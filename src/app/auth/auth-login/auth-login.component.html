@@ -1,0 +1,37 @@
+<div class="back-button">
+  <button routerLink="">
+    <i class="fa fa-arrow-left"></i>
+  </button>
+</div>
+
+<div class="login-container">
+  <h1>ABCall</h1>
+  <h2>Iniciar sesión</h2>
+
+  <form [formGroup]="authForm" (ngSubmit)="!authForm.invalid && login(authForm.value)">
+    <input type="email" novalidate id="email" class="form-control" formControlName="email"
+      placeholder="Correo electrónico">
+    <div class="alert alert-danger alert-dismissible fade show" *ngIf="
+          authForm.get('email')!.hasError('required') &&
+          authForm.get('email')!.touched
+        ">
+      Correo electrónico requerido
+    </div>
+    <input type="password" novalidate id="password" class="form-control" formControlName="password"
+      placeholder="Contraseña">
+    <div class="alert alert-danger alert-dismissible fade show" *ngIf="
+          authForm.get('password')!.hasError('required') &&
+          authForm.get('password')!.touched
+        ">
+      Contraseña requerida
+    </div>
+    <a href="#">¿Olvido su contraseña?</a>
+
+    <div class="buttons">
+      <button type="submit" class="btn btn-primary" [disabled]="!authForm.valid">
+        Iniciar sesión
+      </button>
+      <button type="button" class="btn btn-primary" disabled>Registrarse</button>
+    </div>
+  </form>
+</div>

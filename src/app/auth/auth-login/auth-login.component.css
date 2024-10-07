@@ -1,0 +1,115 @@
+.login-container {
+  text-align: center;
+  background-color: #2e2e2e;
+}
+
+h1 {
+  color: white;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 300px;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #3b3b3b;
+  color: white;
+  font-size: 1rem;
+}
+
+input::placeholder {
+  color: #bbb;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 8px 0;
+  border-radius: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 300px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  /* Distance from the top */
+  left: 20px;
+  /* Distance from the left */
+  z-index: 1000;
+  /* Make sure it appears on top */
+}
+
+.back-button button {
+  background-color: #007bff;
+  /* Button background color */
+  border: none;
+  border-radius: 50%;
+  /* Make the button circular */
+  width: 40px;
+  /* Width of the button */
+  height: 40px;
+  /* Height of the button */
+  font-size: 18px;
+  /* Icon size */
+  color: white;
+  /* Icon color */
+  cursor: pointer;
+  display: flex;
+  /* Center the icon */
+  align-items: center;
+  /* Vertically center */
+  justify-content: center;
+  /* Horizontally center */
+  transition: background-color 0.3s;
+  /* Smooth transition for hover effect */
+}
+
+.back-button button:hover {
+  background-color: #0056b3;
+  /* Darker shade on hover */
+}
+
+.back-button i {
+  margin: 0;
+  /* No margin needed for circular button */
+}
