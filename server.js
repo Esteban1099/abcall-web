@@ -3,10 +3,10 @@ const path = require("path");
 
 const app = express();
 
-app.use(express.static(__dirname + "/dist/browser/abcall-web"));
+app.use(express.static(__dirname + "/dist/abcall-web/browser"));
 
 app.get("/*", function (req, res) {
-  res.sendFile(path.join(__dirname + "/dist/browser/abcall-web/index.html"));
+  res.sendFile(path.join(__dirname + "/dist/abcall-web/browser/index.html"));
 });
 
 const PORT = process.env.PORT || 5000;
