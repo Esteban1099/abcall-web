@@ -13,6 +13,10 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
+  "engines": {
+    "node": "18.19.0",
+    "npm": "10.2.3"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^18.2.0",
