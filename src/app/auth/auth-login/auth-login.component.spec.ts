@@ -8,6 +8,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('AuthLoginComponent', () => {
   let component: AuthLoginComponent;
@@ -18,7 +20,15 @@ describe('AuthLoginComponent', () => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, ToastrModule.forRoot(), HttpClientModule],
       declarations: [AuthLoginComponent],
-      providers: [AuthService],
+      providers: [
+        AuthService,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            queryParams: of({ role: 'empresa' }),
+          },
+        },
+      ],
     }).compileComponents();
   }));
 
