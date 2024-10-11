@@ -39,14 +39,26 @@ jobs:
       - name: Run unit tests
         run: ng test --no-watch --browsers=ChromeHeadless --code-coverage | tee test-output.txt
 
-      - name: Check coverage is at least 40%
+      - name: Check coverage for Statements and Lines
         run: |
           STATEMENTS_COVERAGE=$(grep -Po 'Statements\s*:\s*\K\d+' test-output.txt)
+          LINES_COVERAGE=$(grep -Po 'Lines\s*:\s*\K\d+' test-output.txt)
+
           echo "Statements coverage is $STATEMENTS_COVERAGE%"
+          echo "Lines coverage is $LINES_COVERAGE%"
+
           if [ "$STATEMENTS_COVERAGE" -lt 40 ]; then
-            echo "Coverage is below 40%"
+            echo "Statements coverage is below 40%"
             exit 1
           fi
+
+          if [ "$LINES_COVERAGE" -lt 40 ]; then
+            echo "Lines coverage is below 40%"
+            exit 1
+          fi
+
+      - name: Coverage passed
+        run: echo "Coverage is sufficient!"
 
       - name: Merge feature branch into Develop
         uses: tukasz/direct-merge-action@master
