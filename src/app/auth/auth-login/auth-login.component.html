@@ -1,37 +1,65 @@
-<div class="back-button">
-  <button routerLink="">
-    <i class="fa fa-arrow-left"></i>
-  </button>
-</div>
-
-<div class="login-container">
-  <h1>ABCall</h1>
-  <h2>Iniciar sesión</h2>
-
-  <form [formGroup]="authForm" (ngSubmit)="!authForm.invalid && login(authForm.value)">
-    <input type="email" novalidate id="email" class="form-control" formControlName="email"
-      placeholder="Correo electrónico">
-    <div class="alert alert-danger alert-dismissible fade show" *ngIf="
-          authForm.get('email')!.hasError('required') &&
-          authForm.get('email')!.touched
-        ">
-      Correo electrónico requerido
+<div class="position-absolute top-50 start-50 translate-middle">
+  <div style="width: 300px">
+    <div class="row">
+      <div class="col">
+        <h1 class="pb-3 text-center">ABCall</h1>
+      </div>
+      <form [formGroup]="authForm" (ngSubmit)="!authForm.invalid && login(authForm.value)">
+        <div class="row">
+          <div class="col">
+            <h3 class="pb-3 text-center">Iniciar sesión</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col pb-3">
+            <div class="input-group has-validation">
+              <div class="form-floating">
+                <input formControlName="email" type="email" class="form-control rounded-4"
+                  autocomplete="Correo electrónico"
+                  [class.is-invalid]="authForm.controls['email'].invalid && authForm.controls['email'].touched" />
+                <label>Correo electrónico</label>
+                <div class="invalid-feedback" *ngIf="authForm.controls['email']!.hasError('required')">
+                  Correo electrónico requerido
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col pb-3">
+            <div class="input-group has-validation">
+              <div class="form-floating">
+                <input formControlName="password" type="password" class="form-control rounded-4"
+                  autocomplete="Contraseña"
+                  [class.is-invalid]="authForm.controls['password'].invalid && authForm.controls['password'].touched" />
+                <label>Contraseña</label>
+                <div class="invalid-feedback" *ngIf="authForm.controls['password']!.hasError('required')">
+                  Debe ingresar la contraseña
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-end">
+          <div class="col-auto pb-3">
+            <a class="link-secondary link-underline-opacity-0">¿Olvido su contraseña?</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col pb-3">
+            <button type="submit" class="btn btn-primary rounded-pill w-100" [disabled]="!authForm.valid">
+              Iniciar sesión
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button type="button" class="btn btn-primary rounded-pill w-100" disabled>
+              Registrarse
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
-    <input type="password" novalidate id="password" class="form-control" formControlName="password"
-      placeholder="Contraseña">
-    <div class="alert alert-danger alert-dismissible fade show" *ngIf="
-          authForm.get('password')!.hasError('required') &&
-          authForm.get('password')!.touched
-        ">
-      Contraseña requerida
-    </div>
-    <a href="#">¿Olvido su contraseña?</a>
-
-    <div class="buttons">
-      <button type="submit" class="btn btn-primary" [disabled]="!authForm.valid">
-        Iniciar sesión
-      </button>
-      <button type="button" class="btn btn-primary" disabled>Registrarse</button>
-    </div>
-  </form>
+  </div>
 </div>
