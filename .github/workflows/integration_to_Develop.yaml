@@ -37,7 +37,7 @@ jobs:
         run: npm install
 
       - name: Run unit tests
-        run: ng test --code-coverage
+        run: ng test --no-watch --browsers=ChromeHeadless --code-coverage
 
       # - name: Merge feature branch into Develop
       #   uses: tukasz/direct-merge-action@master
