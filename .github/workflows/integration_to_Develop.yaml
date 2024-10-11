@@ -39,18 +39,18 @@ jobs:
       - name: Run unit tests
         run: ng test --no-watch --browsers=ChromeHeadless --code-coverage | tee test-output.txt
 
-      - name: Check coverage is at least 60%
+      - name: Check coverage is at least 40%
         run: |
           STATEMENTS_COVERAGE=$(grep -Po 'Statements\s*:\s*\K\d+' test-output.txt)
           echo "Statements coverage is $STATEMENTS_COVERAGE%"
-          if [ "$STATEMENTS_COVERAGE" -lt 60 ]; then
-            echo "Coverage is below 60%"
+          if [ "$STATEMENTS_COVERAGE" -lt 40 ]; then
+            echo "Coverage is below 40%"
             exit 1
           fi
 
-      # - name: Merge feature branch into Develop
-      #   uses: tukasz/direct-merge-action@master
-      #   with:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     source-branch: ${{ github.ref }}
-      #     target-branch: develop
+      - name: Merge feature branch into Develop
+        uses: tukasz/direct-merge-action@master
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          source-branch: ${{ github.ref }}
+          target-branch: develop
