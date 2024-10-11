@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "node server.js",
     "build": "ng build",
-    "test": "ng test",
+    "test": "ng test --karma-config=karma.conf.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "preinstall": "npm install -g @angular/cli @angular/compiler-cli typescript",
@@ -36,7 +36,7 @@
     "zone.js": "~0.14.10"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^18.2.7",
+    "@angular-devkit/build-angular": "^18.2.8",
     "@angular/cli": "^18.2.7",
     "@angular/compiler-cli": "^18.2.0",
     "@faker-js/faker": "^9.0.3",
