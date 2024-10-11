@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../user';
 import { AuthService } from '../auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-auth-login',
@@ -10,15 +11,21 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./auth-login.component.css'],
 })
 export class AuthLoginComponent implements OnInit {
+  role: string | null = '';
   authForm!: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      this.role = params['role'];
+    });
+
     this.authForm = this.formBuilder.group({
       email: ['', [Validators.required]],
       password: ['', Validators.required],
@@ -26,14 +33,21 @@ export class AuthLoginComponent implements OnInit {
   }
 
   login(user: User) {
+    user.role = this.role ?? 'Undefined';
     console.info('Login succesfull: ', user);
     this.toastr.success('Confirmation', 'Login succesfull');
     this.authForm.reset();
 
-    // this.authService.login(user).subscribe((user) => {
-    //   console.info('Login succesfull: ', user);
-    //   this.toastr.success('Confirmation', 'Login succesfull');
-    //   this.authForm.reset();
-    // });
+    // this.authService.login(user).subscribe(
+    //   (token) => {
+    //     console.info('Login succesfull: ', token);
+    //     user.token = token;
+    //     this.toastr.success('Confirmation', 'Login succesfull');
+    //     this.authForm.reset();
+    //   },
+    //   (error) => {
+    //     this.toastr.error('Error', error.message);
+    //   }
+    // );
   }
 }
