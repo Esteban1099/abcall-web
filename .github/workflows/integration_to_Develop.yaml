@@ -37,7 +37,16 @@ jobs:
         run: npm install
 
       - name: Run unit tests
-        run: ng test --no-watch --browsers=ChromeHeadless --code-coverage
+        run: ng test --no-watch --browsers=ChromeHeadless --code-coverage | tee test-output.txt
+
+      - name: Check coverage is at least 60%
+        run: |
+          STATEMENTS_COVERAGE=$(grep -Po 'Statements\s*:\s*\K\d+' test-output.txt)
+          echo "Statements coverage is $STATEMENTS_COVERAGE%"
+          if [ "$STATEMENTS_COVERAGE" -lt 60 ]; then
+            echo "Coverage is below 60%"
+            exit 1
+          fi
 
       # - name: Merge feature branch into Develop
       #   uses: tukasz/direct-merge-action@master
