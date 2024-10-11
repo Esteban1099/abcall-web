@@ -38,7 +38,7 @@ export class AuthLoginComponent implements OnInit {
     this.toastr.success('Confirmation', 'Login succesfull');
     this.authForm.reset();
 
-    //Test pipeline
+    //Test pipeline v2
 
     // this.authService.login(user).subscribe(
     //   (token) => {
