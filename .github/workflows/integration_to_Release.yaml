@@ -1,0 +1,65 @@
+name: Creation of Release Branhc and PR to main
+on:
+  push:
+    branches:
+      - 'develop'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  tests:
+    name: Tests
+    if: ${{ contains(github.event.head_commit.message, 'RELEASE') }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to develop branch
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run unit tests
+        run: ng test --no-watch --browsers=ChromeHeadless --code-coverage | tee test-output.txt
+
+      - name: Check coverage for Statements and Lines
+        run: |
+          STATEMENTS_COVERAGE=$(grep -Po 'Statements\s*:\s*\K\d+' test-output.txt)
+          LINES_COVERAGE=$(grep -Po 'Lines\s*:\s*\K\d+' test-output.txt)
+
+          echo "Statements coverage is $STATEMENTS_COVERAGE%"
+          echo "Lines coverage is $LINES_COVERAGE%"
+
+          if [ "$STATEMENTS_COVERAGE" -lt 40 ]; then
+            echo "Statements coverage is below 40%"
+            exit 1
+          fi
+
+          if [ "$LINES_COVERAGE" -lt 40 ]; then
+            echo "Lines coverage is below 40%"
+            exit 1
+          fi
+
+      - name: Coverage passed
+        run: echo "Coverage is sufficient!"
+
+      - name: Sanitize commit message for branch name
+        id: sanitize_message
+        run: |
+          # Sanitize the commit message to create a valid branch name
+          BRANCH_NAME=$(echo "${{ github.event.head_commit.message }}" | sed -e 's/[^a-zA-Z0-9._-]/-/g' | cut -c1-50)
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Create a new release branch from develop
+        run: |
+          git checkout -b $BRANCH_NAME develop
+          git push origin $BRANCH_NAME
