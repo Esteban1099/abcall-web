@@ -4,6 +4,12 @@
   "newProjectRoot": "projects",
   "projects": {
     "abcall-web": {
+      "i18n": {
+        "sourceLocale": "es-CO",
+        "locales": {
+          "en-US": "src/locale/messages.en.xlf"
+        }
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -16,13 +22,6 @@
           "standalone": false
         }
       },
-      "i18n": {
-        "sourceLocale": "en",
-        "locales": {
-          "en-US": "src/locale/messages.us.xlf",
-          "es": "src/locale/messages.es.xlf"
-        }
-      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -30,6 +29,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "localize": true,
             "outputPath": "dist/abcall-web",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -42,8 +42,7 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              },
-              "src/locale"
+              }
             ],
             "styles": [
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
@@ -60,15 +59,13 @@
               "localize": [
                 "en-US"
               ],
-              "outputPath": "dist/abcall-web-us/",
-              "i18nMissingTranslation": "error"
+              "outputPath": "dist/abcall-web-en-US/"
             },
-            "es": {
+            "es-CO": {
               "localize": [
-                "es"
+                "es-CO"
               ],
-              "outputPath": "dist/abcall-web-es/",
-              "i18nMissingTranslation": "error"
+              "outputPath": "dist/abcall-web-es-CO/"
             },
             "production": {
               "budgets": [
@@ -100,8 +97,8 @@
             "en-US": {
               "buildTarget": "abcall-web:build:en-US"
             },
-            "es": {
-              "buildTarget": "abcall-web:build:es"
+            "es-CO": {
+              "buildTarget": "abcall-web:build:es-CO"
             },
             "production": {
               "buildTarget": "abcall-web:build:production"
@@ -128,8 +125,7 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              },
-              "src/locale"
+              }
             ],
             "styles": [
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
