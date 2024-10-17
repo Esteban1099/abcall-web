@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="7535527225967694107" datatype="html">
+        <source>Español</source>
+        <target>Spanish</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">16,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2383211077050532045" datatype="html">
+        <source>Inglés</source>
+        <target>English</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4311569858228721961" datatype="html">
+        <source>Iniciar sesión</source>
+        <target>Login</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/auth-login/auth-login.component.html</context>
+          <context context-type="linenumber">10,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4401057011206112121" datatype="html">
+        <source>Correo electrónico</source>
+        <target>Email</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/auth-login/auth-login.component.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="728021956363839006" datatype="html">
+        <source> Correo electrónico requerido </source>
+        <target>Email is required</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/auth-login/auth-login.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2649500488734843046" datatype="html">
+        <source> Correo electrónico invalido </source>
+        <target>Invalid email</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/auth-login/auth-login.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7132730488496169673" datatype="html">
+        <source>Contraseña</source>
+        <target>Password</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/auth-login/auth-login.component.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2653306750404184742" datatype="html">
+        <source> Debe ingresar la contraseña </source>
+        <target>Password is required</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/auth-login/auth-login.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5969680630589738314" datatype="html">
+        <source>¿Olvido su contraseña?</source>
+        <target>Forgot your password?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/auth-login/auth-login.component.html</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2330215751936654880" datatype="html">
+        <source> Iniciar sesión </source>
+        <target>Login</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/auth-login/auth-login.component.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3431432917436045134" datatype="html">
+        <source> Registrarse </source>
+        <target>Sing up</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/auth-login/auth-login.component.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6463801045172840832" datatype="html">
+        <source>Iniciar sesión como:</source>
+        <target>Login as:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/auth.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1456727077432700741" datatype="html">
+        <source>Empresa</source>
+        <target>Client</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/auth.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="413357021015815832" datatype="html">
+        <source>Asesor</source>
+        <target>Agent</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/auth.component.html</context>
+          <context context-type="linenumber">15,16</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

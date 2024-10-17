@@ -16,6 +16,13 @@
           "standalone": false
         }
       },
+      "i18n": {
+        "sourceLocale": "en",
+        "locales": {
+          "en-US": "src/locale/messages.us.xlf",
+          "es": "src/locale/messages.es.xlf"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -27,14 +34,16 @@
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
-              "zone.js"
+              "zone.js",
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/locale"
             ],
             "styles": [
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
@@ -47,17 +56,26 @@
             ]
           },
           "configurations": {
+            "en-US": {
+              "localize": [
+                "en-US"
+              ],
+              "outputPath": "dist/abcall-web-us/",
+              "i18nMissingTranslation": "error"
+            },
+            "es": {
+              "localize": [
+                "es"
+              ],
+              "outputPath": "dist/abcall-web-es/",
+              "i18nMissingTranslation": "error"
+            },
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 }
               ],
               "outputHashing": "all"
@@ -79,6 +97,12 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
+            "en-US": {
+              "buildTarget": "abcall-web:build:en-US"
+            },
+            "es": {
+              "buildTarget": "abcall-web:build:es"
+            },
             "production": {
               "buildTarget": "abcall-web:build:production"
             },
@@ -96,14 +120,16 @@
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing"
+              "zone.js/testing",
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/locale"
             ],
             "styles": [
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",

@@ -32,6 +32,13 @@ export class HttpErrorInterceptorService extends HttpErrorResponse {
             errorMesagge = 'No hay conexión con el servidor';
           } else {
             errorMesagge = `${httpErrorResponse.status}: ${httpErrorResponse.statusText}`;
+            if (
+              httpErrorResponse.url &&
+              httpErrorResponse.url.includes('/token')
+            ) {
+              errorType = 'Error en la autenticación';
+              errorMesagge = httpErrorResponse.error.error_message;
+            }
           }
 
           if (httpErrorResponse.statusText !== 'OK') {
