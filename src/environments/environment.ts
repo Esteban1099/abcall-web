@@ -1,4 +1,5 @@
-const baseUrl = 'http://localhost:3000';
+const baseUrl =
+  'http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com';
 
 export const environment = {
   production: true,

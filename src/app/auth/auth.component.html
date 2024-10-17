@@ -3,16 +3,16 @@
     <div class="row">
       <div class="col">
         <h1 class="pb-3 text-center">ABCall</h1>
-        <h2 class="pb-3 text-center">Iniciar sesión como:</h2>
+        <h2 i18n class="pb-3 text-center">Iniciar sesión como:</h2>
       </div>
       <div class="row">
         <div class="col pb-3">
-          <button type="button" class="btn btn-primary rounded-pill w-100" [routerLink]="['/auth/login']"
-            [queryParams]="{role: 'empresa'}">Empresa</button>
+          <button i18n type="button" class="btn btn-primary rounded-pill w-100" [routerLink]="['/auth/login']"
+            [queryParams]="{role: 'CLIENT'}">Empresa</button>
         </div>
         <div class="col pb-3">
-          <button type="button" class="btn btn-primary rounded-pill w-100" [routerLink]="['/auth/login']"
-            [queryParams]="{role: 'asesor'}">Asesor</button>
+          <button i18n type="button" class="btn btn-primary rounded-pill w-100" [routerLink]="['/auth/login']"
+            [queryParams]="{role: 'AGENT'}">Asesor</button>
         </div>
       </div>
     </div>

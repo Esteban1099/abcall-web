@@ -25,7 +25,7 @@ describe('AuthLoginComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            queryParams: of({ role: 'empresa' }),
+            queryParams: of({ role: 'CLIENT' }),
           },
         },
       ],
@@ -43,9 +43,33 @@ describe('AuthLoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have an dd element ', () => {
+  it('should have title ', () => {
     const dd = debug.query(By.css('h1'));
     const content: HTMLElement = dd.nativeElement;
     expect(content.textContent).toEqual('ABCall');
+  });
+
+  it('should have subtitle ', () => {
+    const dd = debug.query(By.css('h3'));
+    const content: HTMLElement = dd.nativeElement;
+    expect(content.textContent).toEqual('Iniciar sesión');
+  });
+
+  it('should have label for the fields in form', () => {
+    debug.queryAll(By.css('label')).forEach((label, i) => {
+      if (i == 0) {
+        expect(label.nativeElement.textContent).toContain('Correo electrónico');
+      } else if (i == 1) {
+        expect(label.nativeElement.textContent).toContain('Contraseña');
+      }
+    });
+  });
+
+  it('should have input with id email;', () => {
+    expect(debug.queryAll(By.css('#email'))).toHaveSize(1);
+  });
+
+  it('should have input with id password', () => {
+    expect(debug.queryAll(By.css('#password'))).toHaveSize(1);
   });
 });

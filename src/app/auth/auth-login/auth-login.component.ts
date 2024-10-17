@@ -27,29 +27,26 @@ export class AuthLoginComponent implements OnInit {
     });
 
     this.authForm = this.formBuilder.group({
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
   }
 
   login(user: User) {
     user.role = this.role ?? 'Undefined';
-    console.info('Login succesfull: ', user);
-    this.toastr.success('Confirmation', 'Login succesfull');
-    this.authForm.reset();
 
-    //Test pipeline v3
-
-    // this.authService.login(user).subscribe(
-    //   (token) => {
-    //     console.info('Login succesfull: ', token);
-    //     user.token = token;
-    //     this.toastr.success('Confirmation', 'Login succesfull');
-    //     this.authForm.reset();
-    //   },
-    //   (error) => {
-    //     this.toastr.error('Error', error.message);
-    //   }
-    // );
+    this.authService.login(user).subscribe(
+      (token) => {
+        console.info('Login succesfull: ', token);
+        user.token = token;
+        this.toastr.success('Confirmation', 'Login succesfull');
+        this.authForm.reset();
+      },
+      (error) => {
+        if (error.name === 'RoleError') {
+          this.toastr.error('Error', error.message);
+        }
+      }
+    );
   }
 }
