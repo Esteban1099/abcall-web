@@ -106,10 +106,12 @@
               "buildTarget": "abcall-web:build:es-CO"
             },
             "production": {
-              "buildTarget": "abcall-web:build:production"
+              "buildTarget": "abcall-web:build:production",
+              "proxyConfig": "proxy.conf.json"
             },
             "development": {
-              "buildTarget": "abcall-web:build:development"
+              "buildTarget": "abcall-web:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
