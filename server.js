@@ -7,15 +7,40 @@ const app = express();
 app.use(express.static(path.join(__dirname, "dist/abcall-web/browser/es-CO")));
 
 // Serve static files correctly, without duplicating "es-CO" in the path
-app.get(/.*\.(js|css|png|jpg|svg|woff2|woff|ttf|eot|ico)$/, function (req, res) {
-  // Remove the '/es-CO' prefix from the requested path, if present
-  const filePath = req.path.replace('/es-CO', '');
-  res.sendFile(path.join(__dirname, "dist/abcall-web/browser/es-CO", filePath));
-});
+app.get(
+  /.*\.(js|css|png|jpg|svg|woff2|woff|ttf|eot|ico)$/,
+  function (req, res) {
+    // Remove the '/es-CO' prefix from the requested path, if present
+    const filePath = req.path.replace("/es-CO", "");
+    res.sendFile(
+      path.join(__dirname, "dist/abcall-web/browser/es-CO", filePath)
+    );
+  }
+);
 
 // For all other routes, serve the Angular app's index.html
 app.get("/*", function (req, res) {
-  res.sendFile(path.join(__dirname, "dist/abcall-web/browser/es-CO/index.html"));
+  res.sendFile(
+    path.join(__dirname, "dist/abcall-web/browser/es-CO/index.html")
+  );
+});
+
+// Proxy API requests (adjust paths as needed)
+app.use("/api/auth/clients/token", (req, res) => {
+  // Forward the request to the target API server
+  const targetUrl =
+    "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/auth/clients/token";
+  req
+    .pipe(request({ url: targetUrl, method: req.method, json: req.body }))
+    .pipe(res);
+});
+
+app.use("/api/auth/agents/token", (req, res) => {
+  const targetUrl =
+    "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/auth/agents/token";
+  req
+    .pipe(request({ url: targetUrl, method: req.method, json: req.body }))
+    .pipe(res);
 });
 
 const PORT = process.env.PORT || 5000;
