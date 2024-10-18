@@ -52,7 +52,7 @@ describe('Service: HttpErrorInterceptor', () => {
       () => fail('Expected an error, but got a success response'),
       (error: HttpErrorResponse) => {
         expect(toastrService.error).toHaveBeenCalledWith(
-          'Invalid token',
+          'Credenciales inválidas',
           'Error en la autenticación',
           { closeButton: true }
         );
