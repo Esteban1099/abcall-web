@@ -51,10 +51,10 @@ jobs:
           BRANCHES_COVERAGE=$(grep -Po 'Branches\s*:\s*\K\d+' test-output.txt)
           FUNCTIONS_COVERAGE=$(grep -Po 'Functions\s*:\s*\K\d+' test-output.txt)
 
-          echo "Statements coverage is $STATEMENTS_COVERAGE%"
-          echo "Lines coverage is $LINES_COVERAGE%"
-          echo "Branches coverage is $BRANCHES_COVERAGE%"
-          echo "Functions coverage is $FUNCTIONS_COVERAGE%"
+          echo "Statements coverage is $STATEMENTS_COVERAGE%, min required is 70%"
+          echo "Lines coverage is $LINES_COVERAGE%, min required is 70%"
+          echo "Branches coverage is $BRANCHES_COVERAGE%, min required is 70%"
+          echo "Functions coverage is $FUNCTIONS_COVERAGE%, min required is 70%"
 
           if [ "$STATEMENTS_COVERAGE" -lt 70 ]; then
             echo "Statements coverage is below 70%"
