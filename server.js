@@ -41,6 +41,11 @@ app.use("/auth/clients/token", async (req, res) => {
     res.status(response.status).json(response.data);
   } catch (error) {
     console.error("Error forwarding request:", error.message);
+    res
+      .status(error.response?.status || 500)
+      .json({
+        message: error.response?.data?.message || "Error forwarding request",
+      });
   }
 });
 
@@ -57,6 +62,11 @@ app.use("/auth/agents/token", async (req, res) => {
     res.status(response.status).json(response.data);
   } catch (error) {
     console.error("Error forwarding request:", error.message);
+    res
+      .status(error.response?.status || 500)
+      .json({
+        message: error.response?.data?.message || "Error forwarding request",
+      });
   }
 });
 
