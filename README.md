@@ -22,7 +22,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run `ng e2e` to execute the end-to-end tests with a local deployment of the FrontEnd Web app. For running against the Production UI, run `npm install`, and then `npx cypress open`. A Cypress UI will open. Click on E2E Testing, choose the preferred web browser, then click on Start E2E Testing button, and then click on the spec.cy.ts file. Tests against the actual Production UI should start inmediatly.
 
 ## Further help
 
