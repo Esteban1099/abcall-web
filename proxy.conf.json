@@ -1,0 +1,12 @@
+{
+  "/auth/clients/token": {
+    "target": "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com",
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/auth/agents/token": {
+    "target": "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com",
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
