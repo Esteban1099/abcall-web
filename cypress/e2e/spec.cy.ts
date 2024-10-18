@@ -49,30 +49,7 @@ describe('User Login Tests as Clients', () => {
 
   });
 
-  // Non Existing User
-  // it('Should not login the user with wrong credentials', () => {
-  //   cy.visit('http://localhost:4200/auth');
-  //   cy.contains('button', 'Empresa').click();
-  //   cy.get('input[formcontrolname="email"]').type('wrong@email.com');
-  //   cy.get('input[formcontrolname="password"]').type('wrongpassword');
-  //   cy.contains('button', 'Iniciar sesión').click();
-  //   cy.contains('Login failed').should('be.visible');
-});
-
-  // Maria Uses wrong Password
-  // it('Should not login the user with wrong password', () => {
-  //   cy.visit('http://localhost:4200/auth');
-  //   cy.contains('button', 'Empresa').click();
-  //   cy.get('input[formcontrolname="email"]').type('maria@example.com')
-  //   cy.get('input[formcontrolname="password"]').type('wrongpassword');
-  //   cy.contains('button', 'Iniciar sesión').click();
-  //   cy.contains('Login failed').should('be.visible');
-
-// });
-
-
-// });
-
+  
 // describe users log in as advisors
 describe('User Login Tests as Advisors', () => {
   beforeEach(() => {
