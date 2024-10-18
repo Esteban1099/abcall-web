@@ -41,7 +41,7 @@ describe('Service: Auth', () => {
     });
 
     // Expecting a POST request to the client token URL
-    const req = httpMock.expectOne(`${environment.baseUrl}/auth/clients/token`);
+    const req = httpMock.expectOne('/auth/clients/token');
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(mockUser);
 
@@ -63,7 +63,7 @@ describe('Service: Auth', () => {
     });
 
     // Expecting a POST request to the agent token URL
-    const req = httpMock.expectOne(`${environment.baseUrl}/auth/agents/token`);
+    const req = httpMock.expectOne('/auth/agents/token');
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(mockUser);
 

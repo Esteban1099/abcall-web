@@ -39,6 +39,8 @@ app.use("/auth/clients/token", async (req, res) => {
       headers: { "Content-Type": "application/json" },
     });
     res.status(response.status).json(response.data);
+  } catch (error) {
+    console.error("Error forwarding request:", error.message);
   }
 });
 
@@ -53,6 +55,8 @@ app.use("/auth/agents/token", async (req, res) => {
       headers: { "Content-Type": "application/json" },
     });
     res.status(response.status).json(response.data);
+  } catch (error) {
+    console.error("Error forwarding request:", error.message);
   }
 });
 
