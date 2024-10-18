@@ -3,12 +3,14 @@ const path = require("path");
 
 const app = express();
 
-// Serve static files from the locale-specific build folder
+// Serve static files from the Angular app's locale-specific build folder
 app.use(express.static(path.join(__dirname, "dist/abcall-web/browser/es-CO")));
 
-// Serve static files for requests that match JS, CSS, and other static resources
+// Serve static files correctly, without duplicating "es-CO" in the path
 app.get(/.*\.(js|css|png|jpg|svg|woff2|woff|ttf|eot|ico)$/, function (req, res) {
-  res.sendFile(path.join(__dirname, "dist/abcall-web/browser/es-CO", req.path));
+  // Remove the '/es-CO' prefix from the requested path, if present
+  const filePath = req.path.replace('/es-CO', '');
+  res.sendFile(path.join(__dirname, "dist/abcall-web/browser/es-CO", filePath));
 });
 
 // For all other routes, serve the Angular app's index.html
