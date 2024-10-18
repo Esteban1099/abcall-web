@@ -38,7 +38,7 @@ export class HttpErrorInterceptorService extends HttpErrorResponse {
             ) {
               errorType = 'Error en la autenticación';
               console.log(httpErrorResponse);
-              errorMesagge = httpErrorResponse.error.error_message;
+              errorMesagge = 'Credenciales inválidas';
             }
           }
 
