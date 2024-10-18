@@ -1,7 +1,9 @@
 const express = require("express");
 const path = require("path");
+const axios = require("axios"); // Use axios for HTTP requests
 
 const app = express();
+app.use(express.json()); // Parse JSON request bodies
 
 // Serve static files from the Angular app's locale-specific build folder
 app.use(express.static(path.join(__dirname, "dist/abcall-web/browser/es-CO")));
@@ -26,21 +28,42 @@ app.get("/*", function (req, res) {
 });
 
 // Proxy API requests (adjust paths as needed)
-app.use("/api/auth/clients/token", (req, res) => {
-  // Forward the request to the target API server
-  const targetUrl =
-    "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/auth/clients/token";
-  req
-    .pipe(request({ url: targetUrl, method: req.method, json: req.body }))
-    .pipe(res);
+app.use("/api/auth/clients/token", async (req, res) => {
+  try {
+    const targetUrl =
+      "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/auth/clients/token";
+    const response = await axios({
+      method: req.method,
+      url: targetUrl,
+      data: req.body,
+      headers: { "Content-Type": "application/json" },
+    });
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    console.error("Error forwarding request:", error.message);
+    res
+      .status(error.response?.status || 500)
+      .json({ message: "Error forwarding request" });
+  }
 });
 
-app.use("/api/auth/agents/token", (req, res) => {
-  const targetUrl =
-    "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/auth/agents/token";
-  req
-    .pipe(request({ url: targetUrl, method: req.method, json: req.body }))
-    .pipe(res);
+app.use("/api/auth/agents/token", async (req, res) => {
+  try {
+    const targetUrl =
+      "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/auth/agents/token";
+    const response = await axios({
+      method: req.method,
+      url: targetUrl,
+      data: req.body,
+      headers: { "Content-Type": "application/json" },
+    });
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    console.error("Error forwarding request:", error.message);
+    res
+      .status(error.response?.status || 500)
+      .json({ message: "Error forwarding request" });
+  }
 });
 
 const PORT = process.env.PORT || 5000;
