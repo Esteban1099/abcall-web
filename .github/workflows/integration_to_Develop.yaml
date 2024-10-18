@@ -44,14 +44,17 @@ jobs:
             exit 1
           fi
 
-      - name: Check coverage for Statements and Lines
+      - name: Check coverage for Statements, Lines, Branches, and Functions
         run: |
           STATEMENTS_COVERAGE=$(grep -Po 'Statements\s*:\s*\K\d+' test-output.txt)
           LINES_COVERAGE=$(grep -Po 'Lines\s*:\s*\K\d+' test-output.txt)
-
+          BRANCHES_COVERAGE=$(grep -Po 'Branches\s*:\s*\K\d+' test-output.txt)
+          FUNCTIONS_COVERAGE=$(grep -Po 'Functions\s*:\s*\K\d+' test-output.txt)
 
           echo "Statements coverage is $STATEMENTS_COVERAGE%"
           echo "Lines coverage is $LINES_COVERAGE%"
+          echo "Branches coverage is $BRANCHES_COVERAGE%"
+          echo "Functions coverage is $FUNCTIONS_COVERAGE%"
 
           if [ "$STATEMENTS_COVERAGE" -lt 70 ]; then
             echo "Statements coverage is below 70%"
@@ -60,6 +63,16 @@ jobs:
 
           if [ "$LINES_COVERAGE" -lt 70 ]; then
             echo "Lines coverage is below 70%"
+            exit 1
+          fi
+
+          if [ "$BRANCHES_COVERAGE" -lt 70 ]; then
+            echo "Branches coverage is below 70%"
+            exit 1
+          fi
+
+          if [ "$FUNCTIONS_COVERAGE" -lt 70 ]; then
+            echo "Functions coverage is below 70%"
             exit 1
           fi
 
