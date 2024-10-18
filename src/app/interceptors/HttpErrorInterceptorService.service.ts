@@ -37,6 +37,7 @@ export class HttpErrorInterceptorService extends HttpErrorResponse {
               httpErrorResponse.url.includes('/token')
             ) {
               errorType = 'Error en la autenticación';
+              console.log(httpErrorResponse);
               errorMesagge = httpErrorResponse.error.error_message;
             }
           }
