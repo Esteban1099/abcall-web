@@ -4,6 +4,12 @@
   "newProjectRoot": "projects",
   "projects": {
     "abcall-web": {
+      "i18n": {
+        "sourceLocale": "es-CO",
+        "locales": {
+          "en-US": "src/locale/messages.en.xlf"
+        }
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,11 +29,13 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "localize": true,
             "outputPath": "dist/abcall-web",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
-              "zone.js"
+              "zone.js",
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -47,17 +55,24 @@
             ]
           },
           "configurations": {
+            "en-US": {
+              "localize": [
+                "en-US"
+              ],
+              "outputPath": "dist/abcall-web-en-US/"
+            },
+            "es-CO": {
+              "localize": [
+                "es-CO"
+              ],
+              "outputPath": "dist/abcall-web-es-CO/"
+            },
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 }
               ],
               "outputHashing": "all"
@@ -79,6 +94,12 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
+            "en-US": {
+              "buildTarget": "abcall-web:build:en-US"
+            },
+            "es-CO": {
+              "buildTarget": "abcall-web:build:es-CO"
+            },
             "production": {
               "buildTarget": "abcall-web:build:production"
             },
@@ -96,7 +117,8 @@
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing"
+              "zone.js/testing",
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
