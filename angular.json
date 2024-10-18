@@ -30,7 +30,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "localize": true,
-            "outputPath": "dist/abcall-web",
+            "outputPath": "dist/abcall-web-es-CO",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
