@@ -12,6 +12,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpErrorInterceptorService } from './interceptors/HttpErrorInterceptorService.service';
 import { RouterModule } from '@angular/router';
+import { PqrModule } from './pqr/pqr.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { RouterModule } from '@angular/router';
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     RouterModule,
+    PqrModule
   ],
   providers: [
     provideClientHydration(),
