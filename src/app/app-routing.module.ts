@@ -7,8 +7,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
   { path: 'auth', component: AuthComponent },
   { path: 'auth/login', component: AuthLoginComponent },
-  { path: '**', redirectTo: 'auth' },
-  { path: 'pqr', loadChildren: () => import('./pqr/pqr.module').then(m => m.PqrModule) }
+  { path: 'pqr', loadChildren: () => import('./pqr/pqr.module').then(m => m.PqrModule) },
+  { path: '**', redirectTo: 'auth' }
 ];
 
 @NgModule({

@@ -1,0 +1,44 @@
+/* Contenedor del menú */
+.menu-container {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.menu-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.menu-options {
+  background-color: #ffffff; /* Fondo blanco */
+  color: #000000; /* Letras negras */
+  border-radius: 8px;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.menu-options ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-options li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.menu-options li:hover {
+  background-color: #f0f0f0;
+}

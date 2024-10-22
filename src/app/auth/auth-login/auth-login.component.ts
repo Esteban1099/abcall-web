@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../user';
 import { AuthService } from '../auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth-login',
@@ -18,7 +18,8 @@ export class AuthLoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router // Inyectar el servicio Router
   ) {}
 
   ngOnInit() {
@@ -40,7 +41,7 @@ export class AuthLoginComponent implements OnInit {
         console.info('Login succesfull: ', token);
         user.token = token;
         this.toastr.success('Confirmation', 'Login succesfull');
-        this.authForm.reset();
+        this.router.navigate(['/pqr/list-pqr']);
       },
       (error) => {
         if (error.name === 'RoleError') {
