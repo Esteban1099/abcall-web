@@ -1,0 +1,42 @@
+.fixed-menu {
+  position: absolute;
+  top: 80px; /* Ajusta según la posición deseada */
+  left: 40px; /* Ajusta según la posición deseada */
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 150px; /* Tamaño del cuadro más pequeño */
+  padding: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.fixed-menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.fixed-menu li {
+  padding: 5px;
+  cursor: pointer;
+  color: #000; /* Texto en negro */
+  text-align: left; /* Alinear el texto a la izquierda */
+}
+
+.fixed-menu li:hover {
+  background-color: #f0f0f0;
+}
+
+.menu-button {
+  position: absolute;
+  top:30px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  cursor: pointer;
+}

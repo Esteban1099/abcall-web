@@ -5,3 +5,7 @@
   right: 50px;  /* Alineado a la derecha */
   z-index: 1000;  /* Para asegurar que esté siempre visible */
 }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

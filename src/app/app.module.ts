@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpErrorInterceptorService } from './interceptors/HttpErrorInterceptorService.service';
 import { RouterModule } from '@angular/router';
 import { PqrModule } from './pqr/pqr.module';
+import { HamburgerMenuComponent } from './shared/hamburger-menu/hamburger-menu.component';
 
 @NgModule({
   declarations: [AppComponent],
