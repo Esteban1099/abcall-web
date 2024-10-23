@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PqrRoutingModule } from './pqr-routing.module';
 import { PqrListComponent } from './components/pqr-list/pqr-list.component';
 import { CreatePqrComponent } from './components/create-pqr/create-pqr.component';
-import { SearchConsumerComponent } from './components/search-consumer/search-consumer.component';
 import { SharedModule } from '../shared/shared.module';
 
 
@@ -13,7 +12,6 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     PqrListComponent,
     CreatePqrComponent,
-    SearchConsumerComponent
   ],
   imports: [
     CommonModule,

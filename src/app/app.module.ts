@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpErrorInterceptorService } from './interceptors/HttpErrorInterceptorService.service';
 import { RouterModule } from '@angular/router';
 import { PqrModule } from './pqr/pqr.module';
-import { HamburgerMenuComponent } from './shared/hamburger-menu/hamburger-menu.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +25,8 @@ import { HamburgerMenuComponent } from './shared/hamburger-menu/hamburger-menu.c
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     RouterModule,
-    PqrModule
+    PqrModule,
+    SharedModule
   ],
   providers: [
     provideClientHydration(),

@@ -1,10 +1,10 @@
 <div>
-  <button class="menu-button" (click)="toggleMenu()">☰</button>
+  <button class="menu-button" (click)="toggleMenu()"style="position: fixed; top: 20px; left: 45px;">☰</button>
   <div *ngIf="menuOpen" class="menu-options fixed-menu">
     <ul>
-      <li (click)="navigateTo('create-pqr')">Crear PQR</li>
-      <li (click)="navigateTo('list-pqr')">Listar PQR</li>
-      <li (click)="navigateTo('search-consumer')">Consultar Consumidor</li>
+      <li (click)="navigateTo('/pqr/search-consumer')">Crear PQR</li>
+      <li (click)="navigateTo('/pqr/list-pqr')">Listar PQR</li>
+      <li (click)="navigateTo('/pqr/search-consumer')">Consultar Consumidor</li>
     </ul>
   </div>
 </div>

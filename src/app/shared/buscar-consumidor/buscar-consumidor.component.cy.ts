@@ -1,4 +1,4 @@
-import { SearchConsumerComponent } from './search-consumer.component'
+import { SearchConsumerComponent } from './buscar-consumidor.component'
 
 describe('SearchConsumerComponent', () => {
   it('should mount', () => {

@@ -1,0 +1,29 @@
+<app-hamburger-menu></app-hamburger-menu>
+
+<div class="container">
+  <div class="header">
+    <h1 class="consultar-consumidor-title">Consultar consumidor para la creación de PQR</h1>
+  </div>
+  <div class="content">
+    <form>
+      <div class="form-group">
+        <label for="tipo-identificacion">Tipo de identificación</label>
+        <select id="tipo-identificacion" name="tipo-identificacion">
+          <option value="cc">Cédula de Ciudadanía</option>
+          <option value="ce">Cédula de Extranjería</option>
+          <option value="ti">Tarjeta de Identidad</option>
+          <option value="pasaporte">Pasaporte</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="numero-identificacion">Número de identificación del consumidor</label>
+        <input type="text" id="numero-identificacion" name="numero-identificacion" placeholder="Ingresa el número de identificación">
+      </div>
+      <div class="buttons">
+        <button type="button" class="btn-regresar">Regresar</button>
+        <button type="submit" class="btn-consultar">Consultar</button>
+      </div>
+    </form>
+  </div>
+
+</div>
