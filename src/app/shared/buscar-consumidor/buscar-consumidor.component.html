@@ -8,7 +8,8 @@
     <form>
       <div class="form-group">
         <label for="tipo-identificacion">Tipo de identificación</label>
-        <select id="tipo-identificacion" name="tipo-identificacion">
+        <select id="tipo-identificacion" name="tipo-identificacion" required>
+          <option value="" selected disabled>Seleccione un tipo de identificación</option>
           <option value="cc">Cédula de Ciudadanía</option>
           <option value="ce">Cédula de Extranjería</option>
           <option value="ti">Tarjeta de Identidad</option>
@@ -21,7 +22,7 @@
       </div>
       <div class="buttons">
         <button type="button" class="btn-regresar">Regresar</button>
-        <button type="submit" class="btn-consultar">Consultar</button>
+        <button type="submit" class="btn-consultar" (click)="navigateTo('/pqr/create-pqr')">Consultar</button>
       </div>
     </form>
   </div>

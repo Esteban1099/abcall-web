@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
 import { AuthLoginComponent } from './auth/auth-login/auth-login.component';
 import { BuscarConsumidorComponent } from './shared/buscar-consumidor/buscar-consumidor.component';
+import { CreatePqrComponent } from './pqr/components/create-pqr/create-pqr.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'pqr', loadChildren: () => import('./pqr/pqr.module').then(m => m.PqrModule) },
   { path: 'pqr/search-consumer', component: BuscarConsumidorComponent },
   { path: 'pqr/list-pqr', loadChildren: () => import('./pqr/pqr.module').then(m => m.PqrModule) },
+  { path: 'pqr/create-pqr', component: CreatePqrComponent },
   { path: '**', redirectTo: 'auth' }
 ];
 

@@ -69,10 +69,16 @@ button {
 
 .btn-regresar {
   background-color: #e74c3c;
-  color: #fff;
+  color: white;
+  border-radius: 25px; /* Ajuste redondeado para que coincida con la imagen */
+  padding: 10px 50px;
+  border: none;
 }
 
 .btn-consultar {
   background-color: #3498db;
-  color: #fff;
+  color: white;
+  border-radius: 25px; /* Ajuste redondeado para que coincida con la imagen */
+  padding: 10px 50px;
+  border: none;
 }
