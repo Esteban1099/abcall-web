@@ -51,7 +51,7 @@ app.use(
     console.log("consumer details ---- entered");
     try {
       const { identification_type, identification_number } = req.params;
-      const targetUrl = `http://localhost:5000/consumers/identification_type/${identification_type}/identification_number/${identification_number}`;
+      const targetUrl = `http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/consumers/identification_type/${identification_type}/identification_number/${identification_number}`;
       const response = await axios({
         method: req.method,
         url: targetUrl,
