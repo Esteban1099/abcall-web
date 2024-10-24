@@ -9,7 +9,7 @@ app.use(express.json()); // Parse JSON request bodies
 // Proxy API requests (define these first to prevent them from being caught by the wildcard route)
 app.use("/auth/clients/token", async (req, res) => {
   try {
-    const targetUrl = "http://localhost:5000";
+    const targetUrl = "http://localhost:5000/auth/clients/token";
     const response = await axios({
       method: req.method,
       url: targetUrl,
@@ -27,7 +27,7 @@ app.use("/auth/clients/token", async (req, res) => {
 
 app.use("/auth/agents/token", async (req, res) => {
   try {
-    const targetUrl = "http://localhost:5000";
+    const targetUrl = "http://localhost:5000/auth/agents/token";
     const response = await axios({
       method: req.method,
       url: targetUrl,
