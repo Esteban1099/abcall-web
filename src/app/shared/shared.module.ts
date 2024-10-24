@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HamburgerMenuComponent } from './hamburger-menu/hamburger-menu.component';
-import { BuscarConsumidorComponent } from './buscar-consumidor/buscar-consumidor.component';
+import { SearchConsumerComponent } from '../consumer/search-consumer/search-consumer.component';
+import { CreatePqrComponent } from '../pqr/create-pqr/create-pqr.component';
 
 @NgModule({
   declarations: [
     HamburgerMenuComponent,
-    BuscarConsumidorComponent
+    SearchConsumerComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    CreatePqrComponent
   ],
   exports: [
     HamburgerMenuComponent,
-    BuscarConsumidorComponent
+    SearchConsumerComponent
   ]
 })
 export class SharedModule { }

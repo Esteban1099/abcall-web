@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear PQR</title>
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    /* Estilo del contenedor */
+    .container {
+      max-width: 600px;
+      margin: 0;
+      padding: 20px;
+      background-color: #ffffff;
+      border: 1px solid #dddddd;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      position: absolute;
+      top: 100px;
+      left: 100px;
+    }
+
+    .header {
+      margin-bottom: 20px;
+    }
+
+    .consultar-consumidor-title {
+      font-size: 24px;
+      margin: 0;
+      color: #333333;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: #333333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #cccccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .btn-regresar {
+      background-color: #d9534f;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-crear {
+      background-color: #0275d8;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-regresar:hover {
+      background-color: #c9302c;
+    }
+
+    .btn-crear:hover {
+      background-color: #025aa5;
+    }
+  </style>
+</head>
+<body>
+
+<app-hamburger-menu></app-hamburger-menu>
+
+<div class="container">
+  <div class="header">
+    <h1 class="consultar-consumidor-title">Crear PQR para Gustavo Andres Rodriguez</h1>
+  </div>
+  <div class="content">
+    <form>
+      <div class="form-group">
+        <label for="tipo-identificacion">Tipo de identificación del paciente</label>
+        <select id="tipo-identificacion" name="tipo-identificacion" required>
+          <option value="cc" selected>Cédula de ciudadanía</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="numero-identificacion">Número de identificación del paciente</label>
+        <input type="text" id="numero-identificacion" name="numero-identificacion" value="1015894712" readonly>
+      </div>
+      <div class="form-group">
+        <label for="numero-contacto">Número de contacto</label>
+        <input type="text" id="numero-contacto" name="numero-contacto" value="3504552369" readonly>
+      </div>
+      <div class="form-group">
+        <label for="direccion">Dirección</label>
+        <input type="text" id="direccion" name="direccion" value="Calle 22b 68c 41 Int 6 Apto 804" readonly>
+      </div>
+      <div class="form-group">
+        <label for="correo-electronico">Correo electrónico del paciente</label>
+        <input type="email" id="correo-electronico" name="correo-electronico" value="gustavo.rodriguez@fake.com" readonly>
+      </div>
+      <div class="form-group">
+        <label for="asunto">Asunto</label>
+        <input type="text" id="asunto" name="asunto" value="Fraude por transacción no autorizada" readonly>
+      </div>
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" name="descripcion" rows="4" readonly>El consumidor informa que ha recibido mensajes de texto en su celular de transacciones desconocidas por posible usurpación de identidad</textarea>
+      </div>
+      <div class="buttons">
+        <button type="button" class="btn-regresar">Regresar</button>
+        <button type="submit" class="btn-crear">Crear PQR</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
