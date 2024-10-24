@@ -10,45 +10,66 @@ import { ToastrService } from 'ngx-toastr';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class HttpErrorInterceptorService extends HttpErrorResponse {
-  constructor(private toastrService: ToastrService) {
-    super(toastrService);
-  }
+export class HttpErrorInterceptorService {
+  constructor(private toastrService: ToastrService) {}
+
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((httpErrorResponse: HttpErrorResponse) => {
-        let errorMesagge = '';
+        let errorMessage = '';
         let errorType = '';
 
-        if (httpErrorResponse.error instanceof HttpErrorResponse) {
-          errorType = 'Client side error';
-          errorMesagge = httpErrorResponse.statusText;
+        // Client-side error (network issue, etc.)
+        if (httpErrorResponse.error instanceof ErrorEvent) {
+          errorType = 'Client-side error';
+          errorMessage = httpErrorResponse.error.message;
         } else {
-          errorType = 'Server side error';
+          // Server-side error
+          errorType = 'Server-side error';
+
+          // Handling server connection issues
           if (httpErrorResponse.status === 0) {
-            errorMesagge = 'No hay conexión con el servidor';
+            errorMessage = 'No hay conexión con el servidor';
           } else {
-            errorMesagge = `${httpErrorResponse.status}: ${httpErrorResponse.statusText}`;
+            // Handle specific server responses
+            errorMessage = `${httpErrorResponse.status}: ${httpErrorResponse.message}`;
+
+            // Check if it's an authentication error (token-related)
             if (
               httpErrorResponse.url &&
               httpErrorResponse.url.includes('/token')
             ) {
               errorType = 'Error en la autenticación';
               console.log(httpErrorResponse);
-              errorMesagge = 'Credenciales inválidas';
+              errorMessage = 'Credenciales inválidas';
+            }
+
+            // Check if it's an consumer error
+            if (
+              httpErrorResponse.url &&
+              httpErrorResponse.url.includes('/consumer/details')
+            ) {
+              errorType = 'Error en la consulta de consumidor';
+              if (httpErrorResponse.message.includes('404 NOT FOUND')) {
+                errorMessage =
+                  'No se encontro un consumidor con los datos ingresados';
+              }
             }
           }
 
-          if (httpErrorResponse.statusText !== 'OK') {
-            this.toastrService.error(errorMesagge, errorType, {
+          // Only show Toastr error for non-200 statuses
+          if (httpErrorResponse.status !== 200) {
+            this.toastrService.error(errorMessage, errorType, {
               closeButton: true,
             });
           }
         }
-        return throwError(() => new Error(errorMesagge));
+
+        // Throw the error
+        return throwError(() => new Error(errorMessage));
       })
     );
   }
