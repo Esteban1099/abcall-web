@@ -1,10 +1,13 @@
 <br>
 <div class="row">
-  <div class="col text-start">
-    <h1 class="pb-3">Consultar consumidor</h1>
+  <div class="col text-start" *ngIf="action === 'createPQR'">
+    <h1 class="pb-3">Consultar consumidor para creación de PQR</h1>
+  </div>
+  <div class="col text-start" *ngIf="action === 'consumerDetail'">
+    <h1 class="pb-3">Consulta consumidor</h1>
   </div>
 </div>
-<form [formGroup]="consumerForm" (ngSubmit)="!consumerForm.invalid && getConsumerDetails(consumerForm.value)">
+<form [formGroup]="consumerForm" (ngSubmit)="!consumerForm.invalid && getConsumerDetails(consumerForm.value, action)">
   <div class="row">
     <div class="col-sm-4 col-md-3 pb-1">
       <div class="input-group has-validation">

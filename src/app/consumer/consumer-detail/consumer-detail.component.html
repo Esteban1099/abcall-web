@@ -1,8 +1,9 @@
 <br>
 <div class="row">
   <div class="col text-start">
-    <h1 class="pb-3">Vista 360 de {{ consumerDetails.name }}</h1>
-  </div>
+    <h1 class="pb-3" *ngIf="action === 'consumerDetail' || action === ''" >Vista 360 de {{ consumerDetails.name }}</h1>
+    <h1 class="pb-3" *ngIf="action === 'createPQR'">Crear PQR para {{ consumerDetails.name }}</h1>
+    </div>
 </div>
 
 <div class="row">

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Consumer } from '../consumer';
 import { ConsumerService } from '../consumer.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-consumer-detail',
@@ -10,10 +10,12 @@ import { Router } from '@angular/router';
 })
 export class ConsumerDetailComponent implements OnInit {
   consumerDetails: Consumer;
+  action: string | null = null;
 
   constructor(
     private consumerService: ConsumerService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.consumerDetails = this.getDefaultConsumer(); // Initialize with default values
   }
@@ -39,6 +41,10 @@ export class ConsumerDetailComponent implements OnInit {
     if (!token) {
       this.router.navigate(['/auth']);
     }
+
+    this.route.queryParams.subscribe(params => {
+      this.action = params['action']; // "view" or "createPQR"
+    });
 
     // Get the consumer details from the service
     this.consumerDetails = this.consumerService.getActualConsumerDetails();
