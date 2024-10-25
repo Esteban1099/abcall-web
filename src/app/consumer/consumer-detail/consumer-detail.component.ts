@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Consumer } from '../consumer';
+import { Consumer, Company } from '../consumer';
 import { ConsumerService } from '../consumer.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PQR } from '../../pqr/pqr';
+
 
 @Component({
   selector: 'app-consumer-detail',
@@ -9,13 +12,19 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./consumer-detail.component.css'],
 })
 export class ConsumerDetailComponent implements OnInit {
-  consumerDetails: Consumer;
+  consumerDetails!: Consumer;
   action: string | null = null;
+  selectedCompany!: Company;
+  pqrForm!: FormGroup;
+  consumerId!: string;
+  companyId!: string;
+
 
   constructor(
     private consumerService: ConsumerService,
     private router: Router,
     private route: ActivatedRoute,
+    private fb: FormBuilder
   ) {
     this.consumerDetails = this.getDefaultConsumer(); // Initialize with default values
   }
@@ -42,6 +51,16 @@ export class ConsumerDetailComponent implements OnInit {
       this.router.navigate(['/auth']);
     }
 
+    this.route.params.subscribe(params => {
+      this.consumerId = params['consumer_id'];
+      this.companyId = params['company_id'];
+    });
+
+    this.pqrForm = this.fb.group({
+      subject: ['', Validators.required],
+      description: ['', Validators.required]
+    });
+
     this.route.queryParams.subscribe(params => {
       this.action = params['action']; // "view" or "createPQR"
     });
@@ -64,5 +83,19 @@ export class ConsumerDetailComponent implements OnInit {
 
   goInit() {
     this.router.navigate(['/consumer']);
+  }
+
+  // Método para enviar los datos del formulario y crear la PQR
+  submitPQR(): void {
+    if (this.pqrForm.valid && this.consumerId && this.companyId) {
+      const newPQR = new PQR(
+        this.pqrForm.value.subject,
+        this.pqrForm.value.description,
+        this.consumerId,
+        this.companyId
+      );
+
+    }
+
   }
 }
