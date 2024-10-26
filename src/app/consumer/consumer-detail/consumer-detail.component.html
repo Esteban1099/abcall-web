@@ -1,7 +1,7 @@
 <br>
 <div class="row">
   <div class="col text-start">
-    <h1 class="pb-3">Vista 360 de {{ consumerDetails.name }}</h1>
+    <h1 class="pb-3">Vista 360 de {{ consumerDetails?.name }}</h1>
   </div>
 </div>
 
@@ -12,25 +12,25 @@
       <div class="col-md-6">
         <div class="mb-3">
           <p class="mb-1 text-muted" i18n>Tipo de identificación</p>
-          <p class="fw-bold">{{ consumerDetails.identification_type }}</p>
+          <p class="fw-bold">{{ consumerDetails?.identification_type }}</p>
         </div>
         <div class="mb-3">
           <p class="mb-1 text-muted" i18n>Número de contacto</p>
-          <p class="fw-bold">{{ consumerDetails.contact_number }}</p>
+          <p class="fw-bold">{{ consumerDetails?.contact_number }}</p>
         </div>
         <div class="mb-3">
           <p class="mb-1 text-muted" i18n>Dirección</p>
-          <p class="fw-bold">{{ consumerDetails.address }}</p>
+          <p class="fw-bold">{{ consumerDetails?.address }}</p>
         </div>
       </div>
       <div class="col-md-6">
         <div class="mb-3">
           <p class="mb-1 text-muted" i18n>Número de identificación</p>
-          <p class="fw-bold">{{ consumerDetails.identification_number }}</p>
+          <p class="fw-bold">{{ consumerDetails?.identification_number }}</p>
         </div>
         <div class="mb-3">
           <p class="mb-1 text-muted" i18n>Correo electrónico del paciente</p>
-          <p class="fw-bold">{{ consumerDetails.email }}</p>
+          <p class="fw-bold">{{ consumerDetails?.email }}</p>
         </div>
       </div>
     </div>
@@ -42,8 +42,8 @@
   <div class="col-md-6">
     <h4 class="fw-bold mb-3" i18n>Empresas asociadas con el consumidor</h4>
     <ul class="list-group">
-      <li *ngFor="let company of consumerDetails.companies" class="list-group-item bg-dark text-white border-0">
-        {{ company.name }}
+      <li *ngFor="let company of consumerDetails?.companies" class="list-group-item bg-dark text-white border-0">
+        {{ company?.name }}
       </li>
     </ul>
   </div>
