@@ -69,7 +69,9 @@ app.use(
         error.message
       );
       res.status(error.response?.status || 500).json({
-        message: error.response?.data?.message || "Error forwarding request",
+        message:
+          error.response?.data?.message ||
+          "Error forwarding request **********",
       });
     }
   }
