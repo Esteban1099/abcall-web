@@ -204,13 +204,110 @@ describe('User Login as Clients Tests', () => {
       // Hace clic en el botón "Consultar"
       cy.get('button').contains('Consultar').click();
 
+       // Verifica que el mensaje de error se muestra
+      cy.contains('Error en la consulta de consumidor').should('be.visible');
+      cy.contains('No se encontro un consumidor con los datos ingresados').should('be.visible');
+
+      // Verifica que el número fue ingresado correctamente
+      cy.get('input#identification_number').should('be.visible').clear().type('9601063007');
+      cy.get('input#identification_number').should('have.value', '9601063007');
+
+      // Hace clic en el botón "Consultar"
+      cy.get('button').contains('Consultar').click();
+
+      // Verifica que la información del consumidor se muestra
+
+      cy.contains('Vista 360 de').should('be.visible');
+      cy.contains('Número de contacto').should('be.visible');
+      cy.contains('Dirección').should('be.visible');
+      cy.contains('Correo electrónico').should('be.visible');
+      cy.contains('Número de identificación').should('be.visible');
+      cy.contains('istado de PQRs reportados por el consumidor').should('be.visible');
+      cy.contains('Empresas asociadas con el consumidor').should('be.visible');
+
+      cy.contains('button', 'Regresar').should('be.visible');
+      cy.contains('button', 'Regresar').click()
+
 
     });
+  });
 
-    // Asesor se dirige a Consultar consumidor
+
+  describe('Asesor crea una PQR a un usuario', () => {
+    it('should create a PQR Succesfully', () => {
+
+      //Desde el menu principal
+      // Asesor se Loggea Exitosamente
+      cy.visit('/');
+      cy.contains('button', 'Asesor').click();
+      cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
+      cy.get('input[formcontrolname="password"]').type('123456');
+      cy.contains('button', 'Iniciar sesión').click();
+      cy.contains('Login succesfull').should('be.visible');
+      cy.wait(200);
+      cy.get('button.btn-primary.rounded-pill').should('exist');
+      cy.get('button.btn-primary.rounded-pill').first().click();
+
+
+      // Haz clic en la opción "Consultar consumidor"
+      cy.contains('.dropdown-item', 'Crear PQR').click();
+      cy.wait(500); // Espera 500 milisegundos
+
+
+      cy.contains('button', 'Consultar').should('be.visible');
+      cy.contains('button', 'Regresar').should('be.visible');
+
+      // Verifica que el selector de "Tipo identificación" es visible
+      cy.get('select#identification_type').should('be.visible');
+
+      // Verifica que las opciones dentro del selector sean visibles
+      cy.get('select#identification_type option').should('have.length', 4);
+      cy.get('select#identification_type').contains('Cédula de ciudadanía').should('be.visible');
+      cy.get('select#identification_type').contains('Cédula de extranjería').should('be.visible');
+      cy.get('select#identification_type').contains('Tarjeta de identidad').should('be.visible');
+      cy.get('select#identification_type').contains('Pasaporte').should('be.visible');
+
+      // Verifica que el campo de texto "Numero identificación" es visible
+      cy.get('input#identification_number').should('be.visible');
+
+      // Verifica que el selector de "Tipo identificación" es visible y selecciona "Pasaporte"
+      cy.get('select#identification_type').should('be.visible').select('Pasaporte');
+
+      // Verifica que se ha seleccionado "Pasaporte"
+      cy.get('select#identification_type').should('have.value', 'Pasaporte');
+
+      // Ingresa el número "1234556" en el campo "Numero identificación"
+      cy.get('input#identification_number').should('be.visible').type('1234556');
+
+      // Hace clic en el botón "Consultar"
+      cy.get('button').contains('Consultar').click();
+
+       // Verifica que el mensaje de error se muestra
+      cy.contains('Error en la consulta de consumidor').should('be.visible');
+      cy.contains('No se encontro un consumidor con los datos ingresados').should('be.visible');
+
+      // Verifica que el número fue ingresado correctamente
+      cy.get('input#identification_number').should('be.visible').clear().type('9601063007');
+      cy.get('input#identification_number').should('have.value', '9601063007');
+
+      // Hace clic en el botón "Consultar"
+      cy.get('button').contains('Consultar').click();
+
+      // se verifican elementos graficos propios de creacion de pqr
+
+      cy.contains('Crear PQR para').should('be.visible');
+      cy.contains('Número de contacto').should('be.visible');
+      cy.contains('Dirección').should('be.visible');
+      cy.contains('Correo electrónico').should('be.visible');
+      cy.contains('Número de identificación').should('be.visible');
+      cy.contains('Empresas asociadas con el consumidor').should('be.visible');
+
+      cy.contains('button', 'Regresar').should('be.visible');
+
 
 
 
 
   });
 
+});
