@@ -50,6 +50,7 @@ app.use(
   async (req, res) => {
     console.log("consumer details ---- entered");
     try {
+      console.log("Authorization Header:", authHeader);
       const { identification_type, identification_number } = req.params;
       const targetUrl = `http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/consumers/identification_type/${identification_type}/identification_number/${identification_number}`;
       const response = await axios({
@@ -63,7 +64,10 @@ app.use(
       });
       res.status(response.status).json(response.data);
     } catch (error) {
-      console.error("Error forwarding request:", error.message);
+      console.error(
+        "Error forwarding request: -----------------",
+        error.message
+      );
       res.status(error.response?.status || 500).json({
         message: error.response?.data?.message || "Error forwarding request",
       });
