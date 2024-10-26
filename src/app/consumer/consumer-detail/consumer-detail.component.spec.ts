@@ -1,9 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConsumerDetailComponent } from './consumer-detail.component';
 import { ConsumerService } from '../consumer.service';
 import { Router } from '@angular/router';
 import { Consumer } from '../consumer';
-import { of } from 'rxjs';
 
 describe('ConsumerDetailComponent', () => {
   let component: ConsumerDetailComponent;
@@ -11,21 +10,21 @@ describe('ConsumerDetailComponent', () => {
   let consumerService: jasmine.SpyObj<ConsumerService>;
   let router: jasmine.SpyObj<Router>;
 
-  beforeEach(async () => {
+  beforeEach(waitForAsync(() => {
     // Create spies for the services
     consumerService = jasmine.createSpyObj('ConsumerService', [
       'getActualConsumerDetails',
     ]);
     router = jasmine.createSpyObj('Router', ['navigate']);
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       declarations: [ConsumerDetailComponent],
       providers: [
         { provide: ConsumerService, useValue: consumerService },
         { provide: Router, useValue: router },
       ],
     }).compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConsumerDetailComponent);

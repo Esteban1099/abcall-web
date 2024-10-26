@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
@@ -11,14 +11,14 @@ describe('ConsumerService', () => {
   let service: ConsumerService;
   let httpMock: HttpTestingController;
 
-  beforeEach(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [ConsumerService],
     });
     service = TestBed.inject(ConsumerService);
     httpMock = TestBed.inject(HttpTestingController);
-  });
+  }));
 
   afterEach(() => {
     httpMock.verify(); // Verify that no unmatched requests remain
