@@ -28,4 +28,4 @@ Run `ng e2e` to execute the end-to-end tests with a local deployment of the Fron
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
 
-Update version: 1.0.4 
+Update version: 1.0.5
