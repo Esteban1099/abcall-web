@@ -48,9 +48,10 @@
       <!-- Dropdown if there are companies -->
       <div *ngIf="consumerDetails.companies.length > 0; else noCompanies">
         <select class="form-select" [(ngModel)]="selectedCompany">
-          <option *ngFor="let company of consumerDetails.companies" [value]="company.id">{{ company.name }}</option>
+          <option *ngFor="let company of consumerDetails.companies" [ngValue]="company">{{ company.name }}</option>
         </select>
       </div>
+
 
       <!-- No companies message -->
       <ng-template #noCompanies>
@@ -69,15 +70,27 @@
 
 <!-- Form for creating PQR (only if action is createPQR) -->
 <div *ngIf="action === 'createPQR'">
-  <form [formGroup]="pqrForm" (ngSubmit)="submitPQR()">
+  <form [formGroup]="pqrForm" (ngSubmit)="!pqrForm.invalid && submitPQR(selectedCompany.id, consumerDetails.id)">
     <div class="mb-3">
       <label for="subject" class="form-label" i18n>Asunto</label>
-      <input type="text" id="subject" class="form-control" formControlName="subject" placeholder="Asunto" />
+      <input type="text" id="subject" class="form-control" formControlName="subject" placeholder="Asunto"
+      [class.is-invalid]="pqrForm.controls['subject'].invalid && pqrForm.controls['subject'].touched"/>
+
+          <div i18n class="invalid-feedback" *ngIf="pqrForm.controls['subject']!.hasError('required')">
+            Asunto requerido
+          </div>
     </div>
 
     <div class="mb-3">
       <label for="description" class="form-label" i18n>Descripción</label>
-      <textarea id="description" class="form-control" formControlName="description" placeholder="Descripción"></textarea>
+      <input type="text" id="description" class="form-control" formControlName="description" placeholder="Descripción"
+      [class.is-invalid]="pqrForm.controls['description'].invalid && pqrForm.controls['description'].touched"/>
+      <div i18n class="invalid-feedback" *ngIf="pqrForm.controls['description']!.hasError('required')">
+        Descripción requerida
+      </div>
+      <div i18n class="invalid-feedback" *ngIf="pqrForm.controls['description']!.hasError('minlength')">
+        La Descripción debe tener un mínimo de 200 caracteres
+      </div>
     </div>
 
     <!-- Buttons -->

@@ -19,5 +19,14 @@
     "pathRewrite": {
       "^/consumer/details/(.*)/(.*)$": "/consumers/identification_type/$1/identification_number/$2"
     }
-  }
+  },
+
+
+  "/companies": {
+      "target": "http://localhost:5000",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+
 }
