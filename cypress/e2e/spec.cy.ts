@@ -140,3 +140,77 @@ describe('User Login as Clients Tests', () => {
     });
 
   });
+
+  describe('Asesor Ve vista 360 de un usuario', () => {
+    it('Should login the user Asesor Succesfully', () => {
+
+      // Asesor se Loggea Exitosamente
+      cy.visit('/');
+      cy.contains('button', 'Asesor').click();
+      cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
+      cy.get('input[formcontrolname="password"]').type('123456');
+      cy.contains('button', 'Iniciar sesión').click();
+      cy.contains('Login succesfull').should('be.visible');
+      cy.contains('button', 'Consultar').should('be.visible');
+      cy.contains('button', 'Regresar').should('be.visible');
+
+      cy.get('button.btn-primary.rounded-pill').should('exist');
+      cy.get('button[data-bs-toggle="dropdown"]').should('exist');
+      cy.get('button[type="button"].btn-primary.rounded-pill').should('exist');
+      cy.get('button.btn-primary.rounded-pill i.fa-solid.fa-bars').should('exist');
+      cy.get('button.btn-primary.rounded-pill').first().click();
+      cy.get('.dropdown-menu').should('be.visible'); // Verifica que el menú desplegable es visible
+
+      // Verifica que cada opción existe en el menú
+      cy.contains('.dropdown-item', 'Listar PQR').should('be.visible');
+      cy.contains('.dropdown-item', 'Crear PQR').should('be.visible');
+      cy.contains('.dropdown-item', 'Consultar consumidor').should('be.visible');
+
+      // Haz clic en la opción "Consultar consumidor"
+      cy.contains('.dropdown-item', 'Consultar consumidor').click();
+      cy.wait(500); // Espera 500 milisegundos
+
+      cy.contains('button', 'Consultar').should('be.visible');
+      cy.contains('button', 'Regresar').should('be.visible');
+
+      // Verifica que el selector de "Tipo identificación" es visible
+      cy.get('select#identification_type').should('be.visible');
+
+      // Verifica que las opciones dentro del selector sean visibles
+      cy.get('select#identification_type option').should('have.length', 4);
+      cy.get('select#identification_type').contains('Cédula de ciudadanía').should('be.visible');
+      cy.get('select#identification_type').contains('Cédula de extranjería').should('be.visible');
+      cy.get('select#identification_type').contains('Tarjeta de identidad').should('be.visible');
+      cy.get('select#identification_type').contains('Pasaporte').should('be.visible');
+
+      // Verifica que el campo de texto "Numero identificación" es visible
+      cy.get('input#identification_number').should('be.visible');
+
+      // Verifica que el selector de "Tipo identificación" es visible y selecciona "Pasaporte"
+      cy.get('select#identification_type').should('be.visible').select('Pasaporte');
+
+      // Verifica que se ha seleccionado "Pasaporte"
+      cy.get('select#identification_type').should('have.value', 'Pasaporte');
+
+      // Ingresa el número "1234556" en el campo "Numero identificación"
+      cy.get('input#identification_number').should('be.visible').type('1234556');
+
+      // Verifica que el número fue ingresado correctamente
+      cy.get('input#identification_number').should('have.value', '1234556');
+
+      // Verifica que el botón "Consultar" esté habilitado
+      cy.get('button').contains('Consultar').should('be.enabled');
+
+      // Hace clic en el botón "Consultar"
+      cy.get('button').contains('Consultar').click();
+
+
+    });
+
+    // Asesor se dirige a Consultar consumidor
+
+
+
+
+  });
+
