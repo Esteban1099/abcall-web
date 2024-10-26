@@ -36,6 +36,7 @@ describe('ConsumerService', () => {
       contact_number: '',
       address: '',
       companies: [],
+      pccs: [],
     });
   });
 
@@ -50,6 +51,7 @@ describe('ConsumerService', () => {
       contact_number: '555-5555',
       address: '123 Main St',
       companies: [{ id: '1', name: 'Company A' }],
+      pccs: [],
     };
 
     // Simulate sessionStorage token
@@ -106,6 +108,7 @@ describe('ConsumerService', () => {
       contact_number: '555-5555',
       address: '123 Main St',
       companies: [{ id: '1', name: 'Company A' }],
+      pccs: [],
     };
 
     // Set the consumer details in the service

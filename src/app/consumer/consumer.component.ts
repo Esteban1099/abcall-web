@@ -53,8 +53,11 @@ export class ConsumerComponent implements OnInit {
         console.info('Consumer details: ', consumerDetails);
         this.toastr.success('Confirmation', 'Consumer details fetched');
         this.consumerForm.reset();
+        console.info('Call by: ', this.callBy);
         if (this.callBy === 'CONSUMER') {
           this.router.navigate(['/consumer/detail']);
+        } else if (this.callBy === 'CREATE_PQR') {
+          this.router.navigate(['/pqr/create']);
         }
       });
   }
