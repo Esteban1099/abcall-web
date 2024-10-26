@@ -53,7 +53,9 @@ export class ConsumerComponent implements OnInit {
         console.info('Consumer details: ', consumerDetails);
         this.toastr.success('Confirmation', 'Consumer details fetched');
         this.consumerForm.reset();
-        this.router.navigate(['/consumer/detail']);
+        if (this.callBy === 'CONSUMER') {
+          this.router.navigate(['/consumer/detail']);
+        }
       });
   }
 

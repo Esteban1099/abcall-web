@@ -9,7 +9,8 @@ app.use(express.json()); // Parse JSON request bodies
 // Proxy API requests (define these first to prevent them from being caught by the wildcard route)
 app.use("/auth/clients/token", async (req, res) => {
   try {
-    const targetUrl = "http://localhost:5000";
+    const targetUrl =
+      "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/auth/clients/token";
     const response = await axios({
       method: req.method,
       url: targetUrl,
@@ -27,7 +28,8 @@ app.use("/auth/clients/token", async (req, res) => {
 
 app.use("/auth/agents/token", async (req, res) => {
   try {
-    const targetUrl = "http://localhost:5000";
+    const targetUrl =
+      "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/auth/agents/token";
     const response = await axios({
       method: req.method,
       url: targetUrl,
@@ -49,7 +51,7 @@ app.use(
     console.log("consumer details ---- entered");
     try {
       const { identification_type, identification_number } = req.params;
-      const targetUrl = `http://localhost:5000/consumers/identification_type/${identification_type}/identification_number/${identification_number}`;
+      const targetUrl = `http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/consumers/identification_type/${identification_type}/identification_number/${identification_number}`;
       const response = await axios({
         method: req.method,
         url: targetUrl,
