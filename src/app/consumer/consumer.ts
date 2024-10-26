@@ -7,6 +7,7 @@ export class Consumer {
   contact_number: string;
   address: string;
   companies: Company[];
+  pccs: PCCS[];
 
   public constructor(
     id: string,
@@ -16,7 +17,8 @@ export class Consumer {
     email: string,
     contact_number: string,
     address: string,
-    companies: Company[]
+    companies: Company[],
+    pccs: PCCS[]
   ) {
     this.id = id;
     this.identification_type = identification_type;
@@ -26,15 +28,26 @@ export class Consumer {
     this.contact_number = contact_number;
     this.address = address;
     this.companies = companies;
+    this.pccs = pccs;
   }
 }
 
-class Company {
+export class Company {
   id: string;
   name: string;
 
   constructor(id: string, name: string) {
     this.id = id;
     this.name = name;
+  }
+}
+
+export class PCCS {
+  id: string;
+  subject: string;
+
+  constructor(id: string, subject: string) {
+    this.id = id;
+    this.subject = subject;
   }
 }

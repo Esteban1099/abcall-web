@@ -97,7 +97,7 @@ describe('Service: HttpErrorInterceptor', () => {
       (error: HttpErrorResponse) => {
         // Adjust test to expect the actual proxy error message
         expect(toastrService.error).toHaveBeenCalledWith(
-          '404: Http failure response for /consumer/details: 404 Not Found',
+          'No se encontro un consumidor con los datos ingresados',
           'Error en la consulta de consumidor',
           { closeButton: true }
         );

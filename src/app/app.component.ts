@@ -29,8 +29,8 @@ export class AppComponent implements OnInit {
     });
   }
 
-  goToConsumer() {
-    this.router.navigate(['/consumer']);
+  goToConsumer(action: string) {
+    this.router.navigate(['/consumer'], { queryParams: { callBy: action } });
   }
 
   logOut() {

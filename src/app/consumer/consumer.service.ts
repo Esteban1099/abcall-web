@@ -24,6 +24,7 @@ export class ConsumerService {
       contact_number: '',
       address: '',
       companies: [],
+      pccs: [],
     };
   }
 

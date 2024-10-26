@@ -1,7 +1,10 @@
 <br>
 <div class="row">
-  <div class="col text-start">
-    <h1 class="pb-3">Consultar consumidor</h1>
+  <div class="col text-start" *ngIf="callBy === 'CREATE_PQR'">
+    <h1 class="pb-3">Consultar consumidor para creación de PQR</h1>
+  </div>
+  <div class="col text-start" *ngIf="callBy === 'CONSUMER'">
+    <h1 class="pb-3">Consulta consumidor</h1>
   </div>
 </div>
 <form [formGroup]="consumerForm" (ngSubmit)="!consumerForm.invalid && getConsumerDetails(consumerForm.value)">

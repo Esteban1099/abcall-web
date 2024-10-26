@@ -1,1 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Asegura que toda la aplicación utilice la fuente Segoe UI */
+* {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

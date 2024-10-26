@@ -19,5 +19,11 @@
     "pathRewrite": {
       "^/consumer/details/(.*)/(.*)$": "/consumers/identification_type/$1/identification_number/$2"
     }
+  },
+  "/companies/*/consumers/*/pccs": {
+    "target": "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }

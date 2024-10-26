@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./consumer-detail.component.css'],
 })
 export class ConsumerDetailComponent implements OnInit {
-  consumerDetails: Consumer;
+  consumerDetails!: Consumer;
 
   constructor(
     private consumerService: ConsumerService,
@@ -29,6 +29,7 @@ export class ConsumerDetailComponent implements OnInit {
       contact_number: '',
       address: '',
       companies: [],
+      pccs: [],
     };
   }
 
@@ -50,6 +51,8 @@ export class ConsumerDetailComponent implements OnInit {
     } else {
       console.info('Actual consumer details:', this.consumerDetails);
     }
+
+    // Método para enviar los datos del formulario y crear la PQR
   }
 
   goBack() {

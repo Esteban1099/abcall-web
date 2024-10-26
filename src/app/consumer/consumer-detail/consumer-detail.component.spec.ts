@@ -55,6 +55,7 @@ describe('ConsumerDetailComponent', () => {
       contact_number: '555-5555',
       address: '123 Main St',
       companies: [{ id: '1', name: 'Company A' }],
+      pccs: [],
     };
 
     // Simulate a token present
