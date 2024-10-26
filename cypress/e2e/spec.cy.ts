@@ -302,12 +302,56 @@ describe('User Login as Clients Tests', () => {
       cy.contains('Número de identificación').should('be.visible');
       cy.contains('Empresas asociadas con el consumidor').should('be.visible');
 
+      cy.contains('Asunto').should('be.visible');
+      cy.contains('Descripción').should('be.visible');
       cy.contains('button', 'Regresar').should('be.visible');
 
+      // Verifica que el dropdown de compañías está visible
+      cy.get('select.form-select').should('be.visible');
 
+      // Verifica que el dropdown contiene opciones (compañías)
+      cy.get('select.form-select option').should('have.length.greaterThan', 0);
 
+      // Opcional: Verifica que el contenido de las opciones no esté vacío
+      cy.get('select.form-select option').each(($el) => {
+        cy.wrap($el).invoke('text').should('not.be.empty');
+      });
 
+      // Selecciona una compañía cualquiera (en este caso, selecciona la primera opción)
+      //cy.get('select#identification_type').should('be.visible').select('Pasaporte');
 
+      // Ingresa un asunto y una descripción
+      cy.get('input#description').type('Descripción de prueba');
+      cy.get('input#subject').type('Asunto de prueba');
+      cy.contains('La Descripción debe tener un mínimo de 200 caracteres').should('be.visible');
+
+      // Se ingresa una descripción con más de 200 caracteres
+      cy.get('input#description').clear().type('Descripción de prueba con más de 200 caracteres'.repeat(5));
+
+      // Se borra el asunto y aparece mensaje de error
+      cy.get('input#subject').clear();
+      cy.contains('Asunto requerido').should('be.visible');
+
+      // Se vuelve a ingresar un asunto
+      cy.get('input#subject').type('Asunto de prueba');
+
+      // Se verifica que el boton Crear PQR esté deshabilitado
+
+      cy.contains('button', 'Crear PQR').should('be.disabled');
+
+      // Se selecciona una empresa
+
+      cy.wait(3000);
+      cy.get('select.form-select').should('be.visible').select(0);
+      // Opcional: Verifica que una opción ha sido seleccionada
+      cy.get('select.form-select').should('not.have.value', '');
+
+      // Se verifica que el boton Crear PQR esté habilitado
+
+      cy.contains('button', 'Crear PQR').should('be.enabled');
+      // Se hace click en el boton crear pqr y se evidencia mensaje de exito
+      cy.contains('button', 'Crear PQR').click();
+      cy.contains('Confirmation').should('be.visible');
   });
 
 });
