@@ -54,7 +54,10 @@ app.use(
         method: req.method,
         url: targetUrl,
         data: req.body,
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: authHeader, // Forward the Authorization header if it exists
+        },
       });
       res.status(response.status).json(response.data);
     } catch (error) {
