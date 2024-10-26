@@ -81,15 +81,20 @@ describe('PqrCreateComponent', () => {
       pccs: [],
     };
 
+    // Spy on sessionStorage to simulate token presence
     spyOn(sessionStorage, 'getItem').and.returnValue(
       JSON.stringify({ token: 'mock-token' })
     );
+
+    // Mock consumer details
     consumerService.getActualConsumerDetails.and.returnValue(mockConsumer);
 
+    // Initialize component
     component.ngOnInit();
 
+    // Ensure consumer details are loaded and router does not navigate
     expect(component.consumerDetails).toEqual(mockConsumer);
-    expect(router.navigate).not.toHaveBeenCalled(); // Should not navigate if token is present
+    expect(router.navigate).not.toHaveBeenCalled(); // Verify no navigation occurs
   });
 
   // Test submitPQR: Invalid form
