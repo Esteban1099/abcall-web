@@ -53,7 +53,8 @@ export class HttpErrorInterceptorService {
               httpErrorResponse.url.includes('/consumer/details')
             ) {
               errorType = 'Error en la consulta de consumidor';
-              if (httpErrorResponse.message.includes('404 NOT FOUND')) {
+              console.log(httpErrorResponse.message);
+              if (httpErrorResponse.message.includes('404 Not Found')) {
                 errorMessage =
                   'No se encontro un consumidor con los datos ingresados';
               }

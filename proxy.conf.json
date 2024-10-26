@@ -1,18 +1,18 @@
 {
   "/auth/clients/token": {
-    "target": "http://localhost:5000",
+    "target": "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
   },
   "/auth/agents/token": {
-    "target": "http://localhost:5000",
+    "target": "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
   },
   "/consumer/details": {
-    "target": "http://localhost:5000",
+    "target": "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",
@@ -20,13 +20,10 @@
       "^/consumer/details/(.*)/(.*)$": "/consumers/identification_type/$1/identification_number/$2"
     }
   },
-
-
-  "/companies": {
-      "target": "http://localhost:5000",
-      "secure": false,
-      "changeOrigin": true,
-      "logLevel": "debug"
-    }
-
+  "/companies/*/consumers/*/pccs": {
+    "target": "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
 }

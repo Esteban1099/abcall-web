@@ -13,7 +13,6 @@ import { Consumer } from './consumer';
 export class ConsumerComponent implements OnInit {
   callBy: string = 'CONSUMER';
   consumerForm!: FormGroup;
-  action: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,10 +30,6 @@ export class ConsumerComponent implements OnInit {
       this.router.navigate(['/auth']);
     }
 
-    this.route.queryParams.subscribe(params => {
-      this.action = params['action'];
-    });
-
     this.route.queryParams.subscribe((params) => {
       if (
         params['callBy'] !== undefined &&
@@ -51,14 +46,19 @@ export class ConsumerComponent implements OnInit {
     });
   }
 
-  getConsumerDetails(consumer: Consumer, action: string) {
+  getConsumerDetails(consumer: Consumer) {
     this.consumerService
       .getConsumerDetails(consumer)
       .subscribe((consumerDetails) => {
         console.info('Consumer details: ', consumerDetails);
         this.toastr.success('Confirmation', 'Consumer details fetched');
         this.consumerForm.reset();
-        this.router.navigate(['/consumer/detail'], { queryParams: { action } });
+        console.info('Call by: ', this.callBy);
+        if (this.callBy === 'CONSUMER') {
+          this.router.navigate(['/consumer/detail']);
+        } else if (this.callBy === 'CREATE_PQR') {
+          this.router.navigate(['/pqr/create']);
+        }
       });
   }
 

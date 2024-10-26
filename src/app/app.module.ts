@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpErrorInterceptorService } from './interceptors/HttpErrorInterceptorService.service';
 import { RouterModule } from '@angular/router';
 import { ConsumerModule } from './consumer/consumer.module';
+import { PqrModule } from './pqr/pqr.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { ConsumerModule } from './consumer/consumer.module';
     HttpClientModule,
     AuthModule,
     ConsumerModule,
+    PqrModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     RouterModule,
