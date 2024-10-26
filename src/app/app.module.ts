@@ -12,6 +12,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpErrorInterceptorService } from './interceptors/HttpErrorInterceptorService.service';
 import { RouterModule } from '@angular/router';
+import { ConsumerModule } from './consumer/consumer.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { RouterModule } from '@angular/router';
     AppRoutingModule,
     HttpClientModule,
     AuthModule,
+    ConsumerModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     RouterModule,
