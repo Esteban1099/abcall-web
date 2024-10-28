@@ -8,42 +8,32 @@ import {EventService} from './commons/event.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  title = 'abcall-web';
-  shouldShowMenu = false;
-  shouldShowLogOut = false;
-  shouldShowBackOption = true;
+  title: string = 'abcall-web';
+  showMenu: boolean = false;
+  showLogOut: boolean = false;
+  showBackOption: boolean = true;
 
   constructor(
     private router: Router,
-    private eventService: EventService,) {
+    private eventService: EventService,
+  ) {
   }
 
   ngOnInit(): void {
-    // Listen to route changes
-    this.router.events.subscribe(() => {
-      this.shouldShowMenu =
-        this.router.url.includes('auth') == false &&
-        this.router.url.includes('consumer');
-
-      this.shouldShowLogOut =
-        this.router.url.includes('auth') == false &&
-        this.router.url.includes('consumer');
-
-      this.shouldShowBackOption = this.router.url.includes('auth');
+    this.eventService.showMenu.subscribe((): void => {
+      this.showMenu = true;
+      this.showBackOption = false;
+      this.showLogOut = true;
     });
-
   }
 
   backAuthLogin() {
     this.eventService.backAuthLogin.emit();
   }
 
-  goToConsumer(action: string) {
-    this.router.navigate(['/consumer'], {queryParams: {callBy: action}});
-  }
-
   logOut() {
-    sessionStorage.removeItem('user');
-    this.router.navigate(['/auth']);
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('role');
+    this.router.navigate(['/auth']).then(() => true);
   }
 }

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {User} from '../user';
+import {Auth} from '../auth';
 import {AuthService} from '../auth.service';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {NgIf} from '@angular/common';
@@ -9,7 +9,6 @@ import {Observable} from 'rxjs';
 import {ToastService} from '../../commons/toast.service';
 
 @Component({
-  standalone: true,
   selector: 'app-auth-login',
   templateUrl: './auth-login.component.html',
   styleUrls: ['./auth-login.component.css'],
@@ -17,7 +16,8 @@ import {ToastService} from '../../commons/toast.service';
     ReactiveFormsModule,
     RouterLink,
     NgIf
-  ]
+  ],
+  standalone: true,
 })
 export class AuthLoginComponent implements OnInit {
   role?: string;
@@ -26,7 +26,6 @@ export class AuthLoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private route: ActivatedRoute,
     private router: Router,
     private eventService: EventService,
     private toastService: ToastService,
@@ -49,8 +48,8 @@ export class AuthLoginComponent implements OnInit {
     localStorage.setItem('role', role);
   }
 
-  login(user: User) {
-    if (this.role){
+  login(user: Auth) {
+    if (this.role) {
       let response: Observable<any> | null = null;
       if (this.role === 'CLIENT') {
         response = this.authService.loginClient(user);
@@ -60,11 +59,13 @@ export class AuthLoginComponent implements OnInit {
       if (response) {
         response.subscribe((response: any): void => {
           localStorage.setItem('token', response.token);
-          this.toastService.showSuccess('Sesión iniciada. Puede seguir trabajando');
+          this.toastService.showSuccess('Bienvenido!');
+          this.eventService.showMenu.emit();
+          this.router.navigate(['/pcc-list']).then(() => true);
         })
       }
     } else {
-      this.toastService.showError('Role no seleccionado');
+      this.toastService.showError('Rol no seleccionado');
     }
 
   }

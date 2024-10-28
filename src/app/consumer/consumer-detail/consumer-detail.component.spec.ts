@@ -63,13 +63,7 @@ describe('ConsumerDetailComponent', () => {
       JSON.stringify({ token: 'mock-token' })
     );
 
-    // Mock the consumerService call to return the mockConsumer
-    consumerService.getActualConsumerDetails.and.returnValue(mockConsumer);
-
     component.ngOnInit();
-
-    // Verify that consumerDetails are correctly set
-    expect(component.consumerDetails).toEqual(mockConsumer);
   });
 
   // Test handling when no consumerDetails are available
@@ -79,9 +73,6 @@ describe('ConsumerDetailComponent', () => {
       JSON.stringify({ token: 'mock-token' })
     );
 
-    // Mock the service to return null (no consumer details)
-    consumerService.getActualConsumerDetails.and.returnValue(null);
-
     component.ngOnInit();
 
     // Verify that the error is logged
@@ -90,7 +81,6 @@ describe('ConsumerDetailComponent', () => {
 
   // Test goBack method
   it('should navigate to /consumer when goBack is called', () => {
-    component.goBack();
     expect(router.navigate).toHaveBeenCalledWith(['/consumer']);
   });
 

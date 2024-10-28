@@ -1,62 +1,176 @@
-<br>
-<div class="row">
-  <div class="col text-start">
-    <h1 class="pb-3">Vista 360 de {{ consumerDetails?.name }}</h1>
+<div *ngIf="!consumer">
+  <div class="row">
+    <div class="col" *ngIf="actualRoute === '/pcc-create'">
+      <h1 class="pb-3" i18n>Consultar consumidor para creación de PQR</h1>
+    </div>
+    <div class="col" *ngIf="actualRoute === '/consumer-detail'">
+      <h1 class="pb-3" i18n>Consultar consumidor</h1>
+    </div>
   </div>
-</div>
-
-<div class="row">
-  <!-- Left Column: Personal Information -->
-  <div class="col-md-6">
+  <form [formGroup]="consumerForm"
+        (ngSubmit)="!consumerForm.invalid && getConsumerDetails(consumerForm.value)">
     <div class="row">
-      <div class="col-md-6">
-        <div class="mb-3">
-          <p class="mb-1 text-muted" i18n>Tipo de identificación</p>
-          <p class="fw-bold">{{ consumerDetails?.identification_type }}</p>
-        </div>
-        <div class="mb-3">
-          <p class="mb-1 text-muted" i18n>Número de contacto</p>
-          <p class="fw-bold">{{ consumerDetails?.contact_number }}</p>
-        </div>
-        <div class="mb-3">
-          <p class="mb-1 text-muted" i18n>Dirección</p>
-          <p class="fw-bold">{{ consumerDetails?.address }}</p>
+      <div class="col-3 pb-3">
+        <div class="input-group has-validation">
+          <div class="form-floating">
+            <select formControlName="identification_type" id="identification_type"
+                    class="form-select form-control rounded-4"
+                    [class.is-invalid]="consumerForm.controls['identification_type'].invalid && consumerForm.controls['identification_type'].touched"
+                    autocomplete="Tipo identificación">
+              <option value="Cédula de ciudadanía" i18n>Cédula de ciudadanía</option>
+              <option value="Cédula de extranjería" i18n>Cédula de extranjería</option>
+              <option value="Tarjeta de identidad" i18n>Tarjeta de identidad</option>
+              <option value="Pasaporte" i18n>Pasaporte</option>
+            </select>
+            <label i18n>Tipo identificación</label>
+            <div i18n class="invalid-feedback"
+                 *ngIf="consumerForm.controls['identification_type']!.hasError('required')">
+              Tipo identificación requerido
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="mb-3">
-          <p class="mb-1 text-muted" i18n>Número de identificación</p>
-          <p class="fw-bold">{{ consumerDetails?.identification_number }}</p>
-        </div>
-        <div class="mb-3">
-          <p class="mb-1 text-muted" i18n>Correo electrónico del Consumidor</p>
-          <p class="fw-bold">{{ consumerDetails?.email }}</p>
+      <div class="col-3 pb-3">
+        <div class="input-group has-validation">
+          <div class="form-floating">
+            <input formControlName="identification_number" id="identification_number" type="text"
+                   class="form-control rounded-4" autocomplete="Numero identificación"
+                   [class.is-invalid]="consumerForm.controls['identification_number'].invalid && consumerForm.controls['identification_number'].touched"/>
+            <label i18n>Numero identificación</label>
+            <div i18n class="invalid-feedback"
+                 *ngIf="consumerForm.controls['identification_number']!.hasError('required')">
+              Numero identificación requerido
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-
+    <div class="row">
+      <div class="col-2">
+        <button i18n type="button" class="btn btn-danger rounded-pill w-100" [routerLink]="['/pcc-list']">
+          Regresar
+        </button>
+      </div>
+      <div class="col-2">
+        <button i18n type="submit" class="btn btn-primary rounded-pill w-100" [disabled]="!consumerForm.valid">
+          Consultar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<div *ngIf="consumer">
+  <div class="row">
+    <div class="col" *ngIf="actualRoute === '/consumer-detail'">
+      <h1 class="pb-3">Vista 360 de {{ consumer.name }}</h1>
+    </div>
+    <div class="col" *ngIf="actualRoute === '/pcc-create'">
+      <h1 class="pb-3">Crear PQR para {{ consumer.name }}</h1>
+    </div>
   </div>
-
-  <!-- Right Column: Companies Section -->
-  <div class="col-md-6">
-    <h4 class="fw-bold mb-3" i18n>Listado de PQRs reportados por el consumidor</h4>
-    <ul class="list-group">
-      <li *ngFor="let pqr of consumerDetails?.pccs" class="list-group-item bg-dark text-white border-0">
-        {{ pqr?.id }} - {{ pqr?.subject }}
-      </li>
-    </ul>
-    <h4 class="fw-bold mb-3" i18n>Empresas asociadas con el consumidor</h4>
-    <ul class="list-group">
-      <li *ngFor="let company of consumerDetails?.companies" class="list-group-item bg-dark text-white border-0">
-        {{ company?.name }}
-      </li>
-    </ul>
+  <div class="row">
+    <!-- Left Column: Personal Information -->
+    <div class="col-6">
+      <div class="row">
+        <div class="col">
+          <div class="input-group">
+            <div class="form-floating">
+              <p class="form-control-plaintext rounded-4">
+                {{ consumer.identification_type }}
+              </p>
+              <label class="form-label" i18n>Tipo de identificación</label>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group">
+            <div class="form-floating">
+              <p class="form-control-plaintext rounded-4">
+                {{ consumer.identification_number }}
+              </p>
+              <label class="form-label" i18n>Número de identificación</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="input-group">
+            <div class="form-floating">
+              <p class="form-control-plaintext rounded-4">
+                {{ consumer.contact_number }}
+              </p>
+              <label class="form-label" i18n>Número de contacto</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="input-group">
+            <div class="form-floating">
+              <p class="form-control-plaintext rounded-4">
+                {{ consumer.address }}
+              </p>
+              <label class="form-label" i18n>Dirección</label>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group">
+            <div class="form-floating">
+              <p class="form-control-plaintext rounded-4">
+                {{ consumer.email }}
+              </p>
+              <label class="form-label" i18n>Correo electrónico</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-pcc-create [consumer]="consumer" *ngIf="actualRoute === '/pcc-create'"></app-pcc-create>
+    <!-- Right Column: Companies Section -->
+    <div class="col-6" *ngIf="actualRoute === '/consumer-detail'">
+      <div class="row">
+        <div class="col">
+          <h2 class="pb-3" i18n>Listado de PQRs reportados por el consumidor</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col pb-3">
+          <ul class="list-group">
+            <li *ngFor="let pqr of consumer?.pccs" class="list-group-item bg-dark text-white border-0">
+              {{ pqr?.id }} - {{ pqr?.subject }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h2 class="pb-3" i18n>Empresas asociadas con el consumidor</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col pb-3">
+          <ul class="list-group">
+            <li *ngFor="let company of consumer?.companies" class="list-group-item bg-dark text-white border-0">
+              {{ company?.name }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="actualRoute === '/consumer-detail'">
+    <!-- Buttons for consumerDetail -->
+    <div class="row justify-content-center">
+      <div class="col-2 pb-3">
+        <button class="btn btn-danger rounded-pill w-100" i18n (click)="clearConsumer()">Regresar</button>
+      </div>
+      <div class="col-2 pb-3">
+        <button class="btn btn-primary rounded-pill w-100" i18n [routerLink]="['/pcc-list']">Ir al inicio</button>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- Buttons for consumerDetail -->
-<div class="mt-4 d-flex justify-content-center">
-  <button class="btn btn-danger rounded-pill me-2" (click)="goBack()" i18n>Regresar</button>
-  <button class="btn btn-primary rounded-pill" (click)="goInit()" i18n>Ir al inicio</button>
-</div>

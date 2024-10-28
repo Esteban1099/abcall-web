@@ -5,7 +5,6 @@ import {
 } from '@angular/common/http/testing';
 import { ConsumerService } from './consumer.service';
 import { Consumer } from './consumer';
-import { HttpHeaders } from '@angular/common/http';
 
 describe('ConsumerService', () => {
   let service: ConsumerService;
@@ -22,22 +21,6 @@ describe('ConsumerService', () => {
 
   afterEach(() => {
     httpMock.verify(); // Verify that no unmatched requests remain
-  });
-
-  // Test default consumer values
-  it('should initialize with default consumer values', () => {
-    const defaultConsumer: Consumer = service.getActualConsumerDetails();
-    expect(defaultConsumer).toEqual({
-      id: '',
-      identification_type: '',
-      identification_number: '',
-      name: '',
-      email: '',
-      contact_number: '',
-      address: '',
-      companies: [],
-      pccs: [],
-    });
   });
 
   // Test fetching consumer details
@@ -59,7 +42,7 @@ describe('ConsumerService', () => {
 
     // Call the service method
     service
-      .getConsumerDetails({
+      .getConsumer({
         identification_type: 'Pasaporte',
         identification_number: 'A1234567',
       } as Consumer)
@@ -81,7 +64,7 @@ describe('ConsumerService', () => {
     const mockError = { status: 404, statusText: 'Not Found' };
 
     service
-      .getConsumerDetails({
+      .getConsumer({
         identification_type: 'Pasaporte',
         identification_number: 'A1234567',
       } as Consumer)
@@ -112,13 +95,10 @@ describe('ConsumerService', () => {
     };
 
     // Set the consumer details in the service
-    service.getConsumerDetails(mockConsumer).subscribe();
+    service.getConsumer(mockConsumer).subscribe();
     const req = httpMock.expectOne(
-      `/consumer/details/${mockConsumer.identification_type}/${mockConsumer.identification_number}`
+      `/consumer/identification_type/${mockConsumer.identification_type}/identification_number/${mockConsumer.identification_number}`
     );
     req.flush(mockConsumer);
-
-    // Check that the details are returned correctly from the service
-    expect(service.getActualConsumerDetails()).toEqual(mockConsumer);
   });
 });

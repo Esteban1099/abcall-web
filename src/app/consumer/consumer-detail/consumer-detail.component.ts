@@ -1,65 +1,59 @@
-import { Component, OnInit } from '@angular/core';
-import { Consumer } from '../consumer';
-import { ConsumerService } from '../consumer.service';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Consumer} from '../consumer';
+import {ConsumerService} from '../consumer.service';
+import {Router, RouterLink} from '@angular/router';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {NgForOf, NgIf} from '@angular/common';
+import {PccCreateComponent} from '../../pcc/pcc-create/pcc-create.component';
+import {EventService} from '../../commons/event.service';
 
 @Component({
   selector: 'app-consumer-detail',
   templateUrl: './consumer-detail.component.html',
   styleUrls: ['./consumer-detail.component.css'],
+  imports: [
+    ReactiveFormsModule,
+    NgIf,
+    NgForOf,
+    RouterLink,
+    PccCreateComponent
+  ],
+  standalone: true
 })
 export class ConsumerDetailComponent implements OnInit {
-  consumerDetails!: Consumer;
+  consumerForm!: FormGroup;
+  consumer!: Consumer;
+  actualRoute !: string;
 
   constructor(
     private consumerService: ConsumerService,
-    private router: Router
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private eventService: EventService,
   ) {
-    this.consumerDetails = this.getDefaultConsumer(); // Initialize with default values
-  }
-
-  // Method to provide default values for the Consumer class
-  private getDefaultConsumer(): Consumer {
-    return {
-      id: '',
-      identification_type: '',
-      identification_number: '',
-      name: '',
-      email: '',
-      contact_number: '',
-      address: '',
-      companies: [],
-      pccs: [],
-    };
   }
 
   ngOnInit() {
-    const token = sessionStorage.getItem('user')
-      ? JSON.parse(sessionStorage.getItem('user')!).token
-      : null;
-    if (!token) {
-      this.router.navigate(['/auth']);
-    }
-
-    // Get the consumer details from the service
-    this.consumerDetails = this.consumerService.getActualConsumerDetails();
-
-    // If consumerDetails are not available, handle it (e.g., direct access without navigating)
-    if (!this.consumerDetails) {
-      console.error('No consumer details found');
-      // Optionally, navigate back or show an error message
-    } else {
-      console.info('Actual consumer details:', this.consumerDetails);
-    }
-
-    // Método para enviar los datos del formulario y crear la PQR
+    this.actualRoute = this.router.url;
+    this.consumerForm = this.formBuilder.group({
+      identification_type: ['', [Validators.required]],
+      identification_number: ['', [Validators.required]],
+    });
+    this.eventService.clearConsumer.subscribe((): void => {
+      this.clearConsumer();
+    })
   }
 
-  goBack() {
-    this.router.navigate(['/consumer']);
+  getConsumerDetails(consumer: Consumer) {
+    this.consumerService
+      .getConsumer(consumer)
+      .subscribe((consumer: Consumer) => {
+        this.consumerForm.reset();
+        this.consumer = consumer;
+      });
   }
 
-  goInit() {
-    this.router.navigate(['/consumer']);
+  clearConsumer() {
+    this.consumer = undefined as any;
   }
 }

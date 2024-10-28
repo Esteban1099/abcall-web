@@ -3,6 +3,7 @@
 import { enableProdMode, LOCALE_ID } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
+import '@angular/localize/init';
 
 function getLocale() {
   const urlParams = new URLSearchParams(window.location.search);

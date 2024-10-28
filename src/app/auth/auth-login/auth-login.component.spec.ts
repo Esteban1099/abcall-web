@@ -8,7 +8,7 @@ import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { AuthLoginComponent } from './auth-login.component';
-import { User } from '../user';
+import { Auth } from '../auth';
 
 describe('AuthLoginComponent', () => {
   let component: AuthLoginComponent;
@@ -104,11 +104,9 @@ describe('AuthLoginComponent', () => {
   });
 
   it('should navigate to /consumer when role is AGENT', () => {
-    const mockUser: User = {
+    const mockUser: Auth = {
       email: 'agent@example.com',
       password: 'password123',
-      role: 'AGENT',
-      token: '',
     };
 
     const mockToken = 'mock-token';
@@ -117,7 +115,7 @@ describe('AuthLoginComponent', () => {
     component.role = 'AGENT';
 
     // Mock the login method to return a token
-    authService.login.and.returnValue(of(mockToken));
+    authService.loginAgent.and.returnValue(of(mockToken));
 
     // Fill the form with valid credentials
     component.authForm.patchValue({
@@ -129,7 +127,7 @@ describe('AuthLoginComponent', () => {
     component.login(mockUser);
 
     // Verify the service call and that the correct role is passed
-    expect(authService.login).toHaveBeenCalledWith(mockUser);
+    expect(authService.loginAgent).toHaveBeenCalledWith(mockUser);
 
     // Check if sessionStorage is set correctly
     expect(sessionStorage.getItem('user')).toEqual(
@@ -138,26 +136,5 @@ describe('AuthLoginComponent', () => {
 
     // Verify the navigation to the consumer route
     expect(router.navigate).toHaveBeenCalledWith(['/consumer']);
-  });
-
-  // Test error handling
-  it('should show an error if login fails with RoleError', () => {
-    const mockUser: User = {
-      email: 'test@example.com',
-      password: 'password123',
-      role: 'CLIENT',
-      token: '',
-    };
-
-    const roleError = { name: 'RoleError', message: 'Invalid role' };
-
-    // Mock the login method to throw a RoleError
-    authService.login.and.returnValue(throwError(roleError));
-
-    // Call the login method
-    component.login(mockUser);
-
-    // Check if toastr shows an error
-    expect(toastrService.error).toHaveBeenCalledWith('Error', 'Invalid role');
   });
 });

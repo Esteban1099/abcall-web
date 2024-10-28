@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {User} from './user';
+import {Auth} from './auth';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -8,18 +8,22 @@ import {Observable} from 'rxjs';
 })
 export class AuthService {
 
-  private static getResourcePath(userType: string): string {
-    return `/api/auth/${userType}/token`
-  }
-
   constructor(private httpClient: HttpClient) {
   }
 
-  loginClient(user: User): Observable<any> {
-    return this.httpClient.post<any>(AuthService.getResourcePath('clients'), user)
+  loginClient(user: Auth): Observable<any> {
+    return this.httpClient.post<any>("/api/auth/clients/token", user)
   }
 
-  loginAgent(user: User): Observable<any> {
-    return this.httpClient.post<any>(AuthService.getResourcePath('agents'), user)
+  loginAgent(user: Auth): Observable<any> {
+    return this.httpClient.post<any>("/api/auth/agents/token", user)
+  }
+
+  isAuthenticatedUser(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
+  getUserRole(): string | null {
+    return sessionStorage.getItem('role');
   }
 }

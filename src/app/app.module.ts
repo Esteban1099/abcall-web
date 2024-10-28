@@ -1,19 +1,17 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {
   BrowserModule,
   provideClientHydration,
 } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
-import { ConsumerModule } from './consumer/consumer.module';
-import { PqrModule } from './pqr/pqr.module';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterModule} from '@angular/router';
 import {HttpErrorInterceptor} from './commons/interceptors/http-error.interceptor';
 import {HttpRequestInterceptor} from './commons/interceptors/http-request.interceptor';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ToastComponent} from './commons/toast/toast.component';
 
 @NgModule({
@@ -22,8 +20,6 @@ import {ToastComponent} from './commons/toast/toast.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ConsumerModule,
-    PqrModule,
     BrowserAnimationsModule,
     RouterModule,
     NgbModule,
@@ -44,4 +40,5 @@ import {ToastComponent} from './commons/toast/toast.component';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}

@@ -9,7 +9,7 @@ describe('My First Test', () => {
  })
 
 
-describe('User Login as Clients Tests', () => {
+describe('Auth Login as Clients Tests', () => {
 
   it('Should login the user Empresa Succesfully', () => {
 
@@ -73,7 +73,7 @@ describe('User Login as Clients Tests', () => {
 
   });
 
-  describe('User Login as Agent Tests', () => {
+  describe('Auth Login as Agent Tests', () => {
 
     it('Should login the user Asesor Succesfully', () => {
 

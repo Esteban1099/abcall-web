@@ -8,7 +8,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { environment } from '../../environments/environment.prod';
-import { User } from './user';
+import { Auth } from './auth';
 
 describe('Service: Auth', () => {
   let service: AuthService;
@@ -28,7 +28,7 @@ describe('Service: Auth', () => {
   });
 
   it('should return a token when login with CLIENT role', () => {
-    const mockUser: User = {
+    const mockUser: Auth = {
       email: 'clientuser',
       password: 'clientpass',
       role: 'CLIENT',
@@ -50,7 +50,7 @@ describe('Service: Auth', () => {
   });
 
   it('should return a token when login with AGENT role', () => {
-    const mockUser: User = {
+    const mockUser: Auth = {
       email: 'agentuser',
       password: 'agentpass',
       role: 'AGENT',
@@ -72,7 +72,7 @@ describe('Service: Auth', () => {
   });
 
   it('should throw an error for invalid role', () => {
-    const mockUser: User = {
+    const mockUser: Auth = {
       email: 'invaliduser',
       password: 'invalidpass',
       role: 'INVALID_ROLE',
