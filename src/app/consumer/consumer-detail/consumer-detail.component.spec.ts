@@ -1,92 +1,109 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ConsumerDetailComponent } from './consumer-detail.component';
 import { ConsumerService } from '../consumer.service';
+import { EventService } from '../../commons/event.service';
 import { Router } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { of } from 'rxjs';
 import { Consumer } from '../consumer';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ConsumerDetailComponent', () => {
   let component: ConsumerDetailComponent;
   let fixture: ComponentFixture<ConsumerDetailComponent>;
   let consumerService: jasmine.SpyObj<ConsumerService>;
-  let router: jasmine.SpyObj<Router>;
+  let eventService: EventService;
+  let router: Router;
 
   beforeEach(waitForAsync(() => {
-    // Create spies for the services
-    consumerService = jasmine.createSpyObj('ConsumerService', [
-      'getActualConsumerDetails',
-    ]);
-    router = jasmine.createSpyObj('Router', ['navigate']);
+    consumerService = jasmine.createSpyObj('ConsumerService', ['getConsumer']);
+    eventService = new EventService();
 
     TestBed.configureTestingModule({
-      declarations: [ConsumerDetailComponent],
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule.withRoutes([]),  // Configuración de RouterTestingModule para evitar el error
+        ConsumerDetailComponent
+      ],
       providers: [
         { provide: ConsumerService, useValue: consumerService },
-        { provide: Router, useValue: router },
-      ],
+        { provide: EventService, useValue: eventService },
+        FormBuilder
+      ]
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConsumerDetailComponent);
     component = fixture.componentInstance;
+    router = TestBed.inject(Router); // Inyecta el Router proporcionado por RouterTestingModule
     fixture.detectChanges();
   });
 
-  // Test component creation
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  // Test ngOnInit - token check and consumerDetails retrieval
-  it('should navigate to /auth if no token in sessionStorage', () => {
-    spyOn(sessionStorage, 'getItem').and.returnValue(null); // Simulate no token
-    component.ngOnInit();
-    expect(router.navigate).toHaveBeenCalledWith(['/auth']); // Should navigate to /auth
+  it('should initialize actualRoute with the current URL', () => {
+    component.actualRoute = router.url;
+    expect(component.actualRoute).toBe('/');
   });
 
-  // Test consumerDetails retrieval from service
-  it('should retrieve consumer details from the service on init', () => {
+  it('should initialize the form with default values', () => {
+    expect(component.consumerForm).toBeDefined();
+    expect(component.consumerForm.get('identification_type')?.value).toBe('');
+    expect(component.consumerForm.get('identification_number')?.value).toBe('');
+    expect(component.consumerForm.valid).toBeFalse();
+  });
+
+  it('should call getConsumerDetails and reset the form on successful retrieval of consumer', () => {
     const mockConsumer: Consumer = {
-      id: '123',
-      identification_type: 'Pasaporte',
-      identification_number: 'A1234567',
+      id: '1',
+      identification_type: 'passport',
+      identification_number: '12345678',
       name: 'John Doe',
-      email: 'john.doe@example.com',
-      contact_number: '555-5555',
+      email: 'johndoe@example.com',
+      contact_number: '555-555-5555',
       address: '123 Main St',
-      companies: [{ id: '1', name: 'Company A' }],
-      pccs: [],
+      companies: [],
+      pccs: []
     };
 
-    // Simulate a token present
-    spyOn(sessionStorage, 'getItem').and.returnValue(
-      JSON.stringify({ token: 'mock-token' })
-    );
+    consumerService.getConsumer.and.returnValue(of(mockConsumer));
 
-    component.ngOnInit();
+    component.getConsumerDetails(mockConsumer);
+
+    expect(consumerService.getConsumer).toHaveBeenCalledWith(mockConsumer);
+    expect(component.consumer).toEqual(mockConsumer);
+    expect(component.consumerForm.get('identification_type')?.value).toBe(null);
+    expect(component.consumerForm.get('identification_number')?.value).toBe(null);
   });
 
-  // Test handling when no consumerDetails are available
-  it('should log an error if no consumer details are available', () => {
-    spyOn(console, 'error');
-    spyOn(sessionStorage, 'getItem').and.returnValue(
-      JSON.stringify({ token: 'mock-token' })
-    );
+  it('should clear the consumer when clearConsumer is called', () => {
+    component.consumer = {
+      id: '1',
+      identification_type: 'passport',
+      identification_number: '12345678',
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      contact_number: '555-555-5555',
+      address: '123 Main St',
+      companies: [],
+      pccs: []
+    };
 
-    component.ngOnInit();
+    component.clearConsumer();
 
-    // Verify that the error is logged
-    expect(console.error).toHaveBeenCalledWith('No consumer details found');
+    expect(component.consumer).toBeUndefined();
   });
 
-  // Test goBack method
-  it('should navigate to /consumer when goBack is called', () => {
-    expect(router.navigate).toHaveBeenCalledWith(['/consumer']);
-  });
+  it('should handle clearConsumer event from EventService', () => {
+    spyOn(component, 'clearConsumer');
 
-  // Test goInit method
-  it('should navigate to /consumer when goInit is called', () => {
-    component.goInit();
-    expect(router.navigate).toHaveBeenCalledWith(['/consumer']);
+    // Emite el evento clearConsumer
+    eventService.clearConsumer.emit();
+    fixture.detectChanges();
+
+    expect(component.clearConsumer).toHaveBeenCalled();
   });
 });

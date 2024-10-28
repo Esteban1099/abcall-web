@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
-import {AuthService} from './auth.service';
+import {AuthService} from '../../auth/auth.service';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class RoleGuard implements CanActivate {
     const allowedRoles: string[] = route.data['roles'] as Array<string>;
     const userRole: string | null = this.authService.getUserRole();
     if (userRole === null || !allowedRoles.includes(userRole)) {
-      return this.router.navigate(['/auth']).then(r=>false)
+      return this.router.navigate(['/auth']);
     }
     return true;
   }

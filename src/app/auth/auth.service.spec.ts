@@ -1,92 +1,83 @@
-/* tslint:disable:no-unused-variable */
-
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AuthService } from './auth.service';
-import { HttpClientModule } from '@angular/common/http';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
-import { environment } from '../../environments/environment.prod';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Auth } from './auth';
 
-describe('Service: Auth', () => {
+describe('AuthService', () => {
   let service: AuthService;
-  let httpMock: HttpTestingController;
+  let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, HttpClientTestingModule],
+      imports: [HttpClientTestingModule],
       providers: [AuthService],
     });
+
     service = TestBed.inject(AuthService);
-    httpMock = TestBed.inject(HttpTestingController);
+    httpTestingController = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {
-    httpMock.verify(); // Verifies that no unmatched requests are outstanding.
+    httpTestingController.verify();
   });
 
-  it('should return a token when login with CLIENT role', () => {
-    const mockUser: Auth = {
-      email: 'clientuser',
-      password: 'clientpass',
-      role: 'CLIENT',
-      token: '',
-    };
-    const mockTokenResponse = { token: 'client-token' };
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
 
-    service.login(mockUser).subscribe((token) => {
-      expect(token).toEqual('client-token');
+  describe('#loginClient', () => {
+    it('should send a POST request to /api/auth/clients/token and return the expected response', () => {
+      const mockUser: Auth = { email: 'client@example.com', password: 'password123' };
+      const mockResponse = { token: 'mock-client-token' };
+
+      service.loginClient(mockUser).subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+      });
+
+      const req = httpTestingController.expectOne('/api/auth/clients/token');
+      expect(req.request.method).toEqual('POST');
+      expect(req.request.body).toEqual(mockUser);
+      req.flush(mockResponse);
+    });
+  });
+
+  describe('#loginAgent', () => {
+    it('should send a POST request to /api/auth/agents/token and return the expected response', () => {
+      const mockUser: Auth = { email: 'agent@example.com', password: 'password123' };
+      const mockResponse = { token: 'mock-agent-token' };
+
+      service.loginAgent(mockUser).subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+      });
+
+      const req = httpTestingController.expectOne('/api/auth/agents/token');
+      expect(req.request.method).toEqual('POST');
+      expect(req.request.body).toEqual(mockUser);
+      req.flush(mockResponse);
+    });
+  });
+
+  describe('#isAuthenticatedUser', () => {
+    it('should return true if a token exists in localStorage', () => {
+      spyOn(localStorage, 'getItem').and.returnValue('mock-token');
+      expect(service.isAuthenticatedUser()).toBeTrue();
     });
 
-    // Expecting a POST request to the client token URL
-    const req = httpMock.expectOne('/auth/clients/token');
-    expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual(mockUser);
-
-    // Respond with mock token
-    req.flush(mockTokenResponse);
+    it('should return false if no token exists in localStorage', () => {
+      spyOn(localStorage, 'getItem').and.returnValue(null);
+      expect(service.isAuthenticatedUser()).toBeFalse();
+    });
   });
 
-  it('should return a token when login with AGENT role', () => {
-    const mockUser: Auth = {
-      email: 'agentuser',
-      password: 'agentpass',
-      role: 'AGENT',
-      token: '',
-    };
-    const mockTokenResponse = { token: 'agent-token' };
-
-    service.login(mockUser).subscribe((token) => {
-      expect(token).toEqual('agent-token');
+  describe('#getUserRole', () => {
+    it('should return the role from sessionStorage if it exists', () => {
+      spyOn(sessionStorage, 'getItem').and.returnValue('CLIENT');
+      expect(service.getUserRole()).toBe('CLIENT');
     });
 
-    // Expecting a POST request to the agent token URL
-    const req = httpMock.expectOne('/auth/agents/token');
-    expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual(mockUser);
-
-    // Respond with mock token
-    req.flush(mockTokenResponse);
-  });
-
-  it('should throw an error for invalid role', () => {
-    const mockUser: Auth = {
-      email: 'invaliduser',
-      password: 'invalidpass',
-      role: 'INVALID_ROLE',
-      token: '',
-    };
-
-    service.login(mockUser).subscribe(
-      () => fail('Expected an error, but got a token'),
-      (error) => {
-        expect(error.name).toBe('RoleError');
-        expect(error.message).toBe('El role ingresado no existe en el sistema');
-      }
-    );
-
-    // Since the error is client-side, no HTTP request is expected.
+    it('should return null if no role exists in sessionStorage', () => {
+      spyOn(sessionStorage, 'getItem').and.returnValue(null);
+      expect(service.getUserRole()).toBeNull();
+    });
   });
 });

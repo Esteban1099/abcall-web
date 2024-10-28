@@ -46,6 +46,7 @@ export class AuthLoginComponent implements OnInit {
   setRole(role: string) {
     this.role = role;
     localStorage.setItem('role', role);
+    this.eventService.showBackAuthLogin.emit();
   }
 
   login(user: Auth) {
@@ -61,12 +62,11 @@ export class AuthLoginComponent implements OnInit {
           localStorage.setItem('token', response.token);
           this.toastService.showSuccess('Bienvenido!');
           this.eventService.showMenu.emit();
-          this.router.navigate(['/pcc-list']).then(() => true);
+          this.router.navigate(['/pcc-list']);
         })
       }
     } else {
       this.toastService.showError('Rol no seleccionado');
     }
-
   }
 }

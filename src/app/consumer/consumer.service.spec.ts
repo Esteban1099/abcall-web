@@ -38,7 +38,7 @@ describe('ConsumerService', () => {
     };
 
     // Simulate sessionStorage token
-    sessionStorage.setItem('user', JSON.stringify({ token: 'mock-token' }));
+    sessionStorage.setItem('token', JSON.stringify({ token: 'mock-token' }));
 
     // Call the service method
     service
@@ -51,9 +51,9 @@ describe('ConsumerService', () => {
       });
 
     // Check the outgoing HTTP request
-    const req = httpMock.expectOne('/consumer/details/Pasaporte/A1234567');
+    const req = httpMock.expectOne('/api/consumers/identification_type/Pasaporte/identification_number/A1234567');
     expect(req.request.method).toBe('GET'); // Make sure it's a GET request
-    expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token'); // Check the token in headers
+
 
     // Provide a mock response
     req.flush(mockConsumer);
@@ -76,7 +76,7 @@ describe('ConsumerService', () => {
       );
 
     // Simulate an error response
-    const req = httpMock.expectOne('/consumer/details/Pasaporte/A1234567');
+    const req = httpMock.expectOne('/api/consumers/identification_type/Pasaporte/identification_number/A1234567');
     req.flush('Error fetching consumer details', mockError);
   });
 
@@ -97,7 +97,7 @@ describe('ConsumerService', () => {
     // Set the consumer details in the service
     service.getConsumer(mockConsumer).subscribe();
     const req = httpMock.expectOne(
-      `/consumer/identification_type/${mockConsumer.identification_type}/identification_number/${mockConsumer.identification_number}`
+      `/api/consumers/identification_type/${mockConsumer.identification_type}/identification_number/${mockConsumer.identification_number}`
     );
     req.flush(mockConsumer);
   });

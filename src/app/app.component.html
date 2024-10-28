@@ -2,8 +2,8 @@
   <div class="d-flex flex-column flex-fill">
     <div class="container-fluid">
       <div class="row pt-3 pb-3">
-        <div *ngIf="showBackOption" class="col-auto me-auto">
-          <button class="btn btn-primary rounded-pill" type="button" (click)="backAuthLogin()">
+        <div  class="col-auto me-auto">
+          <button class="btn btn-primary rounded-pill" type="button" (click)="backAuthLogin()" *ngIf="showBackOption">
             <i class="fa-solid fa-arrow-left"></i>
           </button>
         </div>
