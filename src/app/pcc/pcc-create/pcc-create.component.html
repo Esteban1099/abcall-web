@@ -26,7 +26,7 @@
     <div class="col-6 pb-3">
       <div class="input-group has-validation">
         <div class="form-floating">
-          <input formControlName="subject" type="text" class="form-control rounded-4"
+          <input formControlName="subject" id="subject" type="text" class="form-control rounded-4"
                  [class.is-invalid]="pccForm.controls['subject'].invalid && pccForm.controls['subject'].touched"/>
           <label class="form-label" i18n>Asunto</label>
           <div class="invalid-feedback"
@@ -41,13 +41,22 @@
     <div class="col-6 pb-3">
       <div class="input-group has-validation">
         <div class="form-floating">
-              <textarea formControlName="description" class="form-control rounded-4" style="height: 150px"
+              <textarea formControlName="description" id="description" class="form-control rounded-4"
+                        style="height: 150px"
                         [class.is-invalid]="pccForm.controls['description'].invalid && pccForm.controls['description'].touched">
               </textarea>
           <label class="form-label" i18n>Descripción</label>
           <div class="invalid-feedback"
                *ngIf="pccForm.controls['description']!.hasError('required')">
             Debe ingresar la descripción
+          </div>
+          <div class="invalid-feedback"
+               *ngIf="pccForm.controls['description']!.hasError('minlength')">
+            La descripción debe tener al menos {{ pccForm.controls['description']!.errors?.['minlength']?.requiredLength }} caracteres
+          </div>
+          <div class="invalid-feedback"
+               *ngIf="pccForm.controls['description']!.hasError('maxlength')">
+            La descripción no debe exceder los {{ pccForm.controls['description']!.errors?.['maxlength']?.requiredLength }} caracteres
           </div>
         </div>
       </div>
