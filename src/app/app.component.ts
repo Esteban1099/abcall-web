@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {EventService} from './commons/event.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,10 @@ export class AppComponent implements OnInit {
   shouldShowLogOut = false;
   shouldShowBackOption = true;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private eventService: EventService,) {
+  }
 
   ngOnInit(): void {
     // Listen to route changes
@@ -27,10 +31,15 @@ export class AppComponent implements OnInit {
 
       this.shouldShowBackOption = this.router.url.includes('auth');
     });
+
+  }
+
+  backAuthLogin() {
+    this.eventService.backAuthLogin.emit();
   }
 
   goToConsumer(action: string) {
-    this.router.navigate(['/consumer'], { queryParams: { callBy: action } });
+    this.router.navigate(['/consumer'], {queryParams: {callBy: action}});
   }
 
   logOut() {

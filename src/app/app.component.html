@@ -3,7 +3,7 @@
     <div class="container-fluid text-center">
       <div class="row ">
         <div *ngIf="shouldShowBackOption" class="col-auto me-auto pt-3">
-          <button class="btn btn-primary rounded-pill" type="button" [routerLink]="['']">
+          <button class="btn btn-primary rounded-pill" type="button" (click)="backAuthLogin()">
             <i class="fa-solid fa-arrow-left"></i>
           </button>
         </div>
@@ -32,14 +32,15 @@
                 </ul>
               </div>
             </div>
-            <div class="col-auto">
-              <button *ngIf="shouldShowLogOut" class="btn btn-danger rounded-pill" type="button" (click)="logOut()">
+            <div class="col-auto" *ngIf="shouldShowLogOut">
+              <button class="btn btn-danger rounded-pill" type="button" (click)="logOut()">
                 <i class="fa-solid fa-right-from-bracket"></i>
               </button>
             </div>
           </div>
         </div>
       </div>
+      <app-toast></app-toast>
       <router-outlet></router-outlet>
     </div>
   </div>

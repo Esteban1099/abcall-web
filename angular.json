@@ -11,17 +11,7 @@
         }
       },
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "standalone": false
-        },
-        "@schematics/angular:directive": {
-          "standalone": false
-        },
-        "@schematics/angular:pipe": {
-          "standalone": false
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -48,11 +38,10 @@
             ],
             "styles": [
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "node_modules/ngx-toastr/toastr.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
+              "node_modules/@popperjs/core/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
@@ -82,13 +71,7 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.development.ts"
-                }
-              ]
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -107,7 +90,7 @@
             },
             "production": {
               "buildTarget": "abcall-web:build:production",
-              "proxyConfig": "proxy.conf.json"
+              "proxyConfig": "proxy.conf.prod.json"
             },
             "development": {
               "buildTarget": "abcall-web:build:development",
@@ -141,6 +124,7 @@
               "src/styles.css"
             ],
             "scripts": [
+              "node_modules/@popperjs/core/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           }

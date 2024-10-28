@@ -1,68 +1,92 @@
-<div class="position-absolute top-50 start-50 translate-middle">
+<div class="position-absolute top-50 start-50 translate-middle" *ngIf="!role">
   <div style="width: 300px">
     <div class="row">
       <div class="col">
         <h1 class="pb-3 text-center">ABCall</h1>
+        <h2 i18n class="pb-3 text-center">Iniciar sesión como:</h2>
       </div>
-      <form [formGroup]="authForm" (ngSubmit)="!authForm.invalid && login(authForm.value)">
-        <div class="row">
-          <div class="col">
-            <h3 i18n class="pb-3 text-center">Iniciar sesión</h3>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col pb-3">
-            <div class="input-group has-validation">
-              <div class="form-floating">
-                <input formControlName="email" id="email" type="email" class="form-control rounded-4"
-                  autocomplete="Correo electrónico"
-                  [class.is-invalid]="authForm.controls['email'].invalid && authForm.controls['email'].touched" />
-                <label i18n>Correo electrónico</label>
-                <div i18n class="invalid-feedback" *ngIf="authForm.controls['email']!.hasError('required')">
-                  Correo electrónico requerido
-                </div>
-                <div i18n class="invalid-feedback" *ngIf="authForm.controls['email']!.hasError('email')">
-                  Correo electrónico invalido
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col pb-3">
-            <div class="input-group has-validation">
-              <div class="form-floating">
-                <input formControlName="password" id="password" type="password" class="form-control rounded-4"
-                  autocomplete="Contraseña"
-                  [class.is-invalid]="authForm.controls['password'].invalid && authForm.controls['password'].touched" />
-                <label i18n>Contraseña</label>
-                <div i18n class="invalid-feedback" *ngIf="authForm.controls['password']!.hasError('required')">
-                  Debe ingresar la contraseña
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row justify-content-end">
-          <div class="col-auto pb-3">
-            <a i18n class="link-secondary link-underline-opacity-0">¿Olvido su contraseña?</a>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col pb-3">
-            <button i18n type="submit" class="btn btn-primary rounded-pill w-100" [disabled]="!authForm.valid">
-              Iniciar sesión
-            </button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <button i18n type="button" class="btn btn-primary rounded-pill w-100" disabled>
-              Registrarse
-            </button>
-          </div>
-        </div>
-      </form>
     </div>
+    <div class="row">
+      <div class="col pb-3">
+        <button i18n type="button" class="btn btn-primary rounded-pill w-100" (click)="setRole('CLIENT')">
+          Empresa
+        </button>
+      </div>
+      <div class="col pb-3">
+        <button i18n type="button" class="btn btn-primary rounded-pill w-100" (click)="setRole('AGENT')">
+          Asesor
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="position-absolute top-50 start-50 translate-middle justify-content-center" *ngIf="role">
+  <div style="width: 300px">
+    <div class="row">
+      <div class="col">
+        <h1 class="text-center">ABCall</h1>
+        <h2 class="pb-3 text-center" *ngIf="role == 'AGENT'">Asesores</h2>
+        <h2 class="pb-3 text-center" *ngIf="role == 'CLIENT'">Empresas</h2>
+      </div>
+    </div>
+    <form [formGroup]="authForm" (ngSubmit)="!authForm.invalid && login(authForm.value)">
+      <div class="row">
+        <div class="col">
+          <h3 i18n class="pb-3 text-center">Iniciar sesión</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col pb-3">
+          <div class="input-group has-validation">
+            <div class="form-floating">
+              <input formControlName="email" id="email" type="email" class="form-control rounded-4"
+                     autocomplete="Correo electrónico"
+                     [class.is-invalid]="authForm.controls['email'].invalid && authForm.controls['email'].touched"/>
+              <label i18n>Correo electrónico</label>
+              <div i18n class="invalid-feedback" *ngIf="authForm.controls['email']!.hasError('required')">
+                Correo electrónico requerido
+              </div>
+              <div i18n class="invalid-feedback" *ngIf="authForm.controls['email']!.hasError('email')">
+                Correo electrónico invalido
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col pb-3">
+          <div class="input-group has-validation">
+            <div class="form-floating">
+              <input formControlName="password" id="password" type="password" class="form-control rounded-4"
+                     autocomplete="Contraseña"
+                     [class.is-invalid]="authForm.controls['password'].invalid && authForm.controls['password'].touched"/>
+              <label i18n>Contraseña</label>
+              <div i18n class="invalid-feedback" *ngIf="authForm.controls['password']!.hasError('required')">
+                Debe ingresar la contraseña
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-end">
+        <div class="col-auto pb-3">
+          <a i18n class="link-secondary link-underline-opacity-0">¿Olvido su contraseña?</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col pb-3">
+          <button i18n type="submit" class="btn btn-primary rounded-pill w-100" [disabled]="!authForm.valid">
+            Iniciar sesión
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button i18n type="button" class="btn btn-primary rounded-pill w-100" disabled>
+            Registrarse
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>

@@ -1,57 +1,71 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { User } from '../user';
-import { AuthService } from '../auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {User} from '../user';
+import {AuthService} from '../auth.service';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {NgIf} from '@angular/common';
+import {EventService} from '../../commons/event.service';
+import {Observable} from 'rxjs';
+import {ToastService} from '../../commons/toast.service';
 
 @Component({
+  standalone: true,
   selector: 'app-auth-login',
   templateUrl: './auth-login.component.html',
   styleUrls: ['./auth-login.component.css'],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    NgIf
+  ]
 })
 export class AuthLoginComponent implements OnInit {
-  role: string | null = '';
+  role?: string;
   authForm!: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    private toastr: ToastrService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    private eventService: EventService,
+    private toastService: ToastService,
+  ) {
+  }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      this.role = params['role'];
-    });
-
     this.authForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
+    this.eventService.backAuthLogin.subscribe((): void => {
+      this.role = undefined;
+      localStorage.removeItem('role');
+    })
+  }
+
+  setRole(role: string) {
+    this.role = role;
+    localStorage.setItem('role', role);
   }
 
   login(user: User) {
-    user.role = this.role ?? 'Undefined';
-
-    this.authService.login(user).subscribe(
-      (token) => {
-        console.info('Login succesfull: ', token);
-        user.token = token;
-        sessionStorage.setItem('user', JSON.stringify(user)); // Save user details
-        this.toastr.success('Confirmation', 'Login succesfull');
-        this.authForm.reset();
-        if (user.role === 'AGENT') {
-          this.router.navigate(['/consumer']);
-        }
-      },
-      (error) => {
-        if (error.name === 'RoleError') {
-          this.toastr.error('Error', error.message);
-        }
+    if (this.role){
+      let response: Observable<any> | null = null;
+      if (this.role === 'CLIENT') {
+        response = this.authService.loginClient(user);
+      } else if (this.role === 'AGENT') {
+        response = this.authService.loginAgent(user);
       }
-    );
+      if (response) {
+        response.subscribe((response: any): void => {
+          localStorage.setItem('token', response.token);
+          this.toastService.showSuccess('Sesión iniciada. Puede seguir trabajando');
+        })
+      }
+    } else {
+      this.toastService.showError('Role no seleccionado');
+    }
+
   }
 }

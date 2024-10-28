@@ -7,7 +7,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment.prod';
 import { User } from './user';
 
 describe('Service: Auth', () => {
