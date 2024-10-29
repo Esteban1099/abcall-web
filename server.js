@@ -26,7 +26,7 @@ app.use("/auth/clients/token", async (req, res) => {
   }
 });
 
-app.use("/auth/agents/token", async (req, res) => {
+app.use("/api/auth/agents/token", async (req, res) => {
   try {
     const targetUrl =
       "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/auth/agents/token";
