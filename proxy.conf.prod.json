@@ -1,0 +1,11 @@
+{
+  "/api/**": {
+    "target": "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

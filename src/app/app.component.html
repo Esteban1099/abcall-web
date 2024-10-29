@@ -1,25 +1,25 @@
 <div class="d-flex flex-nowrap">
   <div class="d-flex flex-column flex-fill">
-    <div class="container-fluid text-center">
-      <div class="row ">
-        <div *ngIf="shouldShowBackOption" class="col-auto me-auto pt-3">
-          <button class="btn btn-primary rounded-pill" type="button" [routerLink]="['']">
+    <div class="container-fluid">
+      <div class="row pt-3 pb-3">
+        <div  class="col-auto me-auto">
+          <button class="btn btn-primary rounded-pill" type="button" (click)="backAuthLogin()" *ngIf="showBackOption">
             <i class="fa-solid fa-arrow-left"></i>
           </button>
         </div>
-        <div *ngIf="shouldShowMenu" class="col-auto me-auto pt-3">
+        <div *ngIf="showMenu" class="col-auto me-auto">
           <div class="dropdown">
             <button class="btn btn-primary rounded-pill" type="button" data-bs-toggle="dropdown">
               <i class="fa-solid fa-bars"></i>
             </button>
             <ul class="dropdown-menu">
-              <li><a i18n class="dropdown-item">Listar PQR</a></li>
-              <li><a i18n class="dropdown-item" (click)="goToConsumer('CREATE_PQR')">Crear PQR</a></li>
-              <li><a i18n class="dropdown-item" (click)="goToConsumer('CONSUMER')">Consultar consumidor</a></li>
+              <li><a i18n class="dropdown-item" [routerLink]="['/pcc-list']">Listar PQR</a></li>
+              <li><a i18n class="dropdown-item" [routerLink]="['/pcc-create']">Crear PQR</a></li>
+              <li><a i18n class="dropdown-item" [routerLink]="['/consumer-detail']">Consultar consumidor</a></li>
             </ul>
           </div>
         </div>
-        <div class="col-auto pt-3">
+        <div class="col-auto">
           <div class="row">
             <div class="col-auto">
               <div class="dropdown">
@@ -32,14 +32,15 @@
                 </ul>
               </div>
             </div>
-            <div class="col-auto">
-              <button *ngIf="shouldShowLogOut" class="btn btn-danger rounded-pill" type="button" (click)="logOut()">
+            <div class="col-auto" *ngIf="showLogOut">
+              <button class="btn btn-danger rounded-pill" type="button" (click)="logOut()">
                 <i class="fa-solid fa-right-from-bracket"></i>
               </button>
             </div>
           </div>
         </div>
       </div>
+      <app-toast></app-toast>
       <router-outlet></router-outlet>
     </div>
   </div>

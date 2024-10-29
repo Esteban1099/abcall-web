@@ -9,7 +9,7 @@ describe('My First Test', () => {
  })
 
 
-describe('User Login as Clients Tests', () => {
+describe('Auth Login as Clients Tests', () => {
 
   it('Should login the user Empresa Succesfully', () => {
 
@@ -19,7 +19,7 @@ describe('User Login as Clients Tests', () => {
     cy.get('input[formcontrolname="email"]').type('cliente@gmail.com');
     cy.get('input[formcontrolname="password"]').type('123456');
     cy.contains('button', 'Iniciar sesión').click();
-    cy.contains('Login succesfull').should('be.visible');
+    cy.contains('Bienvenido').should('be.visible');
 
   });
 
@@ -31,7 +31,7 @@ describe('User Login as Clients Tests', () => {
     cy.get('input[formcontrolname="email"]').type('cliente@gmail.com');
     cy.get('input[formcontrolname="password"]').type('BadPassword');
     cy.contains('button', 'Iniciar sesión').click();
-    cy.contains('Error en la autenticación').should('be.visible');
+    cy.contains('Credenciales inválidas').should('be.visible');
 
   });
 
@@ -67,13 +67,13 @@ describe('User Login as Clients Tests', () => {
     cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
     cy.get('input[formcontrolname="password"]').type('123456');
     cy.contains('button', 'Iniciar sesión').click();
-    cy.contains('Error en la autenticación').should('be.visible');
+    cy.contains('Credenciales inválidas').should('be.visible');
 
   });
 
   });
 
-  describe('User Login as Agent Tests', () => {
+  describe('Auth Login as Agent Tests', () => {
 
     it('Should login the user Asesor Succesfully', () => {
 
@@ -83,7 +83,7 @@ describe('User Login as Clients Tests', () => {
       cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
       cy.get('input[formcontrolname="password"]').type('123456');
       cy.contains('button', 'Iniciar sesión').click();
-      cy.contains('Login succesfull').should('be.visible');
+      cy.contains('Bienvenido').should('be.visible');
 
     });
 
@@ -95,7 +95,7 @@ describe('User Login as Clients Tests', () => {
       cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
       cy.get('input[formcontrolname="password"]').type('BadPassword');
       cy.contains('button', 'Iniciar sesión').click();
-      cy.contains('Error en la autenticación').should('be.visible');
+      cy.contains('Credenciales inválidas').should('be.visible');
 
     });
 
@@ -135,7 +135,7 @@ describe('User Login as Clients Tests', () => {
         cy.get('input[formcontrolname="email"]').type('agente@gmail.com')
         cy.get('input[formcontrolname="password"]').type('123456')
         cy.contains('button', 'Iniciar sesión').click();
-        cy.contains('Error en la autenticación').should('be.visible');
+        cy.contains('Credenciales inválidas').should('be.visible');
 
     });
 
@@ -150,9 +150,7 @@ describe('User Login as Clients Tests', () => {
       cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
       cy.get('input[formcontrolname="password"]').type('123456');
       cy.contains('button', 'Iniciar sesión').click();
-      cy.contains('Login succesfull').should('be.visible');
-      cy.contains('button', 'Consultar').should('be.visible');
-      cy.contains('button', 'Regresar').should('be.visible');
+      cy.contains('Bienvenido').should('be.visible');
 
       cy.get('button.btn-primary.rounded-pill').should('exist');
       cy.get('button[data-bs-toggle="dropdown"]').should('exist');
@@ -205,8 +203,7 @@ describe('User Login as Clients Tests', () => {
       cy.get('button').contains('Consultar').click();
 
        // Verifica que el mensaje de error se muestra
-      cy.contains('Error en la consulta de consumidor').should('be.visible');
-      cy.contains('No se encontro un consumidor con los datos ingresados').should('be.visible');
+      cy.contains('Consumidor no encontrado').should('be.visible');
 
       // Verifica que el número fue ingresado correctamente
       cy.get('input#identification_number').should('be.visible').clear().type('9601063007');
@@ -223,7 +220,7 @@ describe('User Login as Clients Tests', () => {
       cy.contains('Correo electrónico').should('be.visible');
       cy.contains('Número de identificación').should('be.visible');
       cy.contains('istado de PQRs reportados por el consumidor').should('be.visible');
-      cy.contains('Empresas asociadas con el consumidor').should('be.visible');
+      cy.contains('Empresa').should('be.visible');
 
       cy.contains('button', 'Regresar').should('be.visible');
       cy.contains('button', 'Regresar').click()
@@ -243,7 +240,7 @@ describe('User Login as Clients Tests', () => {
       cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
       cy.get('input[formcontrolname="password"]').type('123456');
       cy.contains('button', 'Iniciar sesión').click();
-      cy.contains('Login succesfull').should('be.visible');
+      cy.contains('Bienvenido').should('be.visible');
       cy.wait(200);
       cy.get('button.btn-primary.rounded-pill').should('exist');
       cy.get('button.btn-primary.rounded-pill').first().click();
@@ -283,8 +280,7 @@ describe('User Login as Clients Tests', () => {
       cy.get('button').contains('Consultar').click();
 
        // Verifica que el mensaje de error se muestra
-      cy.contains('Error en la consulta de consumidor').should('be.visible');
-      cy.contains('No se encontro un consumidor con los datos ingresados').should('be.visible');
+      cy.contains('Consumidor no encontrado').should('be.visible');
 
       // Verifica que el número fue ingresado correctamente
       cy.get('input#identification_number').should('be.visible').clear().type('9601063007');
@@ -300,7 +296,7 @@ describe('User Login as Clients Tests', () => {
       cy.contains('Dirección').should('be.visible');
       cy.contains('Correo electrónico').should('be.visible');
       cy.contains('Número de identificación').should('be.visible');
-      cy.contains('Empresas asociadas con el consumidor').should('be.visible');
+      cy.contains('Empresa').should('be.visible');
 
       cy.contains('Asunto').should('be.visible');
       cy.contains('Descripción').should('be.visible');
@@ -321,16 +317,16 @@ describe('User Login as Clients Tests', () => {
       //cy.get('select#identification_type').should('be.visible').select('Pasaporte');
 
       // Ingresa un asunto y una descripción
-      cy.get('input#description').type('Descripción de prueba');
+      cy.get('textarea#description').type('Descripción de prueba');
       cy.get('input#subject').type('Asunto de prueba');
-      cy.contains('La Descripción debe tener un mínimo de 200 caracteres').should('be.visible');
+      cy.contains('La descripción debe tener al menos 100 caracteres').should('be.visible');
 
       // Se ingresa una descripción con más de 200 caracteres
-      cy.get('input#description').clear().type('Descripción de prueba con más de 200 caracteres'.repeat(5));
+      cy.get('textarea#description').clear().type('Descripción de prueba con más de 200 caracteres'.repeat(5));
 
       // Se borra el asunto y aparece mensaje de error
       cy.get('input#subject').clear();
-      cy.contains('Asunto requerido').should('be.visible');
+      cy.contains('Debe ingresar el asunto').should('be.visible');
 
       // Se vuelve a ingresar un asunto
       cy.get('input#subject').type('Asunto de prueba');
@@ -351,7 +347,7 @@ describe('User Login as Clients Tests', () => {
       cy.contains('button', 'Crear PQR').should('be.enabled');
       // Se hace click en el boton crear pqr y se evidencia mensaje de exito
       cy.contains('button', 'Crear PQR').click();
-      cy.contains('Confirmation').should('be.visible');
+      cy.contains('La PQR ha sido creada exitosamente').should('be.visible');
   });
 
 });

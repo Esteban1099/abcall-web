@@ -1,42 +1,41 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { HttpClientModule } from '@angular/common/http';
-import { AuthService } from '../auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { of, throwError } from 'rxjs';
 import { AuthLoginComponent } from './auth-login.component';
-import { User } from '../user';
+import { AuthService } from '../auth.service';
+import { EventService } from '../../commons/event.service';
+import { ToastService } from '../../commons/toast.service';
+import { Router } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
+import { EventEmitter } from '@angular/core';
 
 describe('AuthLoginComponent', () => {
   let component: AuthLoginComponent;
   let fixture: ComponentFixture<AuthLoginComponent>;
-  let debug: DebugElement;
   let authService: jasmine.SpyObj<AuthService>;
-  let toastrService: jasmine.SpyObj<ToastrService>;
+  let eventService: Partial<EventService>;
+  let toastService: jasmine.SpyObj<ToastService>;
   let router: jasmine.SpyObj<Router>;
 
   beforeEach(waitForAsync(() => {
-    authService = jasmine.createSpyObj('AuthService', ['login']);
-    toastrService = jasmine.createSpyObj('ToastrService', ['success', 'error']);
+    authService = jasmine.createSpyObj('AuthService', ['loginClient', 'loginAgent']);
+    toastService = jasmine.createSpyObj('ToastService', ['showSuccess', 'showError']);
     router = jasmine.createSpyObj('Router', ['navigate']);
 
+    eventService = {
+      backAuthLogin: new EventEmitter<void>(),
+      showMenu: new EventEmitter<void>(),
+      showBackAuthLogin: new EventEmitter<void>(),
+    };
+
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, ToastrModule.forRoot(), HttpClientModule],
-      declarations: [AuthLoginComponent],
+      imports: [ReactiveFormsModule, RouterTestingModule, AuthLoginComponent],
       providers: [
         { provide: AuthService, useValue: authService },
-        { provide: ToastrService, useValue: toastrService },
-        { provide: Router, useValue: router },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            queryParams: of({ role: 'CLIENT' }),
-          },
-        },
-      ],
+        { provide: EventService, useValue: eventService },
+        { provide: ToastService, useValue: toastService },
+        { provide: Router, useValue: router }
+      ]
     }).compileComponents();
   }));
 
@@ -44,120 +43,58 @@ describe('AuthLoginComponent', () => {
     fixture = TestBed.createComponent(AuthLoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    debug = fixture.debugElement;
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have title ', () => {
-    const dd = debug.query(By.css('h1'));
-    const content: HTMLElement = dd.nativeElement;
-    expect(content.textContent).toEqual('ABCall');
+  it('should clear role on backAuthLogin event', () => {
+    component.setRole('CLIENT');
+
+    // Emitir el evento backAuthLogin para simular el comportamiento
+    (eventService.backAuthLogin as EventEmitter<void>).emit();
+    fixture.detectChanges();
+
+    expect(component.role).toBeUndefined();
+    expect(localStorage.getItem('role')).toBeNull();
   });
 
-  it('should have subtitle ', () => {
-    const dd = debug.query(By.css('h3'));
-    const content: HTMLElement = dd.nativeElement;
-    expect(content.textContent).toEqual('Iniciar sesión');
-  });
+  it('should call showSuccess and navigate on successful login as CLIENT', () => {
+    component.setRole('CLIENT');
+    const mockUser = { email: 'client@example.com', password: 'password123' };
+    const mockResponse = { token: 'mock-token' };
+    authService.loginClient.and.returnValue(of(mockResponse));
 
-  it('should have label for the fields in form', () => {
-    debug.queryAll(By.css('label')).forEach((label, i) => {
-      if (i == 0) {
-        expect(label.nativeElement.textContent).toContain('Correo electrónico');
-      } else if (i == 1) {
-        expect(label.nativeElement.textContent).toContain('Contraseña');
-      }
-    });
-  });
-
-  it('should have input with id email;', () => {
-    expect(debug.queryAll(By.css('#email'))).toHaveSize(1);
-  });
-
-  it('should have input with id password', () => {
-    expect(debug.queryAll(By.css('#password'))).toHaveSize(1);
-  });
-
-  // Test form initialization and validation
-  it('should initialize the form with default values', () => {
-    expect(component.authForm).toBeDefined();
-    expect(component.authForm.get('email')?.value).toBe('');
-    expect(component.authForm.get('password')?.value).toBe('');
-    expect(component.authForm.valid).toBeFalse();
-  });
-
-  it('should validate the form', () => {
-    component.authForm.patchValue({
-      email: 'invalid-email',
-      password: '',
-    });
-    expect(component.authForm.valid).toBeFalse(); // Invalid email and empty password
-
-    component.authForm.patchValue({
-      email: 'valid.email@example.com',
-      password: 'validpassword',
-    });
-    expect(component.authForm.valid).toBeTrue(); // Form should be valid now
-  });
-
-  it('should navigate to /consumer when role is AGENT', () => {
-    const mockUser: User = {
-      email: 'agent@example.com',
-      password: 'password123',
-      role: 'AGENT',
-      token: '',
-    };
-
-    const mockToken = 'mock-token';
-
-    // Mock query parameters to set the role to AGENT
-    component.role = 'AGENT';
-
-    // Mock the login method to return a token
-    authService.login.and.returnValue(of(mockToken));
-
-    // Fill the form with valid credentials
-    component.authForm.patchValue({
-      email: 'agent@example.com',
-      password: 'password123',
-    });
-
-    // Call the login method
     component.login(mockUser);
 
-    // Verify the service call and that the correct role is passed
-    expect(authService.login).toHaveBeenCalledWith(mockUser);
-
-    // Check if sessionStorage is set correctly
-    expect(sessionStorage.getItem('user')).toEqual(
-      JSON.stringify({ ...mockUser, token: mockToken })
-    );
-
-    // Verify the navigation to the consumer route
-    expect(router.navigate).toHaveBeenCalledWith(['/consumer']);
+    expect(authService.loginClient).toHaveBeenCalledWith(mockUser);
+    expect(localStorage.getItem('token')).toBe('mock-token');
+    expect(toastService.showSuccess).toHaveBeenCalledWith('Bienvenido!');
+    expect(router.navigate).toHaveBeenCalledWith(['/pcc-list']);
   });
 
-  // Test error handling
-  it('should show an error if login fails with RoleError', () => {
-    const mockUser: User = {
-      email: 'test@example.com',
-      password: 'password123',
-      role: 'CLIENT',
-      token: '',
-    };
+  it('should call showSuccess and navigate on successful login as AGENT', () => {
+    component.setRole('AGENT');
+    const mockUser = { email: 'agent@example.com', password: 'password123' };
+    const mockResponse = { token: 'mock-token' };
+    authService.loginAgent.and.returnValue(of(mockResponse));
 
-    const roleError = { name: 'RoleError', message: 'Invalid role' };
-
-    // Mock the login method to throw a RoleError
-    authService.login.and.returnValue(throwError(roleError));
-
-    // Call the login method
     component.login(mockUser);
 
-    // Check if toastr shows an error
-    expect(toastrService.error).toHaveBeenCalledWith('Error', 'Invalid role');
+    expect(authService.loginAgent).toHaveBeenCalledWith(mockUser);
+    expect(localStorage.getItem('token')).toBe('mock-token');
+    expect(toastService.showSuccess).toHaveBeenCalledWith('Bienvenido!');
+    expect(router.navigate).toHaveBeenCalledWith(['/pcc-list']);
+  });
+
+  it('should show error if role is not selected', () => {
+    const mockUser = { email: 'user@example.com', password: 'password123' };
+
+    component.login(mockUser);
+
+    expect(authService.loginClient).not.toHaveBeenCalled();
+    expect(authService.loginAgent).not.toHaveBeenCalled();
+    expect(toastService.showError).toHaveBeenCalledWith('Rol no seleccionado');
   });
 });

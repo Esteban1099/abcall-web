@@ -1,0 +1,10 @@
+<ngb-toast
+  *ngFor="let toast of this.utilService.toasts"
+  [class]="toast.options?.['classname']"
+  [autohide]="true"
+  [delay]="toast.options?.['delay'] || 15000"
+  (hidden)="utilService.remove(toast)"
+  header="{{toast.content?.['header']}}" class="">
+  {{toast.content?.['body']}}
+  <button type="button" class="btn-close me-0 mt-0 m-auto d-flex" (click)="utilService.remove(toast)"></button>
+</ngb-toast>
