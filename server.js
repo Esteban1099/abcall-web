@@ -40,7 +40,8 @@ app.use("/api/auth/agents/token", async (req, res) => {
   } catch (error) {
     console.error("Error forwarding request:", error.message);
     res.status(error.response?.status || 500).json({
-      message: error.response?.data?.message || "Error forwarding request",
+      error_code: error.response?.data?.error_code || "Error forwarding request",
+      error_message: error.response?.data?.error_message || "Error forwarding request",
     });
   }
 });
