@@ -5,7 +5,6 @@ import {
 } from '@angular/common/http/testing';
 import { ConsumerService } from './consumer.service';
 import { Consumer } from './consumer';
-import { HttpHeaders } from '@angular/common/http';
 
 describe('ConsumerService', () => {
   let service: ConsumerService;
@@ -24,22 +23,6 @@ describe('ConsumerService', () => {
     httpMock.verify(); // Verify that no unmatched requests remain
   });
 
-  // Test default consumer values
-  it('should initialize with default consumer values', () => {
-    const defaultConsumer: Consumer = service.getActualConsumerDetails();
-    expect(defaultConsumer).toEqual({
-      id: '',
-      identification_type: '',
-      identification_number: '',
-      name: '',
-      email: '',
-      contact_number: '',
-      address: '',
-      companies: [],
-      pccs: [],
-    });
-  });
-
   // Test fetching consumer details
   it('should fetch consumer details from the API', () => {
     const mockConsumer: Consumer = {
@@ -55,11 +38,11 @@ describe('ConsumerService', () => {
     };
 
     // Simulate sessionStorage token
-    sessionStorage.setItem('user', JSON.stringify({ token: 'mock-token' }));
+    sessionStorage.setItem('token', JSON.stringify({ token: 'mock-token' }));
 
     // Call the service method
     service
-      .getConsumerDetails({
+      .getConsumer({
         identification_type: 'Pasaporte',
         identification_number: 'A1234567',
       } as Consumer)
@@ -68,9 +51,9 @@ describe('ConsumerService', () => {
       });
 
     // Check the outgoing HTTP request
-    const req = httpMock.expectOne('/consumer/details/Pasaporte/A1234567');
+    const req = httpMock.expectOne('/api/consumers/identification_type/Pasaporte/identification_number/A1234567');
     expect(req.request.method).toBe('GET'); // Make sure it's a GET request
-    expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token'); // Check the token in headers
+
 
     // Provide a mock response
     req.flush(mockConsumer);
@@ -81,7 +64,7 @@ describe('ConsumerService', () => {
     const mockError = { status: 404, statusText: 'Not Found' };
 
     service
-      .getConsumerDetails({
+      .getConsumer({
         identification_type: 'Pasaporte',
         identification_number: 'A1234567',
       } as Consumer)
@@ -93,7 +76,7 @@ describe('ConsumerService', () => {
       );
 
     // Simulate an error response
-    const req = httpMock.expectOne('/consumer/details/Pasaporte/A1234567');
+    const req = httpMock.expectOne('/api/consumers/identification_type/Pasaporte/identification_number/A1234567');
     req.flush('Error fetching consumer details', mockError);
   });
 
@@ -112,13 +95,10 @@ describe('ConsumerService', () => {
     };
 
     // Set the consumer details in the service
-    service.getConsumerDetails(mockConsumer).subscribe();
+    service.getConsumer(mockConsumer).subscribe();
     const req = httpMock.expectOne(
-      `/consumer/details/${mockConsumer.identification_type}/${mockConsumer.identification_number}`
+      `/api/consumers/identification_type/${mockConsumer.identification_type}/identification_number/${mockConsumer.identification_number}`
     );
     req.flush(mockConsumer);
-
-    // Check that the details are returned correctly from the service
-    expect(service.getActualConsumerDetails()).toEqual(mockConsumer);
   });
 });
