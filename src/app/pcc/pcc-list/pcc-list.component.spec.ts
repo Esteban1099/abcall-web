@@ -99,4 +99,37 @@ describe('PccListComponent', () => {
       expect(component.filteredPccs).toEqual([]);
     });
   });
+
+  describe('#applyFilter', () => {
+    beforeEach(() => {
+      component.pccList = mockPccList;
+      component.filteredPccs = mockPccList;
+    });
+
+    it('should show all Pccs when searchTerm is empty', () => {
+      component.searchTerm = '';
+      component.applyFilter();
+      expect(component.filteredPccs).toEqual(mockPccList);
+    });
+
+    it('should filter Pccs by id based on searchTerm', () => {
+      component.searchTerm = 'PQR001';
+      component.applyFilter();
+      expect(component.filteredPccs.length).toBe(1);
+      expect(component.filteredPccs[0].id).toBe('PQR001');
+    });
+
+    it('should be case insensitive when filtering by searchTerm', () => {
+      component.searchTerm = 'pqr002';
+      component.applyFilter();
+      expect(component.filteredPccs.length).toBe(1);
+      expect(component.filteredPccs[0].id).toBe('PQR002');
+    });
+
+    it('should show no Pccs if searchTerm does not match any Pcc id', () => {
+      component.searchTerm = 'NonExistingId';
+      component.applyFilter();
+      expect(component.filteredPccs.length).toBe(0);
+    });
+  });
 });
