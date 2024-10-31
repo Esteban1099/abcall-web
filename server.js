@@ -118,7 +118,7 @@ app.use(
   }
 );
 
-app.use("/api/auth/clients/token", async (req, res) => {
+app.use("/api/agents/pccs", async (req, res) => {
   try {
     // Extract Authorization header from incoming request
     const authHeader = req.headers["authorization"];
