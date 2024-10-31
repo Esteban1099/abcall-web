@@ -3,28 +3,38 @@ import { AppComponent } from './app.component';
 import { Router } from '@angular/router';
 import { EventService } from './commons/event.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import {ToastComponent} from './commons/toast/toast.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { ToastComponent } from './commons/toast/toast.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthService } from './auth/auth.service';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let eventService: EventService;
   let router: Router;
+  let authService: jasmine.SpyObj<AuthService>;
 
   beforeEach(waitForAsync(() => {
+    const authServiceSpy = jasmine.createSpyObj('AuthService', [
+      'isAuthenticatedUser',
+    ]);
+
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        ToastComponent,
-        HttpClientTestingModule,// Importamos ToastComponent en el módulo de pruebas
-      ],
+      imports: [RouterTestingModule, ToastComponent, HttpClientTestingModule],
       declarations: [AppComponent],
-      providers: [EventService]
+      providers: [
+        EventService,
+        { provide: AuthService, useValue: authServiceSpy },
+      ],
     }).compileComponents();
+
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
   }));
 
   beforeEach(() => {
+    // Ensure isAuthenticatedUser returns false for default flag tests
+    authService.isAuthenticatedUser.and.returnValue(false);
+
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
     eventService = TestBed.inject(EventService);
