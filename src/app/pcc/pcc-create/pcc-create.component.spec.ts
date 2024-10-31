@@ -6,6 +6,7 @@ import { ToastService } from '../../commons/toast.service';
 import { EventService } from '../../commons/event.service';
 import { of } from 'rxjs';
 import { Pcc } from '../pcc';
+import { SimplifiedConsumer } from '../../consumer/consumer';
 
 describe('PccCreateComponent', () => {
   let component: PccCreateComponent;
@@ -25,8 +26,8 @@ describe('PccCreateComponent', () => {
         FormBuilder,
         { provide: PccService, useValue: pccService },
         { provide: ToastService, useValue: toastService },
-        { provide: EventService, useValue: eventService }
-      ]
+        { provide: EventService, useValue: eventService },
+      ],
     }).compileComponents();
   }));
 
@@ -44,7 +45,7 @@ describe('PccCreateComponent', () => {
       contact_number: '555-555-5555',
       address: '123 Main St',
       companies: [],
-      pccs: []
+      pccs: [],
     };
     fixture.detectChanges();
   });
@@ -62,23 +63,34 @@ describe('PccCreateComponent', () => {
   });
 
   it('should call createPcc and show success message on successful creation', () => {
+    const mockConsumer: SimplifiedConsumer = {
+      id: 'consumer123',
+      identification_type: 'CC',
+      identification_number: '123456789',
+    };
+
     const mockPcc: Pcc = {
       id: 'pcc123',
       subject: 'Test Subject',
-      description: 'Test Description'
+      description: 'Test Description',
+      status: 'pending',
+      consumer: mockConsumer,
     };
 
     component.pccForm.setValue({
       company: 'company123',
       subject: 'Test Subject',
-      description: 'This is a valid description that meets the requirements for length.'
+      description:
+        'This is a valid description that meets the requirements for length.',
     });
 
     pccService.createPcc.and.returnValue(of(mockPcc));
 
     component.createPcc(component.pccForm.value);
 
-    expect(toastService.showSuccess).toHaveBeenCalledWith('La PQR ha sido creada exitosamente');
+    expect(toastService.showSuccess).toHaveBeenCalledWith(
+      'La PQR ha sido creada exitosamente'
+    );
     expect(component.pccForm.get('subject')?.value).toBe(null); // Formulario se debería resetear
     expect(component.pccForm.get('description')?.value).toBe(null); // Formulario se debería resetear
   });

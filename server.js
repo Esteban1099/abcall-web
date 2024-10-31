@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const axios = require("axios");
-const {exec} = require("child_process");
+const { exec } = require("child_process");
 
 const app = express();
 app.use(express.json()); // Parse JSON request bodies
@@ -15,14 +15,16 @@ app.use("/api/auth/clients/token", async (req, res) => {
       method: req.method,
       url: targetUrl,
       data: req.body,
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
     });
     res.status(response.status).json(response.data);
   } catch (error) {
     console.error("Error forwarding request:", error.message);
     res.status(error.response?.status || 500).json({
-      error_code: error.response?.data?.error_code || "Error forwarding request",
-      error_message: error.response?.data?.error_message || "Error forwarding request",
+      error_code:
+        error.response?.data?.error_code || "Error forwarding request",
+      error_message:
+        error.response?.data?.error_message || "Error forwarding request",
     });
   }
 });
@@ -35,14 +37,16 @@ app.use("/api/auth/agents/token", async (req, res) => {
       method: req.method,
       url: targetUrl,
       data: req.body,
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
     });
     res.status(response.status).json(response.data);
   } catch (error) {
     console.error("Error forwarding request:", error.message);
     res.status(error.response?.status || 500).json({
-      error_code: error.response?.data?.error_code || "Error forwarding request",
-      error_message: error.response?.data?.error_message || "Error forwarding request",
+      error_code:
+        error.response?.data?.error_code || "Error forwarding request",
+      error_message:
+        error.response?.data?.error_message || "Error forwarding request",
     });
   }
 });
@@ -56,7 +60,7 @@ app.use(
       const authHeader = req.headers["authorization"];
       console.log("Authorization Header:", authHeader);
 
-      const {identification_type, identification_number} = req.params;
+      const { identification_type, identification_number } = req.params;
       const targetUrl = `http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/consumers/identification_type/${identification_type}/identification_number/${identification_number}`;
 
       const response = await axios({
@@ -72,8 +76,10 @@ app.use(
     } catch (error) {
       console.error("Error forwarding request:", error.message);
       res.status(error.response?.status || 500).json({
-        error_code: error.response?.data?.error_code || "Error forwarding request",
-        error_message: error.response?.data?.error_message || "Error forwarding request",
+        error_code:
+          error.response?.data?.error_code || "Error forwarding request",
+        error_message:
+          error.response?.data?.error_message || "Error forwarding request",
       });
     }
   }
@@ -87,7 +93,7 @@ app.use(
       const authHeader = req.headers["authorization"];
       console.log("Authorization Header:", authHeader);
 
-      const {companyId, consumerId} = req.params;
+      const { companyId, consumerId } = req.params;
       const targetUrl = `http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/companies/${companyId}/consumers/${consumerId}/pccs`;
 
       const response = await axios({
@@ -103,12 +109,44 @@ app.use(
     } catch (error) {
       console.error("Error forwarding request:", error.message);
       res.status(error.response?.status || 500).json({
-        error_code: error.response?.data?.error_code || "Error forwarding request",
-        error_message: error.response?.data?.error_message || "Error forwarding request",
+        error_code:
+          error.response?.data?.error_code || "Error forwarding request",
+        error_message:
+          error.response?.data?.error_message || "Error forwarding request",
       });
     }
   }
 );
+
+app.use("/api/auth/clients/token", async (req, res) => {
+  try {
+    // Extract Authorization header from incoming request
+    const authHeader = req.headers["authorization"];
+    console.log("Authorization Header:", authHeader);
+
+    const targetUrl =
+      "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/agents/pccs";
+
+    const response = await axios({
+      method: req.method,
+      url: targetUrl,
+      data: req.body,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: authHeader, // Forward the Authorization header if it exists
+      },
+    });
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    console.error("Error forwarding request:", error.message);
+    res.status(error.response?.status || 500).json({
+      error_code:
+        error.response?.data?.error_code || "Error forwarding request",
+      error_message:
+        error.response?.data?.error_message || "Error forwarding request",
+    });
+  }
+});
 
 // Serve static files from the Angular app's production build folder
 if (process.env.NODE_ENV === "production") {
