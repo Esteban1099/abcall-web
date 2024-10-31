@@ -1,5 +1,11 @@
-import {Company} from '../company/company';
-import {Pcc} from '../pcc/pcc';
+import { Company } from '../company/company';
+import { Pcc } from '../pcc/pcc';
+
+export interface SimplifiedConsumer {
+  id: string;
+  identification_type: string;
+  identification_number: string;
+}
 
 export class Consumer {
   id: string;
@@ -13,13 +19,13 @@ export class Consumer {
   pccs: Pcc[];
 
   public constructor(
-    id: string = "",
-    identification_type: string = "",
-    identification_number: string = "",
-    name: string = "",
-    email: string = "",
-    contact_number: string = "",
-    address: string = "",
+    id: string = '',
+    identification_type: string = '',
+    identification_number: string = '',
+    name: string = '',
+    email: string = '',
+    contact_number: string = '',
+    address: string = '',
     companies: Company[] = [],
     pccs: Pcc[] = []
   ) {

@@ -1,3 +1,7 @@
 .toast-body {
   display: flex !important
 }
+
+.placeholder-black::placeholder {
+  color: black !important;
+}

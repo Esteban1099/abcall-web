@@ -3,28 +3,38 @@ import { AppComponent } from './app.component';
 import { Router } from '@angular/router';
 import { EventService } from './commons/event.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import {ToastComponent} from './commons/toast/toast.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { ToastComponent } from './commons/toast/toast.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthService } from './auth/auth.service';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let eventService: EventService;
   let router: Router;
+  let authService: jasmine.SpyObj<AuthService>;
 
   beforeEach(waitForAsync(() => {
+    const authServiceSpy = jasmine.createSpyObj('AuthService', [
+      'isAuthenticatedUser',
+    ]);
+
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        ToastComponent,
-        HttpClientTestingModule,// Importamos ToastComponent en el módulo de pruebas
-      ],
+      imports: [RouterTestingModule, ToastComponent, HttpClientTestingModule],
       declarations: [AppComponent],
-      providers: [EventService]
+      providers: [
+        EventService,
+        { provide: AuthService, useValue: authServiceSpy },
+      ],
     }).compileComponents();
+
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
   }));
 
   beforeEach(() => {
+    // Ensure isAuthenticatedUser returns false for default flag tests
+    authService.isAuthenticatedUser.and.returnValue(false);
+
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
     eventService = TestBed.inject(EventService);
@@ -59,7 +69,7 @@ describe('AppComponent', () => {
     expect(eventService.backAuthLogin.emit).toHaveBeenCalled();
   });
 
-  it('should call logOut, clear sessionStorage, and navigate to /auth', () => {
+  it('should call logOut, clear localStorage, and navigate to /auth', () => {
     spyOn(localStorage, 'removeItem');
     spyOn(router, 'navigate');
 
@@ -68,5 +78,24 @@ describe('AppComponent', () => {
     expect(localStorage.removeItem).toHaveBeenCalledWith('token');
     expect(localStorage.removeItem).toHaveBeenCalledWith('role');
     expect(router.navigate).toHaveBeenCalledWith(['/auth']);
+  });
+
+  it('should set showMenu, showBackOption, and showLogOut when user is authenticated', () => {
+    // Make isAuthenticatedUser return true
+    authService.isAuthenticatedUser.and.returnValue(true);
+
+    // Re-initialize the component to trigger ngOnInit with the updated auth status
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    expect(component.showMenu).toBeTrue();
+    expect(component.showBackOption).toBeFalse();
+    expect(component.showLogOut).toBeTrue();
+  });
+
+  it('should update showBackOption when showBackAuthLogin event is emitted', () => {
+    eventService.showBackAuthLogin.emit();
+    fixture.detectChanges();
+    expect(component.showBackOption).toBeTrue();
   });
 });
