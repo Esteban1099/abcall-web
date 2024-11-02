@@ -350,4 +350,258 @@ describe('Asesor crea una PQR a un usuario', () => {
     cy.contains('La PQR ha sido creada exitosamente').should('be.visible');
   });
 
+  describe('Asesor ve listado de PQRs asignado a si mismo', () => {
+    it('should show list of PQRs', () => {
+
+      //Desde el menu principal
+      // Asesor se Loggea Exitosamente
+      cy.visit('/');
+      cy.contains('button', 'Asesor').click();
+      cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
+      cy.get('input[formcontrolname="password"]').type('123456');
+      cy.contains('button', 'Iniciar sesión').click();
+      cy.wait(500);
+
+      // Asesor ve listado de PQRs asignado a si mismo
+
+      cy.get('.table-responsive').should('be.visible');
+
+      // Verifica que la tabla tenga las columnas correctas
+      cy.get('table thead tr').within(() => {
+      cy.contains('th', 'Estado').should('be.visible');
+      cy.contains('th', 'ID PQR').should('be.visible');
+      cy.contains('th', 'Asunto').should('be.visible');
+      cy.contains('th', 'ID Consumidor').should('be.visible');
+      cy.contains('th', 'Acciones').should('be.visible');
+      }
+      );
+    });
+  });
+
 });
+
+
+describe('Asesor crea PQR, y vuelve a la lista exitosamente. Nueva PQR no necesariamente debe aparecer en lista', () => {
+  it('should create a PQR', () => {
+
+    //Desde el menu principal
+    // Asesor se Loggea Exitosamente
+    cy.visit('/');
+    cy.contains('button', 'Asesor').click();
+    cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
+    cy.get('input[formcontrolname="password"]').type('123456');
+    cy.contains('button', 'Iniciar sesión').click();
+
+    // Asesor crea PQR
+    cy.contains('Bienvenido').should('be.visible');
+    cy.wait(200);
+    cy.get('button.btn-primary.rounded-pill').should('exist');
+    cy.get('button.btn-primary.rounded-pill').first().click();
+    cy.contains('.dropdown-item', 'Crear PQR').click();
+    cy.wait(500); // Espera 500 milisegundos
+
+    cy.get('select#identification_type').should('be.visible').select('Pasaporte');
+
+    // Verifica que se ha seleccionado "Pasaporte"
+    cy.get('select#identification_type').should('have.value', 'Pasaporte');
+
+    cy.get('input#identification_number').should('be.visible').clear().type('9601063007');
+    cy.get('input#identification_number').should('have.value', '9601063007');
+
+    cy.get('button').contains('Consultar').click();
+
+    cy.get('textarea#description').clear().type('Descripción de prueba con más de 200 caracteres'.repeat(5));
+
+    cy.get('input#subject').type('Asunto de prueba');
+
+    cy.get('select.form-select').should('be.visible').select(0);
+
+    cy.contains('button', 'Crear PQR').should('be.enabled');
+    // Se hace click en el boton crear pqr y se evidencia mensaje de exito
+    cy.contains('button', 'Crear PQR').click();
+    cy.contains('La PQR ha sido creada exitosamente').should('be.visible');
+
+    // Asesor vuelve a la lista de PQRs
+
+    cy.get('button.btn-primary.rounded-pill').should('exist');
+    cy.get('button.btn-primary.rounded-pill').first().click();
+    cy.contains('.dropdown-item', 'Listar PQR').click();
+    cy.wait(500); // Espera 500 milisegundos
+
+    // Asesor ve listado de PQRs asignado a si mismo
+
+    cy.get('.table-responsive').should('be.visible');
+
+    // Verifica que la tabla tenga las columnas correctas
+    cy.get('table thead tr').within(() => {
+    cy.contains('th', 'Estado').should('be.visible');
+    cy.contains('th', 'ID PQR').should('be.visible');
+    cy.contains('th', 'Asunto').should('be.visible');
+    cy.contains('th', 'ID Consumidor').should('be.visible');
+    cy.contains('th', 'Acciones').should('be.visible');
+      });
+    cy.get('table tbody tr').should('have.length.at.least', 20);
+    });
+  });
+
+  describe('Asesor ve detalle de Usuario y vuelve a la lista', () => {
+    it('should show user details', () => {
+
+      //Desde el menu principal
+      // Asesor se Loggea Exitosamente
+      cy.visit('/');
+      cy.contains('button', 'Asesor').click();
+      cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
+      cy.get('input[formcontrolname="password"]').type('123456');
+      cy.contains('button', 'Iniciar sesión').click();
+      cy.wait(500);
+
+      // Asesor ve detalle de Usuario
+
+      cy.get('button.btn-primary.rounded-pill').first().click();
+      cy.contains('.dropdown-item', 'Consultar consumidor').click();
+      cy.wait(500); // Espera 500 milisegundos
+
+      cy.get('select#identification_type').should('be.visible').select('Pasaporte');
+
+      // Verifica que se ha seleccionado "Pasaporte"
+      cy.get('select#identification_type').should('have.value', 'Pasaporte');
+
+      cy.get('input#identification_number').should('be.visible').clear().type('9601063007');
+
+      cy.get('button').contains('Consultar').click();
+
+      cy.contains('Vista 360 de').should('be.visible');
+      cy.contains('Número de contacto').should('be.visible');
+      cy.contains('Dirección').should('be.visible');
+      cy.contains('Correo electrónico').should('be.visible');
+      cy.contains('Número de identificación').should('be.visible');
+      cy.contains('istado de PQRs reportados por el consumidor').should('be.visible');
+      cy.contains('Empresa').should('be.visible');
+
+          // Asesor vuelve a la lista de PQRs
+
+    cy.get('button.btn-primary.rounded-pill').should('exist');
+    cy.get('button.btn-primary.rounded-pill').first().click();
+    cy.contains('.dropdown-item', 'Listar PQR').click();
+    cy.wait(500); // Espera 500 milisegundos
+
+    // Asesor ve listado de PQRs asignado a si mismo
+
+    cy.get('.table-responsive').should('be.visible');
+
+    // Verifica que la tabla tenga las columnas correctas
+    cy.get('table thead tr').within(() => {
+    cy.contains('th', 'Estado').should('be.visible');
+    cy.contains('th', 'ID PQR').should('be.visible');
+    cy.contains('th', 'Asunto').should('be.visible');
+    cy.contains('th', 'ID Consumidor').should('be.visible');
+    cy.contains('th', 'Acciones').should('be.visible');
+      });
+    cy.get('table tbody tr').should('have.length.at.least', 20);
+    });
+
+  });
+
+  describe('Asesor busca una PQR especifica con la barra de busqueda', () => {
+    //Desde el menu principal
+    // Asesor se Loggea Exitosamente
+
+    it('should search a PQR with the search bar', () => {
+      cy.visit('/');
+    cy.contains('button', 'Asesor').click();
+    cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
+    cy.get('input[formcontrolname="password"]').type('123456');
+    cy.contains('button', 'Iniciar sesión').click();
+    cy.contains('Bienvenido').should('be.visible');
+    cy.wait(200);
+
+    cy.get('table tbody tr').should('have.length.at.least', 1);
+
+    cy.get('table tbody tr').then((rows) => {
+      const randomIndex = Math.floor(Math.random() * rows.length);
+      cy.wrap(rows[randomIndex]).find('td').eq(1).invoke('text').then((id) => {
+
+        // Pega el ID en el campo de búsqueda
+        cy.get('input[placeholder="Buscar"]').type(id);
+
+        // Verifica que se aplicó el filtro correctamente
+        cy.get('table tbody tr').should('have.length', 1);
+
+        // Verifica que el ID en la fila filtrada coincida con el ID buscado
+        cy.get('table tbody tr td').eq(1).should('have.text', id.trim());
+      });
+    });
+    });
+
+  });
+
+
+  describe('Asesor verifica consistencia entre tablas de PQRs y Vista 360 de Usuario', () => {
+
+    let userId = '';
+    let userIdType = '';
+    let initialPqrIds = [];
+
+    it('should show user details', () => {
+
+      // Desde el menú principal
+      // Asesor se loggea exitosamente
+      cy.visit('/');
+      cy.contains('button', 'Asesor').click();
+      cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
+      cy.get('input[formcontrolname="password"]').type('123456');
+      cy.contains('button', 'Iniciar sesión').click();
+      cy.wait(500);
+
+      cy.get('table tbody tr').should('have.length.at.least', 1);
+
+      for (let i = 0; i < 10; i++) {
+        // Selecciona una fila aleatoria y obtiene el ID del usuario y tipo de identificación
+        cy.get('table tbody tr').then((rows) => {
+          const randomIndex = Math.floor(Math.random() * rows.length);
+          let userId = '';
+          let userIdType = '';
+          let pqrId = '';
+
+          // Dentro de la fila aleatoria seleccionada, obtiene el ID y tipo de identificación del usuario
+          cy.wrap(rows[randomIndex]).within(() => {
+            cy.get('td').eq(3).invoke('text').then((text) => {
+              const splitText = text.trim().split(' ');
+              userIdType = splitText.slice(0, -1).join(' '); // Toma todo el tipo de identificación (sin el número)
+              userId = splitText.slice(-1)[0];
+            });
+
+            // Obtiene el ID de PQR de esa misma fila
+            cy.get('td').eq(1).invoke('text').then((id) => {
+              pqrId = id.trim();
+            });
+          }).then(() => {
+            // Navega a la página de detalles del usuario
+            cy.get('button.btn-primary.rounded-pill').first().click();
+            cy.contains('.dropdown-item', 'Consultar consumidor').click();
+            cy.wait(500);
+
+            // Selecciona el tipo de identificación y escribe el ID del usuario
+            cy.get('select#identification_type').should('be.visible').select(userIdType);
+            cy.get('input#identification_number').should('be.visible').clear().type(userId);
+            cy.get('button').contains('Consultar').click(); // Botón para buscar al usuario
+            cy.wait(500); // Espera a que se carguen los resultados de PQRs del usuario
+
+            // Verifica que el ID de PQR está en la lista de PQRs del usuario
+            cy.get('.list-group-item').should('contain.text', pqrId);
+
+            // vuelve a la lista de PQRS
+            cy.get('button.btn-primary.rounded-pill').first().click();
+            cy.contains('.dropdown-item', 'Listar PQR').click();
+            cy.wait(500);
+
+          });
+        });
+      }
+    });
+  });
+
+
+
+
