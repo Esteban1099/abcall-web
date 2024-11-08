@@ -5,17 +5,24 @@ import {
 } from '@angular/common/http/testing';
 import { PccService } from './pcc.service';
 import { Pcc } from './pcc';
-import { SimplifiedConsumer } from '../consumer/consumer';
+import { Consumer, SimplifiedConsumer } from '../consumer/consumer';
+import { Company } from '../company/company';
 
 describe('PccService', () => {
   let service: PccService;
   let httpTestingController: HttpTestingController;
 
   // Define a mock SimplifiedConsumer
-  const mockConsumer: SimplifiedConsumer = {
+  const mockConsumer: Consumer = {
     id: 'consumer123',
     identification_type: 'CC',
     identification_number: '123456789',
+    name: '',
+    email: '',
+    contact_number: '',
+    address: '',
+    companies: [],
+    pccs: []
   };
 
   beforeEach(() => {
@@ -46,6 +53,8 @@ describe('PccService', () => {
         subject: 'Test Subject',
         description: 'Test Description',
         consumer: mockConsumer,
+        company: { id: 'company123', name: 'Test Company' }, // Replace with a valid Company object
+        notifications: []
       };
       const mockResponse: Pcc = {
         id: 'pcc789',
@@ -53,6 +62,8 @@ describe('PccService', () => {
         subject: 'Test Subject',
         description: 'Test Description',
         consumer: mockConsumer,
+        company: { id: 'company123', name: 'Test Company' },
+        notifications: []
       };
 
       // Call the createPcc method
@@ -80,6 +91,8 @@ describe('PccService', () => {
           subject: 'Subject 1',
           description: 'Description 1',
           consumer: mockConsumer,
+          company: { id: 'company123', name: 'Test Company' } as Company,
+          notifications: []
         },
         {
           id: 'PQR002',
@@ -87,6 +100,8 @@ describe('PccService', () => {
           subject: 'Subject 2',
           description: 'Description 2',
           consumer: mockConsumer,
+          company: { id: 'company123', name: 'Test Company' } as Company,
+          notifications: []
         },
         {
           id: 'PQR003',
@@ -94,6 +109,8 @@ describe('PccService', () => {
           subject: 'Subject 3',
           description: 'Description 3',
           consumer: mockConsumer,
+          company: { id: 'company456', name: 'Another Test Company' } as Company,
+          notifications: []
         },
       ];
 

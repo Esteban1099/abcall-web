@@ -1,0 +1,4 @@
+.muted-text {
+  font-size: 0.875rem; /* Smaller font size */
+  color: rgba(255, 255, 255, 0.6); /* Lighter color for opacity effect */
+}

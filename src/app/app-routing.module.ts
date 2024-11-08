@@ -5,6 +5,7 @@ import {ConsumerDetailComponent} from './consumer/consumer-detail/consumer-detai
 import {PccListComponent} from './pcc/pcc-list/pcc-list.component';
 import {AuthGuard} from './commons/guards/auth.guard';
 import {AuthForbiddenComponent} from './auth/auth-forbidden/auth-forbidden.component';
+import { PccDetailComponent } from './pcc/pcc-detail/pcc-detail.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,13 @@ const routes: Routes = [
   {
     path: 'forbidden',
     component: AuthForbiddenComponent
+  },
+  {
+    path: 'pcc-detail/:id',
+    component: PccDetailComponent,
+    canActivate: [
+      AuthGuard
+    ]
   },
 ];
 
