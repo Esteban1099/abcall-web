@@ -1,12 +1,12 @@
 import { Company } from '../company/company';
-import { SimplifiedConsumer } from '../consumer/consumer';
+import { Consumer, SimplifiedConsumer } from '../consumer/consumer';
 
 export class Pcc {
   id: string;
   status: string;
   subject: string;
   description: string;
-  consumer: SimplifiedConsumer;
+  consumer: Consumer;
   company: Company;
   notifications: Notification[];
 
@@ -14,18 +14,18 @@ export class Pcc {
     id: string = '',
     status: string = '',
     subject: string = '',
-    description: string = '',
-    Consumer: SimplifiedConsumer,
     company: Company,
-    notifications: Notification[] = []
+    consumer: Consumer,
+    notifications: Notification[] = [],
+    description: string = '',
   ) {
     this.id = id;
     this.status = status;
     this.subject = subject;
     this.description = description;
-    this.consumer = Consumer;
     this.company = company;
     this.notifications = notifications;
+    this.consumer = consumer;
   }
 }
 
