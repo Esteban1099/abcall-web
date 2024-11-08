@@ -30,7 +30,6 @@ export class PccDetailComponent implements OnInit {
       const id = params.get('id');
       if (id) {
         this.fetchPQR(id);
-        console.log('It got some id');
       } else {
         console.error('No id found in route');
       }
@@ -41,7 +40,6 @@ export class PccDetailComponent implements OnInit {
     this.ppcService.getPccDetail(id).subscribe(
       (data: Pcc) => {
         this.pcc = data;
-        console.log('Fetched Pcc:', this.pcc);  // Log the result to confirm
       },
       (error: any) => {
         console.error('Error fetching PQR:', error);
