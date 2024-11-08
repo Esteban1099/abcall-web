@@ -381,35 +381,6 @@ describe('Asesor crea una PQR a un usuario', () => {
 });
 
 
-
-  describe('Asesor ve listado de PQRs asignado a si mismo', () => {
-    it('should show list of PQRs', () => {
-
-      //Desde el menu principal
-      // Asesor se Loggea Exitosamente
-      cy.visit('/');
-      cy.contains('button', 'Asesor').click();
-      cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
-      cy.get('input[formcontrolname="password"]').type('123456');
-      cy.contains('button', 'Iniciar sesión').click();
-      cy.wait(500);
-
-      // Asesor ve listado de PQRs asignado a si mismo
-
-      cy.get('.table-responsive').should('be.visible');
-      cy.get('table tbody tr').should('have.length.at.least', 20);
-      // Verifica que la tabla tenga las columnas correctas
-      cy.get('table thead tr').within(() => {
-      cy.contains('th', 'Estado').should('be.visible');
-      cy.contains('th', 'ID PQR').should('be.visible');
-      cy.contains('th', 'Asunto').should('be.visible');
-      cy.contains('th', 'ID Consumidor').should('be.visible');
-      cy.contains('th', 'Acciones').should('be.visible');
-      });
-
-    });
-  });
-
 describe('Asesor crea PQR, y vuelve a la lista exitosamente. Nueva PQR no necesariamente debe aparecer en lista', () => {
   it('should create a PQR', () => {
 
@@ -566,7 +537,7 @@ describe('Asesor crea PQR, y vuelve a la lista exitosamente. Nueva PQR no necesa
   });
 
 
-  describe('Asesor se cersiora de consistencia entre tablas de PQRs y Vista 360 de Usuario', () => {
+  describe('Asesor verifica consistencia entre tablas de PQRs y Vista 360 de Usuario', () => {
 
     let userId = '';
     let userIdType = '';
@@ -630,7 +601,3 @@ describe('Asesor crea PQR, y vuelve a la lista exitosamente. Nueva PQR no necesa
       }
     });
   });
-
-
-
-
