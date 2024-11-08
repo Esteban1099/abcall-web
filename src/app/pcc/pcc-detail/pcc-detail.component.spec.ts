@@ -1,17 +1,26 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 import { PccDetailComponent } from './pcc-detail.component';
 
 describe('PccDetailComponent', () => {
   let component: PccDetailComponent;
   let fixture: ComponentFixture<PccDetailComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PccDetailComponent ]
+      imports: [ HttpClientTestingModule, PccDetailComponent ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            // Provide any mock data or parameters required by ActivatedRoute
+            paramMap: of({ get: (key: string) => 'mockValue' })
+          }
+        }
+      ]
     })
     .compileComponents();
   }));
