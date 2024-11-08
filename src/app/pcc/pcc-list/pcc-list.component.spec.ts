@@ -21,7 +21,18 @@ describe('PccListComponent', () => {
         id: 'consumer1',
         identification_type: 'CC',
         identification_number: '123456',
+        name: '',
+        email: '',
+        contact_number: '',
+        address: '',
+        companies: [],
+        pccs: []
       },
+      company: {
+        id: 'company1',
+        name: 'Test Company',
+      },
+      notifications: []
     },
     {
       id: 'PQR002',
@@ -32,7 +43,18 @@ describe('PccListComponent', () => {
         id: 'consumer2',
         identification_type: 'CC',
         identification_number: '654321',
+        name: '',
+        email: '',
+        contact_number: '',
+        address: '',
+        companies: [],
+        pccs: []
       },
+      company: {
+        id: 'company1',
+        name: 'Test Company',
+      },
+      notifications: []
     },
     {
       id: 'PQR003',
@@ -43,7 +65,18 @@ describe('PccListComponent', () => {
         id: 'consumer3',
         identification_type: 'CE',
         identification_number: '987654',
+        name: '',
+        email: '',
+        contact_number: '',
+        address: '',
+        companies: [],
+        pccs: []
       },
+      company: {
+        id: 'company2',
+        name: 'Another Test Company',
+      },
+      notifications: []
     },
   ];
 

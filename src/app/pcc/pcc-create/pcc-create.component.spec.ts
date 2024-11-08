@@ -6,7 +6,8 @@ import { ToastService } from '../../commons/toast.service';
 import { EventService } from '../../commons/event.service';
 import { of } from 'rxjs';
 import { Pcc } from '../pcc';
-import { SimplifiedConsumer } from '../../consumer/consumer';
+import { Consumer, SimplifiedConsumer } from '../../consumer/consumer';
+import { Company } from '../../company/company';
 
 describe('PccCreateComponent', () => {
   let component: PccCreateComponent;
@@ -63,10 +64,16 @@ describe('PccCreateComponent', () => {
   });
 
   it('should call createPcc and show success message on successful creation', () => {
-    const mockConsumer: SimplifiedConsumer = {
+    const mockConsumer: Consumer = {
       id: 'consumer123',
       identification_type: 'CC',
       identification_number: '123456789',
+      name: '',
+      email: '',
+      contact_number: '',
+      address: '',
+      companies: [],
+      pccs: []
     };
 
     const mockPcc: Pcc = {
@@ -75,6 +82,8 @@ describe('PccCreateComponent', () => {
       description: 'Test Description',
       status: 'pending',
       consumer: mockConsumer,
+      company: { id: 'company123', name: 'Test Company' } as Company,
+      notifications: []
     };
 
     component.pccForm.setValue({
