@@ -33,7 +33,7 @@
           <td>{{ pcc.subject }}</td>
           <td>{{ pcc.consumer.identification_type }} {{ pcc.consumer.identification_number }}</td>
           <td>
-            <button class="btn btn-primary btn-sm rounded-pill">
+            <button class="btn btn-primary btn-sm rounded-pill" (click)="viewPccDetail(pcc.id)">
               <i class="fa fa-info-circle me-1"></i> Detalle
             </button>
           </td>

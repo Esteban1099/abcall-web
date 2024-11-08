@@ -19,4 +19,8 @@ export class PccService {
   getPccList(): Observable<Pcc[]> {
     return this.httpClient.get<Pcc[]>('/api/agents/pccs');
   }
+
+  getPccDetail(id: string): Observable<Pcc> {
+    return this.httpClient.get<Pcc>(`/api/pccs/${id}`);
+  }
 }

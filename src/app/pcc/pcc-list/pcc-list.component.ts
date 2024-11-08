@@ -3,6 +3,7 @@ import { Pcc } from '../pcc';
 import { PccService } from '../pcc.service';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pcc-list',
@@ -16,7 +17,7 @@ export class PccListComponent implements OnInit {
   filteredPccs: Pcc[] = [];
   searchTerm: string = '';
 
-  constructor(private ppcService: PccService) {}
+  constructor(private readonly ppcService: PccService, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchPQRs();
@@ -42,5 +43,9 @@ export class PccListComponent implements OnInit {
         pcc.id.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
+  }
+
+  viewPccDetail(id: string): void {
+    this.router.navigate(['/pcc-detail', id]);
   }
 }
