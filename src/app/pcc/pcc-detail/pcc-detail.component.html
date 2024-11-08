@@ -5,4 +5,45 @@
         PQR_{{ pcc.id.split('-')[0] }} - {{ pcc.subject }}</h1>
     </div>
   </div>
-</div>
+  <div class="col-md-6">
+    <!-- Left Column: PQR Information -->
+
+    <!-- Description Row -->
+    <div class="row mb-1">
+      <div class="col">
+        <label class="form-label text-muted small mb-1" i18n>Descripción</label>
+        <p class="form-control-plaintext small" style="text-align: justify;">
+          {{ pcc.description }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Status Row -->
+    <div class="row mb-1">
+      <div class="col">
+        <label class="form-label text-muted small" i18n>Estado del PQR</label>
+        <p class="form-control-plaintext small">
+          {{ pcc.status }}
+        </p>
+      </div>
+      <div class="col">
+        <label class="form-label text-muted small" i18n>Empresa sobre la cual se radicó el PQR</label>
+        <p class="form-control-plaintext small">
+          {{ pcc.company.name }}
+        </p>
+      </div>
+    </div>
+    <!-- Notificaciones Row -->
+    <div class="row mb-1">
+      <div class="col">
+        <h3>Notificaciones</h3>
+        <div *ngFor="let notification of pcc.notifications" class="mb-2">
+          <label class="form-label text-muted small" i18n>{{ notification.status }}</label>
+          <p class="form-control-plaintext small">
+            {{ notification.reason }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>

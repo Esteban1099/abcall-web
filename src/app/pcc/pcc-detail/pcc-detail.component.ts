@@ -40,7 +40,7 @@ export class PccDetailComponent implements OnInit {
   fetchPQR(id: string): void {
     this.ppcService.getPccDetail(id).subscribe(
       (data: Pcc) => {
-        this.pcc = data;  // Ensure the data is assigned here
+        this.pcc = data;
         console.log('Fetched Pcc:', this.pcc);  // Log the result to confirm
       },
       (error: any) => {
