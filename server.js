@@ -118,6 +118,36 @@ app.use(
   }
 );
 
+app.use("/api/pccs/:id", async (req, res) => {
+  try {
+    // Extract Authorization header from incoming request
+    const authHeader = req.headers["authorization"];
+    console.log("Authorization Header:", authHeader);
+
+    const { id } = req.params;
+    const targetUrl = `http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/pccs/${id}`;
+
+    const response = await axios({
+      method: req.method,
+      url: targetUrl,
+      data: req.body,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: authHeader, // Forward the Authorization header if it exists
+      },
+    });
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    console.error("Error forwarding request:", error.message);
+    res.status(error.response?.status || 500).json({
+      error_code:
+        error.response?.data?.error_code || "Error forwarding request",
+      error_message:
+        error.response?.data?.error_message || "Error forwarding request",
+    });
+  }
+});
+
 app.use("/api/agents/pccs", async (req, res) => {
   try {
     // Extract Authorization header from incoming request
