@@ -8,7 +8,6 @@ describe('My First Test', () => {
   })
 })
 
-
 describe('Auth Login as Clients Tests', () => {
 
   it('Should login the user Empresa Succesfully', () => {
@@ -601,3 +600,57 @@ describe('Asesor crea PQR, y vuelve a la lista exitosamente. Nueva PQR no necesa
       }
     });
   });
+
+
+describe('Asesor ve detalle de PCC al azar', () => {
+  it('should display the detail of a randomly selected PCC', () => {
+    let pccId = '';
+    let pccSubject = '';
+    // Asesor se loggea exitosamente
+    cy.visit('/');
+    cy.contains('button', 'Asesor').click();
+    cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
+    cy.get('input[formcontrolname="password"]').type('123456');
+    cy.contains('button', 'Iniciar sesión').click();
+    cy.wait(500); // Espera a que cargue la tabla de PQRs/PCCs
+
+    // Verifica que la tabla de PQRs está visible y tiene al menos una fila
+    cy.get('.table-responsive').should('be.visible');
+    cy.get('table tbody tr').should('have.length.at.least', 1);
+
+    // Selecciona una PCC al azar de la tabla
+    cy.get('table tbody tr').then((rows) => {
+      const randomIndex = Math.floor(Math.random() * rows.length);
+      const selectedRow = cy.wrap(rows[randomIndex]);
+
+      // Dentro de la fila seleccionada, obtenemos el ID de la PCC y hacemos clic en el botón de detalle
+      selectedRow.within(() => {
+        cy.get('td').eq(2).invoke('text').then((subject) => { // Ajusta `eq(2)` según la posición de la columna
+          pccSubject = subject.trim();
+          console.log(pccSubject);
+        });
+        // Guarda el ID de la PCC para verificarlo en la página de detalle
+        cy.get('td').eq(1).invoke('text').then((id) => {
+          pccId = id.trim();
+        });
+        // Asegura que el botón de detalle está visible antes de hacer clic
+        cy.get('button.btn.btn-primary.btn-sm.rounded-pill').should('be.visible').click();
+
+        // Verifica que estamos en la página de detalles de la PCC y que muestra la información correcta
+        cy.url().should('include', `/pcc-detail/${pccId}`);
+      });
+    });
+    cy.contains(`PQR_${pccId.split('-')[0]}`).should('be.visible');
+    cy.contains('button', 'Editar PQR').should('be.visible');
+    cy.contains('button', 'Regresar').should('be.visible');
+    cy.contains('Estado').should('be.visible');
+    cy.contains('Descripción').should('be.visible');
+    cy.contains('Consumidor').should('be.visible');
+    cy.contains('Empresa').should('be.visible');
+    cy.wait(2000);
+
+    cy.contains('button', 'Regresar').should('be.visible').click();
+    cy.url().should('include', `/pcc-list`);
+
+  });
+});
