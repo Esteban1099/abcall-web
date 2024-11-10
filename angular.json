@@ -7,7 +7,7 @@
       "i18n": {
         "sourceLocale": "es-CO",
         "locales": {
-          "en-US": "src/locale/messages.en.xlf"
+          "en-US": "src/assets/locale/en-US.json"
         }
       },
       "projectType": "application",
@@ -36,8 +36,9 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
-                "glob": "**/*",
-                "input": "public"
+                "glob": "**/*.json",
+                "input": "src/assets/locale",
+                "output": "/assets/locale"
               }
             ],
             "styles": [
@@ -120,6 +121,16 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "en-US.json",
+                "input": "src/locale",
+                "output": "/assets/locale"
+              },
+              {
+                "glob": "es-CO.json",
+                "input": "src/locale",
+                "output": "/assets/locale"
               }
             ],
             "styles": [

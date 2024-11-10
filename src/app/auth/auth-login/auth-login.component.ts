@@ -1,22 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Auth} from '../auth';
-import {AuthService} from '../auth.service';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {NgIf} from '@angular/common';
-import {EventService} from '../../commons/event.service';
-import {Observable} from 'rxjs';
-import {ToastService} from '../../commons/toast.service';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Auth } from '../auth';
+import { AuthService } from '../auth.service';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { NgIf } from '@angular/common';
+import { EventService } from '../../commons/event.service';
+import { Observable } from 'rxjs';
+import { ToastService } from '../../commons/toast.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-auth-login',
   templateUrl: './auth-login.component.html',
   styleUrls: ['./auth-login.component.css'],
-  imports: [
-    ReactiveFormsModule,
-    RouterLink,
-    NgIf
-  ],
+  imports: [ReactiveFormsModule, RouterLink, NgIf, TranslateModule],
   standalone: true,
 })
 export class AuthLoginComponent implements OnInit {
@@ -28,9 +30,8 @@ export class AuthLoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private eventService: EventService,
-    private toastService: ToastService,
-  ) {
-  }
+    private toastService: ToastService
+  ) {}
 
   ngOnInit() {
     this.authForm = this.formBuilder.group({
@@ -40,7 +41,7 @@ export class AuthLoginComponent implements OnInit {
     this.eventService.backAuthLogin.subscribe((): void => {
       this.role = undefined;
       localStorage.removeItem('role');
-    })
+    });
   }
 
   setRole(role: string) {
@@ -63,7 +64,7 @@ export class AuthLoginComponent implements OnInit {
           this.toastService.showSuccess('Bienvenido!');
           this.eventService.showMenu.emit();
           this.router.navigate(['/pcc-list']);
-        })
+        });
       }
     } else {
       this.toastService.showError('Rol no seleccionado');

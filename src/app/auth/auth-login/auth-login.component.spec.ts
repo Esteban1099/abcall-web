@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EventEmitter } from '@angular/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('AuthLoginComponent', () => {
   let component: AuthLoginComponent;
@@ -18,8 +19,14 @@ describe('AuthLoginComponent', () => {
   let router: jasmine.SpyObj<Router>;
 
   beforeEach(waitForAsync(() => {
-    authService = jasmine.createSpyObj('AuthService', ['loginClient', 'loginAgent']);
-    toastService = jasmine.createSpyObj('ToastService', ['showSuccess', 'showError']);
+    authService = jasmine.createSpyObj('AuthService', [
+      'loginClient',
+      'loginAgent',
+    ]);
+    toastService = jasmine.createSpyObj('ToastService', [
+      'showSuccess',
+      'showError',
+    ]);
     router = jasmine.createSpyObj('Router', ['navigate']);
 
     eventService = {
@@ -29,13 +36,19 @@ describe('AuthLoginComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule, AuthLoginComponent],
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule,
+        AuthLoginComponent,
+        TranslateModule.forRoot(),
+      ],
       providers: [
         { provide: AuthService, useValue: authService },
         { provide: EventService, useValue: eventService },
         { provide: ToastService, useValue: toastService },
-        { provide: Router, useValue: router }
-      ]
+        { provide: Router, useValue: router },
+        TranslateService,
+      ],
     }).compileComponents();
   }));
 
