@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ToastComponent } from './commons/toast/toast.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthService } from './auth/auth.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -20,11 +21,17 @@ describe('AppComponent', () => {
     ]);
 
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, ToastComponent, HttpClientTestingModule],
+      imports: [
+        RouterTestingModule,
+        ToastComponent,
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
+      ],
       declarations: [AppComponent],
       providers: [
         EventService,
         { provide: AuthService, useValue: authServiceSpy },
+        TranslateService,
       ],
     }).compileComponents();
 
