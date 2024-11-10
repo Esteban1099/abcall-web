@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {EventService} from './commons/event.service';
-import {AuthService} from './auth/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { EventService } from './commons/event.service';
+import { AuthService } from './auth/auth.service';
+import { TranslationService } from './commons/internationalization/translation.service';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +19,8 @@ export class AppComponent implements OnInit {
     private router: Router,
     private eventService: EventService,
     private authService: AuthService,
-  ) {
-  }
+    private translationService: TranslationService
+  ) {}
 
   ngOnInit(): void {
     this.eventService.showMenu.subscribe((): void => {
@@ -34,7 +35,7 @@ export class AppComponent implements OnInit {
     }
     this.eventService.showBackAuthLogin.subscribe((): void => {
       this.showBackOption = true;
-    })
+    });
   }
 
   backAuthLogin() {
@@ -49,5 +50,9 @@ export class AppComponent implements OnInit {
     this.showBackOption = false;
     this.showLogOut = false;
     this.router.navigate(['/auth']);
+  }
+
+  switchLanguage(language: string) {
+    this.translationService.setLanguage(language);
   }
 }
