@@ -11,5 +11,6 @@
   "Contraseña": "Password",
   "Debe ingresar la contraseña": "Password required",
   "¿Olvido su contraseña?": "Forgot your password?",
-  "Registrarse": "Sing up"
+  "Registrarse": "Sing up",
+  "_comment": "Add more translations here"
 }
