@@ -3,6 +3,7 @@ import { Pcc } from '../pcc';
 import { PccService } from '../pcc.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import {NgForOf, NgIf} from '@angular/common';
+import { PccEditComponent } from '../pcc-edit/pcc-edit.component';
 
 
 
@@ -14,6 +15,7 @@ import {NgForOf, NgIf} from '@angular/common';
     NgIf,
     NgForOf,
     RouterLink,
+    PccEditComponent
   ],
   standalone: true,
 })
