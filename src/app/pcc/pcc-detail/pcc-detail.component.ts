@@ -2,23 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { Pcc } from '../pcc';
 import { PccService } from '../pcc.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import {NgForOf, NgIf} from '@angular/common';
-
-
+import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-pcc-detail',
   templateUrl: './pcc-detail.component.html',
   styleUrls: ['./pcc-detail.component.css'],
-  imports: [
-    NgIf,
-    NgForOf,
-    RouterLink,
-  ],
+  imports: [NgIf, NgForOf, RouterLink],
   standalone: true,
 })
 export class PccDetailComponent implements OnInit {
   pcc!: Pcc;
+  role: string = localStorage.getItem('role') ?? 'AGENT';
 
   constructor(
     private readonly ppcService: PccService,
@@ -46,5 +41,4 @@ export class PccDetailComponent implements OnInit {
       }
     );
   }
-
 }

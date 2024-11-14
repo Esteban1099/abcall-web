@@ -97,8 +97,8 @@
       <div class="col-2 pb-3">
         <button class="btn btn-danger rounded-pill w-100" i18n [routerLink]="['/pcc-list']">Regresar</button>
       </div>
-      <div class="col-2 pb-3">
+      <div class="col-2 pb-3" *ngIf="role === 'AGENT'">
         <button class="btn btn-primary rounded-pill w-100" i18n disabled>Editar PQR</button>
       </div>
     </div>
-</div>
+  </div>
