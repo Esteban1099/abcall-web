@@ -27,4 +27,9 @@ export class PccService {
   getPccDetail(id: string): Observable<Pcc> {
     return this.httpClient.get<Pcc>(`/api/pccs/${id}`);
   }
+
+  updatePcc(pccId: string, payload: { status: string; reason: string }): Observable<any> {
+    return this.httpClient.put<Pcc>(`/api/pccs/${pccId}`, payload);
+  }
 }
+
