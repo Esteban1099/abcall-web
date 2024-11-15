@@ -1,0 +1,97 @@
+<div *ngIf="pcc">
+  <div class="row">
+    <div class="col">
+      <h1 class="pb-3">
+        PQR_{{ pcc.id.split('-')[0] }} - {{ pcc.subject }}
+      </h1>
+    </div>
+  </div>
+
+  <!-- Main Row with Two Columns -->
+  <div class="row">
+    <!-- Left Column: PQR Information -->
+    <div class="col-md-6">
+      <!-- Description Row -->
+      <div class="row mb-1">
+        <div class="col">
+          <label class="form-label text-muted small mb-1" i18n>Descripción</label>
+          <p class="form-control-plaintext small" style="text-align: justify;">
+            {{ pcc.description }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Empresa Row -->
+      <div class="row mb-1">
+        <div class="col">
+          <label class="form-label text-muted small" i18n>Empresa sobre la cual se radicó el PQR</label>
+          <p class="form-control-plaintext small">
+            {{ pcc.company.name }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Form Row -->
+      <form [formGroup]="pccEditForm" (ngSubmit)="onSubmit()">
+        <div class="row mb-1">
+          <div class="col">
+            <div class="input-group has-validation">
+              <div class="form-floating">
+                <textarea formControlName="reason" id="reason" type="text"
+                          class="form-control rounded-4" autocomplete="Numero identificación"
+                          [class.is-invalid]="pccEditForm.controls['reason'].invalid && pccEditForm.controls['reason'].touched">
+                </textarea>
+                <label i18n>Razón de modificación de PQR</label>
+                <div i18n class="invalid-feedback"
+                     *ngIf="pccEditForm.controls['reason']!.hasError('required')">
+                  Por favor, ingrese la Razón por la cual se modifica la PQR
+                </div>
+                <div class="invalid-feedback"
+                     *ngIf="pccEditForm.controls['reason']!.hasError('minlength')">
+                  La razon debe tener al menos 8 caracteres
+                </div>
+                <div class="invalid-feedback"
+                     *ngIf="pccEditForm.controls['reason']!.hasError('maxlength')">
+                  La razon debe tener maximo 1000 caracteres
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-1">
+          <div class="col-6 pb-3">
+            <div class="input-group has-validation">
+              <div class="form-floating">
+                <select formControlName="status" id="identification_type"
+                        class="form-select form-control rounded-4"
+                        [class.is-invalid]="pccEditForm.controls['status'].invalid && pccEditForm.controls['status'].touched"
+                        autocomplete="Estado de la PQR">
+                  <option value="" disabled selected i18n>Seleccione un estado</option>
+                  <option value="Pendiente por documentación" i18n>Pendiente por documentación</option>
+                  <option value="Cerrada con solución" i18n>Cerrada con solución</option>
+                  <option value="Cerrada sin solución" i18n>Cerrada sin solución</option>
+                  <option value="En revisión" i18n>En revisión</option>
+                </select>
+                <label i18n>Nuevo Estado</label>
+                <div i18n class="invalid-feedback"
+                     *ngIf="pccEditForm.controls['status'].hasError('required')">
+                  Estado requerido
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buttons for consumerDetail -->
+        <div class="row justify-content-left">
+          <div class="col-4 pb-3">
+            <button class="btn btn-danger rounded-pill w-100" i18n [routerLink]="['/pcc-list']">Regresar</button>
+          </div>
+          <div class="col-4 pb-3">
+            <button type="submit" class="btn btn-primary rounded-pill w-100" i18n [routerLink]="['/pcc-edit']"[disabled]="pccEditForm.invalid">Guardar Cambios</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
