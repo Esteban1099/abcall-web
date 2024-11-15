@@ -6,6 +6,7 @@ import {PccListComponent} from './pcc/pcc-list/pcc-list.component';
 import {AuthGuard} from './commons/guards/auth.guard';
 import {AuthForbiddenComponent} from './auth/auth-forbidden/auth-forbidden.component';
 import { PccDetailComponent } from './pcc/pcc-detail/pcc-detail.component';
+import { PccEditComponent } from './pcc/pcc-edit/pcc-edit.component';
 
 const routes: Routes = [
   {
@@ -49,6 +50,13 @@ const routes: Routes = [
       AuthGuard
     ]
   },
+  {
+    path: 'pcc-edit/:id',
+    component: PccEditComponent,
+    canActivate: [
+      AuthGuard
+    ]
+  }
 ];
 
 @NgModule({
