@@ -5,14 +5,13 @@ import {
 } from '@angular/common/http/testing';
 import { PccService } from './pcc.service';
 import { Pcc } from './pcc';
-import { Consumer, SimplifiedConsumer } from '../consumer/consumer';
+import { Consumer } from '../consumer/consumer';
 import { Company } from '../company/company';
 
 describe('PccService', () => {
   let service: PccService;
   let httpTestingController: HttpTestingController;
 
-  // Define a mock SimplifiedConsumer
   const mockConsumer: Consumer = {
     id: 'consumer123',
     identification_type: 'CC',
@@ -22,8 +21,10 @@ describe('PccService', () => {
     contact_number: '',
     address: '',
     companies: [],
-    pccs: []
+    pccs: [],
   };
+
+  const mockCompany: Company = { id: 'company123', name: 'Test Company' };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -36,7 +37,7 @@ describe('PccService', () => {
   });
 
   afterEach(() => {
-    httpTestingController.verify(); // Ensure no outstanding requests after each test
+    httpTestingController.verify();
   });
 
   it('should be created', () => {
@@ -53,85 +54,75 @@ describe('PccService', () => {
         subject: 'Test Subject',
         description: 'Test Description',
         consumer: mockConsumer,
-        company: { id: 'company123', name: 'Test Company' }, // Replace with a valid Company object
-        notifications: []
+        company: mockCompany,
+        notifications: [],
+        create_at: new Date(),
       };
-      const mockResponse: Pcc = {
-        id: 'pcc789',
-        status: 'Pending',
-        subject: 'Test Subject',
-        description: 'Test Description',
-        consumer: mockConsumer,
-        company: { id: 'company123', name: 'Test Company' },
-        notifications: []
-      };
+      const mockResponse: Pcc = { ...newPcc, id: 'pcc789' };
 
-      // Call the createPcc method
       service.createPcc(companyId, consumerId, newPcc).subscribe((response) => {
-        expect(response).toEqual(mockResponse); // Verify that the response matches
+        expect(response).toEqual(mockResponse);
       });
 
-      // Verify the request details
       const req = httpTestingController.expectOne(
         `/api/companies/${companyId}/consumers/${consumerId}/pccs`
       );
-      expect(req.request.method).toEqual('POST'); // Verify that the method is POST
-      expect(req.request.body).toEqual(newPcc); // Verify the request body
-
-      req.flush(mockResponse); // Simulate API response with mockResponse
+      expect(req.request.method).toEqual('POST');
+      expect(req.request.body).toEqual(newPcc);
+      req.flush(mockResponse);
     });
   });
 
   describe('#getPccList', () => {
-    it('should return a list of Pcc objects', () => {
-      const mockPccList: Pcc[] = [
-        {
-          id: 'PQR001',
-          status: 'In Review',
-          subject: 'Subject 1',
-          description: 'Description 1',
-          consumer: mockConsumer,
-          company: { id: 'company123', name: 'Test Company' } as Company,
-          notifications: []
-        },
-        {
-          id: 'PQR002',
-          status: 'Closed',
-          subject: 'Subject 2',
-          description: 'Description 2',
-          consumer: mockConsumer,
-          company: { id: 'company123', name: 'Test Company' } as Company,
-          notifications: []
-        },
-        {
-          id: 'PQR003',
-          status: 'Open',
-          subject: 'Subject 3',
-          description: 'Description 3',
-          consumer: mockConsumer,
-          company: { id: 'company456', name: 'Another Test Company' } as Company,
-          notifications: []
-        },
-      ];
+    const mockPccList: Pcc[] = [
+      {
+        id: 'PQR001',
+        status: 'Pending',
+        subject: 'Subject 1',
+        description: 'Description 1',
+        consumer: mockConsumer,
+        company: mockCompany,
+        notifications: [],
+        create_at: new Date(),
+      },
+      {
+        id: 'PQR002',
+        status: 'Closed',
+        subject: 'Subject 2',
+        description: 'Description 2',
+        consumer: mockConsumer,
+        company: mockCompany,
+        notifications: [],
+        create_at: new Date(),
+      },
+    ];
 
-      // Call the getPccList method
-      service.getPccList().subscribe((pccList) => {
-        expect(pccList).toEqual(mockPccList); // Verify that the list matches mock data
+    it('should return a list of Pcc objects for AGENT role', () => {
+      service.getPccList('AGENT').subscribe((pccList) => {
+        expect(pccList).toEqual(mockPccList);
       });
 
-      // Verify the request details
       const req = httpTestingController.expectOne('/api/agents/pccs');
-      expect(req.request.method).toEqual('GET'); // Verify that the method is GET
+      expect(req.request.method).toEqual('GET');
+      req.flush(mockPccList);
+    });
 
-      req.flush(mockPccList); // Simulate API response with mockPccList
+    it('should return a list of Pcc objects for CLIENT role', () => {
+      service.getPccList('CLIENT').subscribe((pccList) => {
+        expect(pccList).toEqual(mockPccList);
+      });
+
+      const req = httpTestingController.expectOne('/api/clients/pccs');
+      expect(req.request.method).toEqual('GET');
+      req.flush(mockPccList);
     });
 
     it('should handle errors when fetching the Pcc list', () => {
-      service.getPccList().subscribe(
+      service.getPccList('AGENT').subscribe(
         () => fail('Expected an error, but received data'),
         (error) => {
-          expect(error.message).toContain('500'); // Checking the status code in the error message
-          expect(error.message).toContain('Server Error'); // Checking the status text
+          expect(error.message).toContain('500');
+          expect(error.message).toContain('Server Error');
         }
       );
 
@@ -140,6 +131,42 @@ describe('PccService', () => {
         status: 500,
         statusText: 'Server Error',
       });
+    });
+  });
+
+  describe('#getPccDetail', () => {
+    it('should retrieve the Pcc detail by ID', () => {
+      const mockPccDetail: Pcc = {
+        id: 'PQR001',
+        status: 'Pending',
+        subject: 'Detailed Subject',
+        description: 'Detailed Description',
+        consumer: mockConsumer,
+        company: mockCompany,
+        notifications: [],
+        create_at: new Date(),
+      };
+
+      service.getPccDetail('PQR001').subscribe((pccDetail) => {
+        expect(pccDetail).toEqual(mockPccDetail);
+      });
+
+      const req = httpTestingController.expectOne('/api/pccs/PQR001');
+      expect(req.request.method).toEqual('GET');
+      req.flush(mockPccDetail);
+    });
+
+    it('should handle errors when retrieving the Pcc detail', () => {
+      service.getPccDetail('PQR001').subscribe(
+        () => fail('Expected an error, but received data'),
+        (error) => {
+          expect(error.message).toContain('404');
+          expect(error.message).toContain('Not Found');
+        }
+      );
+
+      const req = httpTestingController.expectOne('/api/pccs/PQR001');
+      req.flush('Pcc not found', { status: 404, statusText: 'Not Found' });
     });
   });
 });

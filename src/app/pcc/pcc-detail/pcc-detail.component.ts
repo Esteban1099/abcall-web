@@ -21,6 +21,7 @@ import { PccEditComponent } from '../pcc-edit/pcc-edit.component';
 })
 export class PccDetailComponent implements OnInit {
   pcc!: Pcc;
+  role: string = localStorage.getItem('role') ?? 'AGENT';
 
   constructor(
     private readonly ppcService: PccService,
@@ -48,5 +49,4 @@ export class PccDetailComponent implements OnInit {
       }
     );
   }
-
 }

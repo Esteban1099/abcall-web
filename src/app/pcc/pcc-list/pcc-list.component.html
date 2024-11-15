@@ -4,7 +4,7 @@
   <h3 class="mb-4 text-center">Listado de PQR asignados</h3>
 
   <!-- Search input aligned with table -->
-  <div class="mb-3" style="max-width: 400px;">
+  <div class="mb-3" style="max-width: 400px;" *ngIf="role === 'AGENT'">
     <div class="input-group">
       <input type="text" class="form-control rounded-start-pill bg-white text-dark placeholder-black"
         placeholder="Buscar" [(ngModel)]="searchTerm" (input)="applyFilter()" />
@@ -12,6 +12,28 @@
         <i class="fa fa-search"></i>
       </button>
     </div>
+  </div>
+
+  <!-- Date filters -->
+  <div *ngIf="role === 'CLIENT'" class="d-flex justify-content-center my-4">
+    <div class="form-floating">
+      <input type="date" id="fromDate" class="form-control rounded-4" [(ngModel)]="fromDate" (change)="applyFilter()" />
+      <label>Desde</label>
+    </div>
+    <div class="mx-3"></div>
+    <div class="form-floating">
+      <input type="date" id="toDate" class="form-control rounded-4" [(ngModel)]="toDate" (change)="applyFilter()" />
+      <label>Hasta</label>
+    </div>
+  </div>
+
+  <!-- Chart (only visible if role is CLIENT) -->
+  <div *ngIf="role === 'CLIENT'" class="my-4">
+    <h3 class="mb-4 text-center">Grafica Estados PQR Por Mes</h3>
+  </div>
+  <div *ngIf="role === 'CLIENT'" class="my-4 chart-container">
+    <canvas baseChart [data]="barChartData" [type]="barChartType" [options]="barChartOptions">
+    </canvas>
   </div>
 
   <!-- Table -->
