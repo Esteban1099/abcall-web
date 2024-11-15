@@ -63,7 +63,6 @@ export class PccListComponent implements OnInit {
 
   constructor(
     private readonly ppcService: PccService,
-    private readonly translationService: TranslationService,
     private router: Router
   ) {}
 
@@ -129,7 +128,7 @@ export class PccListComponent implements OnInit {
       const year = date.getUTCFullYear();
 
       const monthKey = `${
-        this.translationService.getCurrentLanguage() === 'es-CO'
+        localStorage.getItem('lang') || 'es-CO' === 'es-CO'
           ? this.monthsEs[month]
           : this.monthsEn[month]
       }-${year}`;

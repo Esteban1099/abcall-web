@@ -61,7 +61,11 @@ export class AuthLoginComponent implements OnInit {
       if (response) {
         response.subscribe((response: any): void => {
           localStorage.setItem('token', response.token);
-          this.toastService.showSuccess('Bienvenido!');
+          if ((localStorage.getItem('lang') || 'es-CO') === 'es-CO') {
+            this.toastService.showSuccess('Bienvenido!');
+          } else {
+            this.toastService.showSuccess('Welcome!');
+          }
           this.eventService.showMenu.emit();
           this.router.navigate(['/pcc-list']);
         });
