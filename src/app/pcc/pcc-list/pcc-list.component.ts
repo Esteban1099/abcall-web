@@ -122,9 +122,11 @@ export class PccListComponent implements OnInit {
     ];
 
     this.filteredPccs.forEach((pcc) => {
+      const date = new Date(pcc.create_at);
+
       // Ensure consistent month extraction
-      const month = pcc.create_at.getUTCMonth(); // Use getUTCMonth for timezone-independent results
-      const year = pcc.create_at.getUTCFullYear();
+      const month = date.getUTCMonth(); // Use getUTCMonth for timezone-independent results
+      const year = date.getUTCFullYear();
 
       const monthKey = `${
         this.translationService.getCurrentLanguage() === 'es-CO'
