@@ -82,6 +82,8 @@ export class PccListComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching PQR list:', error);
+        this.pccList = []; // Clear list on error
+        this.filteredPccs = []; // Clear filtered list on error
       }
     );
   }
@@ -110,7 +112,6 @@ export class PccListComponent implements OnInit {
       [month: string]: { [status: string]: number };
     } = {};
 
-    // Define a color palette for different statuses
     const colorPalette = [
       '#FF6384',
       '#36A2EB',
@@ -121,12 +122,16 @@ export class PccListComponent implements OnInit {
     ];
 
     this.filteredPccs.forEach((pcc) => {
-      const date = new Date(pcc.create_at);
+      // Ensure consistent month extraction
+      const month = pcc.create_at.getUTCMonth(); // Use getUTCMonth for timezone-independent results
+      const year = pcc.create_at.getUTCFullYear();
+
       const monthKey = `${
         this.translationService.getCurrentLanguage() === 'es-CO'
-          ? this.monthsEs[date.getMonth()]
-          : this.monthsEn[date.getMonth()]
-      }-${date.getFullYear()}`;
+          ? this.monthsEs[month]
+          : this.monthsEn[month]
+      }-${year}`;
+
       if (!monthlyStatusCounts[monthKey]) {
         monthlyStatusCounts[monthKey] = {};
       }

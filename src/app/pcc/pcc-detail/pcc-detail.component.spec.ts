@@ -1,4 +1,10 @@
-import { waitForAsync, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  waitForAsync,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of, throwError } from 'rxjs';
@@ -20,7 +26,15 @@ describe('PccDetailComponent', () => {
     description: 'Sample Description',
     consumer: new Consumer(),
     company: new Company(),
-    notifications: [{ id: 'notif-id', reason: 'Sample Reason', status: 'sent', created_at: new Date().toISOString() }]
+    notifications: [
+      {
+        id: 'notif-id',
+        reason: 'Sample Reason',
+        status: 'sent',
+        created_at: new Date().toISOString(),
+      },
+    ],
+    create_at: new Date(),
   };
 
   beforeEach(waitForAsync(() => {
@@ -32,10 +46,12 @@ describe('PccDetailComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            paramMap: of({ get: (key: string) => (key === 'id' ? '123' : null) })
-          }
-        }
-      ]
+            paramMap: of({
+              get: (key: string) => (key === 'id' ? '123' : null),
+            }),
+          },
+        },
+      ],
     }).compileComponents();
 
     pccService = TestBed.inject(PccService) as jasmine.SpyObj<PccService>;
@@ -62,7 +78,7 @@ describe('PccDetailComponent', () => {
 
     // Configure ActivatedRoute without an ID and instantiate a new component instance
     const routeWithoutId = {
-      paramMap: of({ get: () => null })
+      paramMap: of({ get: () => null }),
     };
     const newFixture = TestBed.createComponent(PccDetailComponent);
     const newComponent = newFixture.componentInstance;
@@ -78,6 +94,9 @@ describe('PccDetailComponent', () => {
     pccService.getPccDetail.and.returnValue(throwError('Error fetching PQR'));
 
     component.fetchPQR('123');
-    expect(console.error).toHaveBeenCalledWith('Error fetching PQR:', 'Error fetching PQR');
+    expect(console.error).toHaveBeenCalledWith(
+      'Error fetching PQR:',
+      'Error fetching PQR'
+    );
   });
 });
