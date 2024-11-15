@@ -73,7 +73,7 @@ describe('PccCreateComponent', () => {
       contact_number: '',
       address: '',
       companies: [],
-      pccs: []
+      pccs: [],
     };
 
     const mockPcc: Pcc = {
@@ -83,7 +83,8 @@ describe('PccCreateComponent', () => {
       status: 'pending',
       consumer: mockConsumer,
       company: { id: 'company123', name: 'Test Company' } as Company,
-      notifications: []
+      notifications: [],
+      create_at: new Date(),
     };
 
     component.pccForm.setValue({

@@ -24,7 +24,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventService.showMenu.subscribe((): void => {
-      this.showMenu = true;
+      if (localStorage.getItem('role') === 'AGENT') {
+        this.showMenu = true;
+      }
       this.showBackOption = false;
       this.showLogOut = true;
     });
