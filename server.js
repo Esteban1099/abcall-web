@@ -178,6 +178,36 @@ app.use("/api/agents/pccs", async (req, res) => {
   }
 });
 
+app.use("/api/clients/pccs", async (req, res) => {
+  try {
+    // Extract Authorization header from incoming request
+    const authHeader = req.headers["authorization"];
+    console.log("Authorization Header:", authHeader);
+
+    const targetUrl =
+      "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/clients/pccs";
+
+    const response = await axios({
+      method: req.method,
+      url: targetUrl,
+      data: req.body,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: authHeader, // Forward the Authorization header if it exists
+      },
+    });
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    console.error("Error forwarding request:", error.message);
+    res.status(error.response?.status || 500).json({
+      error_code:
+        error.response?.data?.error_code || "Error forwarding request",
+      error_message:
+        error.response?.data?.error_message || "Error forwarding request",
+    });
+  }
+});
+
 // Serve static files from the Angular app's production build folder
 if (process.env.NODE_ENV === "production") {
   app.use(

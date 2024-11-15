@@ -5,3 +5,20 @@
 .placeholder-black::placeholder {
   color: black !important;
 }
+
+.chart-container {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  max-width: 600px;
+  /* Set a max width */
+  margin: 0 auto;
+  /* Center the chart */
+}
+
+.chart-canvas {
+  max-height: 300px;
+  /* Set a max height */
+  width: 100%;
+  /* Make it responsive */
+}

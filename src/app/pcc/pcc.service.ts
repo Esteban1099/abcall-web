@@ -16,8 +16,12 @@ export class PccService {
     );
   }
 
-  getPccList(): Observable<Pcc[]> {
-    return this.httpClient.get<Pcc[]>('/api/agents/pccs');
+  getPccList(role: string): Observable<Pcc[]> {
+    if (role === 'AGENT') {
+      return this.httpClient.get<Pcc[]>('/api/agents/pccs');
+    } else {
+      return this.httpClient.get<Pcc[]>('/api/clients/pccs');
+    }
   }
 
   getPccDetail(id: string): Observable<Pcc> {

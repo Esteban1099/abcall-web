@@ -61,11 +61,22 @@ describe('AppComponent', () => {
   });
 
   it('should update visibility flags when showMenu event is emitted', () => {
+    // Set the role to 'AGENT' in localStorage to meet the condition
+    localStorage.setItem('role', 'AGENT');
+
+    // Emit the event
     eventService.showMenu.emit();
+
+    // Detect changes to update the component state
     fixture.detectChanges();
+
+    // Assertions
     expect(component.showMenu).toBeTrue();
     expect(component.showLogOut).toBeTrue();
     expect(component.showBackOption).toBeFalse();
+
+    // Clean up
+    localStorage.removeItem('role');
   });
 
   it('should call backAuthLogin and emit backAuthLogin event', () => {
