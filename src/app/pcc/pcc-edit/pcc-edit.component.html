@@ -75,7 +75,7 @@
                 </select>
                 <label i18n>Nuevo Estado</label>
                 <div i18n class="invalid-feedback"
-                     *ngIf="pccEditForm.controls['identification_type'].hasError('required')">
+                     *ngIf="pccEditForm.controls['status'].hasError('required')">
                   Estado requerido
                 </div>
               </div>
@@ -89,7 +89,7 @@
             <button class="btn btn-danger rounded-pill w-100" i18n [routerLink]="['/pcc-list']">Regresar</button>
           </div>
           <div class="col-4 pb-3">
-            <button type="submit" class="btn btn-primary rounded-pill w-100" i18n [routerLink]="['/pcc-detail']" [disabled]="pccEditForm.controls['status'].invalid">Guardar Cambios</button>
+            <button type="submit" class="btn btn-primary rounded-pill w-100" i18n [routerLink]="['/pcc-edit']"[disabled]="pccEditForm.invalid">Guardar Cambios</button>
           </div>
         </div>
       </form>

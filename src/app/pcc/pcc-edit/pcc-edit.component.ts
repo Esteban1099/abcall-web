@@ -28,7 +28,9 @@ export class PccEditComponent implements OnInit {
     private readonly formBuilder: FormBuilder,
     private readonly ppcService: PccService,
     private readonly route: ActivatedRoute,
-    private readonly router: Router
+    private readonly router: Router,
+    private toastService: ToastService,
+    private eventService: EventService,
   ) { }
 
   ngOnInit(): void {
@@ -55,10 +57,15 @@ export class PccEditComponent implements OnInit {
 
       this.ppcService.updatePcc(this.pcc.id, payload).subscribe(
         (updatedPcc) => {
-          this.router.navigate(['/pcc-detail', this.pcc.id]);
+          this.router.navigate(['/pcc-edit', this.pcc.id]);
+          this.pccEditForm.reset();
+          this.pccEditForm.markAsPristine();
+          this.pccEditForm.markAsUntouched();
+          this.toastService.showSuccess('La PQR ha sido Editada exitosamente');
         },
         (error) => {
           console.error('Error al actualizar la PQR:', error);
+          this.toastService.showError('Error al actualizar la PQR');
         }
       );
     }
