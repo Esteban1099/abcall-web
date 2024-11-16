@@ -38,7 +38,7 @@
             <div class="input-group has-validation">
               <div class="form-floating">
                 <textarea formControlName="reason" id="reason" type="text"
-                          class="form-control rounded-4" autocomplete="Numero identificación"
+                          class="form-control rounded-4" autocomplete="reason"
                           [class.is-invalid]="pccEditForm.controls['reason'].invalid && pccEditForm.controls['reason'].touched">
                 </textarea>
                 <label i18n>Razón de modificación de PQR</label>
@@ -62,7 +62,7 @@
           <div class="col-6 pb-3">
             <div class="input-group has-validation">
               <div class="form-floating">
-                <select formControlName="status" id="identification_type"
+                <select formControlName="status" id="status"
                         class="form-select form-control rounded-4"
                         [class.is-invalid]="pccEditForm.controls['status'].invalid && pccEditForm.controls['status'].touched"
                         autocomplete="Estado de la PQR">
