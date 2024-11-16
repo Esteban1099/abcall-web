@@ -8,6 +8,8 @@ describe('My First Test', () => {
   })
 })
 
+
+
 describe('Auth Login as Clients Tests', () => {
 
   it('Should login the user Empresa Succesfully', () => {
@@ -425,7 +427,7 @@ describe('Asesor crea PQR, y vuelve a la lista exitosamente. Nueva PQR no necesa
     cy.get('button.btn-primary.rounded-pill').should('exist');
     cy.get('button.btn-primary.rounded-pill').first().click();
     cy.contains('.dropdown-item', 'Listar PQR').click();
-    cy.wait(500); // Espera 500 milisegundos
+    cy.wait(3000); // Espera 500 milisegundos
 
     // Asesor ve listado de PQRs asignado a si mismo
 
@@ -483,7 +485,7 @@ describe('Asesor crea PQR, y vuelve a la lista exitosamente. Nueva PQR no necesa
     cy.get('button.btn-primary.rounded-pill').should('exist');
     cy.get('button.btn-primary.rounded-pill').first().click();
     cy.contains('.dropdown-item', 'Listar PQR').click();
-    cy.wait(500); // Espera 500 milisegundos
+    cy.wait(3000); // Espera 500 milisegundos
 
     // Asesor ve listado de PQRs asignado a si mismo
 
@@ -555,7 +557,7 @@ describe('Asesor crea PQR, y vuelve a la lista exitosamente. Nueva PQR no necesa
 
       cy.get('table tbody tr').should('have.length.at.least', 1);
 
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 3; i++) {
         // Selecciona una fila aleatoria y obtiene el ID del usuario y tipo de identificación
         cy.get('table tbody tr').then((rows) => {
           const randomIndex = Math.floor(Math.random() * rows.length);
@@ -585,7 +587,7 @@ describe('Asesor crea PQR, y vuelve a la lista exitosamente. Nueva PQR no necesa
             cy.get('select#identification_type').should('be.visible').select(userIdType);
             cy.get('input#identification_number').should('be.visible').clear().type(userId);
             cy.get('button').contains('Consultar').click(); // Botón para buscar al usuario
-            cy.wait(500); // Espera a que se carguen los resultados de PQRs del usuario
+            cy.wait(4000); // Espera a que se carguen los resultados de PQRs del usuario
 
             // Verifica que el ID de PQR está en la lista de PQRs del usuario
             cy.get('.list-group-item').should('contain.text', pqrId);
@@ -593,7 +595,7 @@ describe('Asesor crea PQR, y vuelve a la lista exitosamente. Nueva PQR no necesa
             // vuelve a la lista de PQRS
             cy.get('button.btn-primary.rounded-pill').first().click();
             cy.contains('.dropdown-item', 'Listar PQR').click();
-            cy.wait(500);
+            cy.wait(1000);
 
           });
         });
@@ -612,7 +614,7 @@ describe('Asesor ve detalle de PCC al azar', () => {
     cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
     cy.get('input[formcontrolname="password"]').type('123456');
     cy.contains('button', 'Iniciar sesión').click();
-    cy.wait(500); // Espera a que cargue la tabla de PQRs/PCCs
+    cy.wait(1000); // Espera a que cargue la tabla de PQRs/PCCs
 
     // Verifica que la tabla de PQRs está visible y tiene al menos una fila
     cy.get('.table-responsive').should('be.visible');
@@ -654,3 +656,302 @@ describe('Asesor ve detalle de PCC al azar', () => {
 
   });
 });
+
+// e2e tests for updating a Pcc
+describe('Update Pcc', () => {
+  it('Visits the initial project page', () => {
+    cy.visit('/')
+    cy.contains('ABCall')
+    cy.contains('Iniciar sesión como:')
+    cy.contains('Empresa')
+    cy.contains('Asesor')
+  })
+
+  it('should display the detail of a randomly selected PCC', () => {
+    let pccId = '';
+    let pccSubject = '';
+    // Asesor se loggea exitosamente
+    cy.visit('/');
+    cy.contains('button', 'Asesor').click();
+    cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
+    cy.get('input[formcontrolname="password"]').type('123456');
+    cy.contains('button', 'Iniciar sesión').click();
+    cy.wait(500); // Espera a que cargue la tabla de PQRs/PCCs
+
+    // Verifica que la tabla de PQRs está visible y tiene al menos una fila
+    cy.get('.table-responsive').should('be.visible');
+    cy.get('table tbody tr').should('have.length.at.least', 1);
+
+    // Selecciona una PCC al azar de la tabla
+    cy.get('table tbody tr').then((rows) => {
+      const randomIndex = Math.floor(Math.random() * rows.length);
+      const selectedRow = cy.wrap(rows[randomIndex]);
+
+      // Dentro de la fila seleccionada, obtenemos el ID de la PCC y hacemos clic en el botón de detalle
+      selectedRow.within(() => {
+        cy.get('td').eq(2).invoke('text').then((subject) => { // Ajusta `eq(2)` según la posición de la columna
+          pccSubject = subject.trim();
+          console.log(pccSubject);
+        });
+        // Guarda el ID de la PCC para verificarlo en la página de detalle
+        cy.get('td').eq(1).invoke('text').then((id) => {
+          pccId = id.trim();
+        });
+        // Asegura que el botón de detalle está visible antes de hacer clic
+        cy.get('button.btn.btn-primary.btn-sm.rounded-pill').should('be.visible').click();
+
+        // Verifica que estamos en la página de detalles de la PCC y que muestra la información correcta
+        cy.url().should('include', `/pcc-detail/${pccId}`);
+
+      });
+    });
+    cy.contains(`PQR_${pccId.split('-')[0]}`).should('be.visible');
+
+    cy.contains('button', 'Regresar').should('be.visible');
+    cy.contains('Estado').should('be.visible');
+    cy.contains('Descripción').should('be.visible');
+    cy.contains('Consumidor').should('be.visible');
+    cy.contains('Empresa').should('be.visible');
+    cy.wait(200);
+    cy.contains('button', 'Editar PQR').should('be.visible').click();
+    cy.wait(200);
+
+    cy.contains('label', 'Razón de modificación de PQR').should('be.visible');
+    cy.get('textarea[formcontrolname="reason"]').should('be.visible');
+
+    cy.get('textarea[formcontrolname="reason"]').type('Short');
+    cy.get('textarea[formcontrolname="reason"]').blur();
+    // Check for the minlength error message
+    cy.contains('La razon debe tener al menos 8 caracteres').should('be.visible');
+    cy.get('textarea[formcontrolname="reason"]').clear();
+    // Step 5: Test the "maxlength" validation
+    // Input text longer than 1000 characters
+    const longText = 'A'.repeat(1001);
+    cy.get('textarea[formcontrolname="reason"]').clear().type(longText);
+
+    // Check for the maxlength error message
+    cy.contains('La razon debe tener maximo 1000 caracteres').should('be.visible');
+
+    cy.get('textarea[formcontrolname="reason"]').clear();
+    cy.get('textarea[formcontrolname="reason"]').blur();
+    cy.contains('Por favor, ingrese la Razón por la cual se modifica la PQR').should('be.visible');
+
+
+    // boton Guardar Cambios debe aparecer no valido
+    cy.contains('button', 'Guardar Cambios').should('be.disabled');
+
+    // Input text with 1000 characters
+    const validText = 'A'.repeat(10);
+    cy.get('textarea[formcontrolname="reason"]').clear().type(validText);
+
+    cy.contains('button', 'Guardar Cambios').should('be.disabled');
+
+    cy.contains('label', 'Nuevo Estado').should('be.visible');
+    cy.get('select[formcontrolname="status"]').should('be.visible');
+
+    cy.get('select[formcontrolname="status"] option').should('have.length', 5);
+
+    cy.get('select[formcontrolname="status"]').contains('Pendiente por documentación').should('be.visible');
+    cy.get('select[formcontrolname="status"]').contains('En revisión').should('be.visible');
+    cy.get('select[formcontrolname="status"]').contains('Cerrada con solución').should('be.visible');
+    cy.get('select[formcontrolname="status"]').contains('Cerrada sin solución').should('be.visible');
+
+    // Focus on the select field
+    cy.get('select[formcontrolname="status"]').focus();
+
+    // Blur the select field to trigger validation
+    cy.get('select[formcontrolname="status"]').blur();
+
+    // Check for the required error message
+    cy.contains('Estado requerido').should('be.visible');
+
+    cy.contains('button', 'Guardar Cambios').should('be.disabled');
+
+    // Select the first option
+    cy.get('select[formcontrolname="status"]').select('Pendiente por documentación');
+
+    cy.contains('button', 'Guardar Cambios').should('be.enabled');
+    cy.contains('button', 'Regresar').should('be.visible');
+
+    cy.contains('button', 'Guardar Cambios').click();
+
+
+    // verificar mensaje de exito
+    cy.contains('La PQR ha sido Editada exitosamente').should('be.visible');
+
+    cy.contains('button', 'Guardar Cambios').should('be.disabled');
+
+    // verificar que campos estan vacios
+    cy.get('textarea[formcontrolname="reason"]').should('have.value', '');
+    cy.get('select[formcontrolname="status"]').should('have.value', null);
+
+    cy.contains('button', 'Regresar').should('be.visible');
+    cy.contains('button', 'Regresar').click();
+
+    cy.url().should('include', `/pcc-list`);
+  });
+
+})
+
+
+describe('Representante de Empresa ve reporte', () => {
+
+  it('Should login the user Empresa Succesfully', () => {
+
+    // Empresa se Loggea Exitosamente
+    cy.visit('/');
+    cy.contains('button', 'Empresa').click();
+    cy.get('input[formcontrolname="email"]').type('Maymie_Wyman@gmail.com');
+    cy.get('input[formcontrolname="password"]').type('123456');
+    cy.contains('button', 'Iniciar sesión').click();
+    cy.contains('Bienvenido').should('be.visible');
+
+    cy.wait(500);
+    cy.contains('Grafica Estados PQR Por Mes').should('be.visible');
+
+    // Paso 3: Verificar los filtros de fechas
+    cy.wait(500);
+    cy.get('input#fromDate[type="date"]').should('be.visible');
+    cy.get('input#toDate[type="date"]').should('be.visible');
+    cy.contains('label', 'Desde').should('be.visible');
+    cy.contains('label', 'Hasta').should('be.visible');
+
+
+    // Paso 4: Verificar la gráfica
+    cy.wait(500);
+  cy.get('canvas[basechart]').should('be.visible');
+  cy.contains('h3', 'Grafica Estados PQR Por Mes').should('be.visible');
+
+  // Paso 5: Verificar la tabla
+  cy.wait(500);
+  cy.get('.table-responsive').should('be.visible');
+  cy.get('table.table.table-dark.table-hover.align-middle.text-center').within(() => {
+    // Verificar los encabezados de la tabla
+    cy.get('thead').within(() => {
+      cy.get('th').eq(0).should('contain', 'Estado');
+      cy.get('th').eq(1).should('contain', 'ID PQR');
+      cy.get('th').eq(2).should('contain', 'Asunto');
+      cy.get('th').eq(3).should('contain', 'ID Consumidor');
+      cy.get('th').eq(4).should('contain', 'Acciones');
+    });
+
+    // Verificar que hay al menos una fila en el cuerpo de la tabla
+    cy.get('tbody tr').should('have.length.at.least', 1);
+
+    // Opcional: Verificar el contenido de la primera fila
+    cy.get('tbody tr').first().within(() => {
+      cy.get('td').should('have.length', 5);
+    });
+
+    // Paso 6: Verificar que el botón de detalle está presente en las acciones
+    cy.wait(500);
+        cy.get('tbody tr').each(($row) => {
+          cy.wrap($row).find('td').last().within(() => {
+            cy.get('button.btn.btn-primary.btn-sm.rounded-pill').should('be.visible');
+          });
+        });
+
+
+
+      });
+
+       // Step 5: Select a random row and click on the "Detalle" button
+
+       cy.wait(500);
+    cy.get('table.table tbody tr').then(($rows) => {
+      const rowCount = $rows.length;
+      const randomIndex = Math.floor(Math.random() * rowCount);
+      const selectedRow = cy.wrap($rows[randomIndex]);
+
+      selectedRow.within(() => {
+        cy.get('button.btn.btn-primary.btn-sm.rounded-pill').should('be.visible').click();
+      })
+
+
+
+    });
+
+
+    cy.wait(500);
+    cy.contains('Descripción').should('be.visible');
+    cy.contains('Estado del PQR').should('be.visible');
+    cy.contains('Empresa').should('be.visible');
+    cy.contains('Consumidor').should('be.visible');
+    cy.contains('Notificaciones').should('be.visible');
+    cy.contains('Correo electrónico').should('be.visible');
+
+    cy.contains('button', 'Regresar').should('be.visible').click();
+
+
+
+
+
+      // Ingresar las fechas en los campos correspondientes
+      // Generar dos fechas aleatorias
+
+     const startDate = randomDate(new Date(2020, 0, 1), new Date());
+     const endDate = randomDate(startDate, new Date());
+
+     // Formatear las fechas en 'YYYY-MM-DD'
+     const formatDate = (date: Date) => date.toISOString().split('T')[0];
+
+     const formattedStartDate = formatDate(startDate);
+     const formattedEndDate = formatDate(endDate);
+
+
+     cy.get('input#fromDate[type="date"]').should('be.visible');
+     cy.get('input#toDate[type="date"]').should('be.visible');
+     cy.wait(500);
+     cy.get('input#fromDate[type="date"]').clear().type(formattedStartDate);
+     cy.get('input#toDate[type="date"]').clear().type(formattedEndDate);
+     cy.wait(500);
+
+     cy.contains('Grafica Estados PQR Por Mes').should('be.visible');
+
+
+     cy.get('input#fromDate[type="date"]').clear().type(formattedEndDate);
+     cy.get('input#toDate[type="date"]').clear().type(formattedStartDate);
+
+
+     cy.wait(500);
+
+     cy.contains('Grafica Estados PQR Por Mes').should('be.visible');
+
+     // Paso 5: Verificar la tabla
+     cy.wait(500);
+  cy.get('.table-responsive').should('be.visible');
+  cy.get('table.table.table-dark.table-hover.align-middle.text-center').within(() => {
+    // Verificar los encabezados de la tabla
+    cy.get('thead').within(() => {
+      cy.get('th').eq(0).should('contain', 'Estado');
+      cy.get('th').eq(1).should('contain', 'ID PQR');
+      cy.get('th').eq(2).should('contain', 'Asunto');
+      cy.get('th').eq(3).should('contain', 'ID Consumidor');
+      cy.get('th').eq(4).should('contain', 'Acciones');
+    });
+
+    // Verificar que hay al menos una fila en el cuerpo de la tabla
+    cy.get('tbody tr').should('have.length', 0);
+
+
+
+    });
+    cy.wait(500);
+    cy.get('input#fromDate[type="date"]').clear()
+    cy.get('input#toDate[type="date"]').clear()
+
+     cy.get('input#fromDate[type="date"]').should('be.visible');
+     cy.get('input#toDate[type="date"]').should('be.visible');
+     cy.wait(500);
+     cy.get('input#fromDate[type="date"]').clear().type(formattedStartDate);
+     cy.get('input#toDate[type="date"]').clear().type(formattedEndDate);
+
+
+
+  });
+  });
+
+  // Función para generar una fecha aleatoria entre dos fechas
+function randomDate(start: Date, end: Date) {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}

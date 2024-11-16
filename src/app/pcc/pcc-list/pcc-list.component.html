@@ -1,7 +1,10 @@
 <div class="container my-5 text-light">
   <!-- Title -->
   <h1 class="fw-bold text-center">ABCall</h1>
-  <h3 class="mb-4 text-center">Listado de PQR asignados</h3>
+  <div *ngIf="role === 'AGENT'">
+    <h3 class="mb-4 text-center">Listado de PQR asignados</h3>
+  </div>
+
 
   <!-- Search input aligned with table -->
   <div class="mb-3" style="max-width: 400px;" *ngIf="role === 'AGENT'">
