@@ -9,7 +9,7 @@ app.use(express.json()); // Parse JSON request bodies
 // Proxy API requests (define these first to prevent them from being caught by the wildcard route)
 app.use("/api/auth/clients/token", async (req, res) => {
   try {
-    const langHeader = req.headers["Language"];
+    const langHeader = req.headers["language"];
     console.log("Language Header:", req.headers);
     const targetUrl =
       "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/auth/clients/token";
@@ -17,7 +17,7 @@ app.use("/api/auth/clients/token", async (req, res) => {
       method: req.method,
       url: targetUrl,
       data: req.body,
-      headers: { "Content-Type": "application/json", Language: localStorage.getItem('lang') || 'es-CO' },
+      headers: { "Content-Type": "application/json", Language: langHeader },
     });
     res.status(response.status).json(response.data);
   } catch (error) {
