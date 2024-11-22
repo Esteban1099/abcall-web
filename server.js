@@ -16,7 +16,7 @@ app.use("/api/auth/clients/token", async (req, res) => {
       method: req.method,
       url: targetUrl,
       data: req.body,
-      headers: { "Content-Type": "application/json", Language: langHeader },
+      headers: { "Content-Type": "application/json", "Language": langHeader },
     });
     res.status(response.status).json(response.data);
   } catch (error) {
