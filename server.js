@@ -10,7 +10,6 @@ app.use(express.json()); // Parse JSON request bodies
 app.use("/api/auth/clients/token", async (req, res) => {
   try {
     const langHeader = req.headers["language"];
-    console.log("Language Header:", req.headers);
     const targetUrl =
       "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/auth/clients/token";
     const response = await axios({
@@ -33,7 +32,7 @@ app.use("/api/auth/clients/token", async (req, res) => {
 
 app.use("/api/auth/agents/token", async (req, res) => {
   try {
-    const langHeader = req.headers["Language"];
+    const langHeader = req.headers["language"];
     const targetUrl =
       "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/auth/agents/token";
     const response = await axios({
@@ -59,7 +58,7 @@ app.use(
   async (req, res) => {
     console.log("consumer details ---- entered");
     try {
-      const langHeader = req.headers["Language"];
+      const langHeader = req.headers["language"];
       // Extract Authorization header from incoming request
       const authHeader = req.headers["authorization"];
       console.log("Authorization Header:", authHeader);
@@ -94,7 +93,7 @@ app.use(
   "/api/companies/:companyId/consumers/:consumerId/pccs",
   async (req, res) => {
     try {
-      const langHeader = req.headers["Language"];
+      const langHeader = req.headers["language"];
       // Extract Authorization header from incoming request
       const authHeader = req.headers["authorization"];
       console.log("Authorization Header:", authHeader);
@@ -127,7 +126,7 @@ app.use(
 
 app.use("/api/pccs/:id", async (req, res) => {
   try {
-    const langHeader = req.headers["Language"];
+    const langHeader = req.headers["language"];
     // Extract Authorization header from incoming request
     const authHeader = req.headers["authorization"];
     console.log("Authorization Header:", authHeader);
@@ -159,7 +158,7 @@ app.use("/api/pccs/:id", async (req, res) => {
 
 app.use("/api/agents/pccs", async (req, res) => {
   try {
-    const langHeader = req.headers["Language"];
+    const langHeader = req.headers["language"];
     // Extract Authorization header from incoming request
     const authHeader = req.headers["authorization"];
     console.log("Authorization Header:", authHeader);
@@ -191,7 +190,7 @@ app.use("/api/agents/pccs", async (req, res) => {
 
 app.use("/api/clients/pccs", async (req, res) => {
   try {
-    const langHeader = req.headers["Language"];
+    const langHeader = req.headers["language"];
     // Extract Authorization header from incoming request
     const authHeader = req.headers["authorization"];
     console.log("Authorization Header:", authHeader);
