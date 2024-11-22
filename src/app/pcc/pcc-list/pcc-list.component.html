@@ -1,13 +1,13 @@
 <div class="container my-5 text-light">
   <!-- Title -->
   <h1 class="fw-bold text-center">ABCall</h1>
-  <h3 class="mb-4 text-center">Listado de PQR asignados</h3>
+  <h3 class="mb-4 text-center">{{ 'Listado de PQR asignados' | translate }}</h3>
 
   <!-- Search input aligned with table -->
   <div class="mb-3" style="max-width: 400px;" *ngIf="role === 'AGENT'">
     <div class="input-group">
       <input type="text" class="form-control rounded-start-pill bg-white text-dark placeholder-black"
-        placeholder="Buscar" [(ngModel)]="searchTerm" (input)="applyFilter()" />
+        placeholder="{{ 'Buscar' | translate }}" [(ngModel)]="searchTerm" (input)="applyFilter()" />
       <button class="btn btn-primary rounded-end-pill" (click)="applyFilter()">
         <i class="fa fa-search"></i>
       </button>
@@ -18,18 +18,18 @@
   <div *ngIf="role === 'CLIENT'" class="d-flex justify-content-center my-4">
     <div class="form-floating">
       <input type="date" id="fromDate" class="form-control rounded-4" [(ngModel)]="fromDate" (change)="applyFilter()" />
-      <label>Desde</label>
+      <label>{{ 'Desde' | translate }}</label>
     </div>
     <div class="mx-3"></div>
     <div class="form-floating">
       <input type="date" id="toDate" class="form-control rounded-4" [(ngModel)]="toDate" (change)="applyFilter()" />
-      <label>Hasta</label>
+      <label>{{ 'Hasta' | translate }}</label>
     </div>
   </div>
 
   <!-- Chart (only visible if role is CLIENT) -->
   <div *ngIf="role === 'CLIENT'" class="my-4">
-    <h3 class="mb-4 text-center">Grafica Estados PQR Por Mes</h3>
+    <h3 class="mb-4 text-center">{{ 'Grafica Estados PQR Por Mes' | translate }}</h3>
   </div>
   <div *ngIf="role === 'CLIENT'" class="my-4 chart-container">
     <canvas baseChart [data]="barChartData" [type]="barChartType" [options]="barChartOptions">
@@ -41,11 +41,11 @@
     <table class="table table-dark table-hover align-middle text-center">
       <thead>
         <tr>
-          <th>Estado</th>
-          <th>ID PQR</th>
-          <th>Asunto</th>
-          <th>ID Consumidor</th>
-          <th>Acciones</th>
+          <th>{{ 'Estado' | translate }}</th>
+          <th>{{ 'ID PQR' | translate }}</th>
+          <th>{{ 'Asunto' | translate }}</th>
+          <th>{{ 'ID Consumidor' | translate }}</th>
+          <th>{{ 'Acciones' | translate }}</th>
         </tr>
       </thead>
       <tbody>
@@ -56,7 +56,7 @@
           <td>{{ pcc.consumer.identification_type }} {{ pcc.consumer.identification_number }}</td>
           <td>
             <button class="btn btn-primary btn-sm rounded-pill" (click)="viewPccDetail(pcc.id)">
-              <i class="fa fa-info-circle me-1"></i> Detalle
+              <i class="fa fa-info-circle me-1"></i> {{ 'Detalle' | translate }}
             </button>
           </td>
         </tr>

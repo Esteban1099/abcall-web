@@ -6,13 +6,13 @@ import { NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { TranslationService } from '../../commons/internationalization/translation.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-pcc-list',
   templateUrl: './pcc-list.component.html',
   styleUrl: './pcc-list.component.css',
-  imports: [FormsModule, NgFor, NgIf, NgChartsModule],
+  imports: [FormsModule, NgFor, NgIf, NgChartsModule, TranslateModule],
   standalone: true,
 })
 export class PccListComponent implements OnInit {

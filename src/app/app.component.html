@@ -15,9 +15,11 @@
                   <i class="fa-solid fa-bars"></i>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a i18n class="dropdown-item" [routerLink]="['/pcc-list']">Listar PQR</a></li>
-                  <li><a i18n class="dropdown-item" [routerLink]="['/pcc-create']">Crear PQR</a></li>
-                  <li><a i18n class="dropdown-item" [routerLink]="['/consumer-detail']">Consultar consumidor</a></li>
+                  <li><a i18n class="dropdown-item" [routerLink]="['/pcc-list']">{{ 'Listar PQR' | translate }}</a></li>
+                  <li><a i18n class="dropdown-item" [routerLink]="['/pcc-create']">{{ 'Crear PQR' | translate }}</a>
+                  </li>
+                  <li><a i18n class="dropdown-item" [routerLink]="['/consumer-detail']">{{ 'Consultar consumidor' |
+                      translate }}</a></li>
                 </ul>
               </div>
             </div>
@@ -31,8 +33,10 @@
                   <i class="fa-solid fa-globe"></i>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a i18n class="dropdown-item" (click)="switchLanguage('es-CO')">Español</a></li>
-                  <li><a i18n class="dropdown-item" (click)="switchLanguage('en-US')">Inglés</a></li>
+                  <li><a i18n class="dropdown-item" (click)="switchLanguage('es-CO')">{{ 'Español' | translate }}</a>
+                  </li>
+                  <li><a i18n class="dropdown-item" (click)="switchLanguage('en-US')">{{ 'Inglés' | translate }}</a>
+                  </li>
                 </ul>
               </div>
             </div>

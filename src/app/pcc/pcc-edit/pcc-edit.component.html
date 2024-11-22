@@ -14,7 +14,7 @@
       <!-- Description Row -->
       <div class="row mb-1">
         <div class="col">
-          <label class="form-label text-muted small mb-1" i18n>Descripción</label>
+          <label class="form-label text-muted small mb-1" i18n>{{ 'Descripción' | translate }}</label>
           <p class="form-control-plaintext small" style="text-align: justify;">
             {{ pcc.description }}
           </p>
@@ -24,7 +24,8 @@
       <!-- Empresa Row -->
       <div class="row mb-1">
         <div class="col">
-          <label class="form-label text-muted small" i18n>Empresa sobre la cual se radicó el PQR</label>
+          <label class="form-label text-muted small" i18n>{{ 'Empresa sobre la cual se radicó el PQR' | translate
+            }}</label>
           <p class="form-control-plaintext small">
             {{ pcc.company.name }}
           </p>
@@ -37,22 +38,19 @@
           <div class="col">
             <div class="input-group has-validation">
               <div class="form-floating">
-                <textarea formControlName="reason" id="reason" type="text"
-                          class="form-control rounded-4" autocomplete="Numero identificación"
-                          [class.is-invalid]="pccEditForm.controls['reason'].invalid && pccEditForm.controls['reason'].touched">
+                <textarea formControlName="reason" id="reason" type="text" class="form-control rounded-4"
+                  autocomplete="Numero identificación"
+                  [class.is-invalid]="pccEditForm.controls['reason'].invalid && pccEditForm.controls['reason'].touched">
                 </textarea>
-                <label i18n>Razón de modificación de PQR</label>
-                <div i18n class="invalid-feedback"
-                     *ngIf="pccEditForm.controls['reason']!.hasError('required')">
-                  Por favor, ingrese la Razón por la cual se modifica la PQR
+                <label i18n>{{ 'Razón de modificación de PQR' | translate }}</label>
+                <div i18n class="invalid-feedback" *ngIf="pccEditForm.controls['reason']!.hasError('required')">
+                  {{ 'Por favor, ingrese la Razón por la cual se modifica la PQR' | translate }}
                 </div>
-                <div class="invalid-feedback"
-                     *ngIf="pccEditForm.controls['reason']!.hasError('minlength')">
-                  La razon debe tener al menos 8 caracteres
+                <div class="invalid-feedback" *ngIf="pccEditForm.controls['reason']!.hasError('minlength')">
+                  {{ 'La razon debe tener al menos 8 caracteres' | translate }}
                 </div>
-                <div class="invalid-feedback"
-                     *ngIf="pccEditForm.controls['reason']!.hasError('maxlength')">
-                  La razon debe tener maximo 1000 caracteres
+                <div class="invalid-feedback" *ngIf="pccEditForm.controls['reason']!.hasError('maxlength')">
+                  {{ 'La razon debe tener maximo 1000 caracteres' | translate }}
                 </div>
               </div>
             </div>
@@ -62,20 +60,19 @@
           <div class="col-6 pb-3">
             <div class="input-group has-validation">
               <div class="form-floating">
-                <select formControlName="status" id="identification_type"
-                        class="form-select form-control rounded-4"
-                        [class.is-invalid]="pccEditForm.controls['status'].invalid && pccEditForm.controls['status'].touched"
-                        autocomplete="Estado de la PQR">
-                  <option value="" disabled selected i18n>Seleccione un estado</option>
-                  <option value="Pendiente por documentación" i18n>Pendiente por documentación</option>
-                  <option value="Cerrada con solución" i18n>Cerrada con solución</option>
-                  <option value="Cerrada sin solución" i18n>Cerrada sin solución</option>
-                  <option value="En revisión" i18n>En revisión</option>
+                <select formControlName="status" id="identification_type" class="form-select form-control rounded-4"
+                  [class.is-invalid]="pccEditForm.controls['status'].invalid && pccEditForm.controls['status'].touched"
+                  autocomplete="Estado de la PQR">
+                  <option value="" disabled selected i18n>{{ 'Seleccione un estado' | translate }}</option>
+                  <option value="Pendiente por documentación" i18n>{{ 'Pendiente por documentación' | translate }}
+                  </option>
+                  <option value="Cerrada con solución" i18n>{{ 'Cerrada con solución' | translate }}</option>
+                  <option value="Cerrada sin solución" i18n>{{ 'Cerrada sin solución' | translate }}</option>
+                  <option value="En revisión" i18n>{{ 'En revisión' | translate }}</option>
                 </select>
-                <label i18n>Nuevo Estado</label>
-                <div i18n class="invalid-feedback"
-                     *ngIf="pccEditForm.controls['status'].hasError('required')">
-                  Estado requerido
+                <label i18n>{{ 'Nuevo Estado' | translate }}</label>
+                <div i18n class="invalid-feedback" *ngIf="pccEditForm.controls['status'].hasError('required')">
+                  {{ 'Estado requerido' | translate }}
                 </div>
               </div>
             </div>
@@ -85,10 +82,12 @@
         <!-- Buttons for consumerDetail -->
         <div class="row justify-content-left">
           <div class="col-4 pb-3">
-            <button class="btn btn-danger rounded-pill w-100" i18n [routerLink]="['/pcc-list']">Regresar</button>
+            <button class="btn btn-danger rounded-pill w-100" i18n [routerLink]="['/pcc-list']">{{ 'Regresar' |
+              translate }}</button>
           </div>
           <div class="col-4 pb-3">
-            <button type="submit" class="btn btn-primary rounded-pill w-100" i18n [routerLink]="['/pcc-edit']"[disabled]="pccEditForm.invalid">Guardar Cambios</button>
+            <button type="submit" class="btn btn-primary rounded-pill w-100" i18n [routerLink]="['/pcc-edit']"
+              [disabled]="pccEditForm.invalid">{{ 'Guardar Cambios' | translate }}</button>
           </div>
         </div>
       </form>
