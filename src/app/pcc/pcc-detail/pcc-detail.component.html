@@ -14,7 +14,7 @@
       <!-- Description Row -->
       <div class="row mb-1">
         <div class="col">
-          <label class="form-label text-muted small mb-1" i18n>Descripción</label>
+          <label class="form-label text-muted small mb-1" i18n>{{ 'Descripción' | translate }}</label>
           <p class="form-control-plaintext small" style="text-align: justify;">
             {{ pcc.description }}
           </p>
@@ -24,13 +24,14 @@
       <!-- Status Row -->
       <div class="row mb-1">
         <div class="col">
-          <label class="form-label text-muted small" i18n>Estado del PQR</label>
+          <label class="form-label text-muted small" i18n>{{ 'Estado del PQR' | translate }}</label>
           <p class="form-control-plaintext small">
             {{ pcc.status }}
           </p>
         </div>
         <div class="col">
-          <label class="form-label text-muted small" i18n>Empresa sobre la cual se radicó el PQR</label>
+          <label class="form-label text-muted small" i18n>{{ 'Empresa sobre la cual se radicó el PQR' | translate
+            }}</label>
           <p class="form-control-plaintext small">
             {{ pcc.company.name }}
           </p>
@@ -40,7 +41,7 @@
       <!-- Notifications Row -->
       <div class="row mb-1">
         <div class="col">
-          <h3>Notificaciones</h3>
+          <h3>{{ 'Notificaciones' | translate }}</h3>
           <div *ngFor="let notification of pcc.notifications" class="mb-2">
             <label class="form-label text-muted small" i18n>{{ notification.status }}</label>
             <p class="form-control-plaintext small">
@@ -55,7 +56,7 @@
     <div class="col-md-6">
       <div class="row mb-1">
         <div class="col">
-          <label class="form-label text-muted small" i18n>Consumidor</label>
+          <label class="form-label text-muted small" i18n>{{ 'Consumidor' | translate }}</label>
           <p class="form-control-plaintext small">
             {{ pcc.consumer.name }}
           </p>
@@ -63,7 +64,7 @@
       </div>
       <div class="row mb-1">
         <div class="col">
-          <label class="form-label text-muted small" i18n>Correo electrónico</label>
+          <label class="form-label text-muted small" i18n>{{ 'Correo electrónico' | translate }}</label>
           <p class="form-control-plaintext small">
             {{ pcc.consumer.email }}
           </p>
@@ -71,7 +72,7 @@
       </div>
       <div class="row mb-1">
         <div class="col">
-          <label class="form-label text-muted small" i18n>Número de contacto</label>
+          <label class="form-label text-muted small" i18n>{{ 'Número de contacto' | translate }}</label>
           <p class="form-control-plaintext small">
             {{ pcc.consumer.contact_number }}
           </p>
@@ -79,13 +80,15 @@
       </div>
       <div class="row mb-1">
         <div class="col">
-          <label class="form-label text-muted small" i18n>Tipo de identificación del consumidor</label>
+          <label class="form-label text-muted small" i18n>{{ 'Tipo de identificación del consumidor' | translate
+            }}</label>
           <p class="form-control-plaintext small">
             {{ pcc.consumer.identification_type }}
           </p>
         </div>
         <div class="col">
-          <label class="form-label text-muted small" i18n>Número de identificación del consumidor</label>
+          <label class="form-label text-muted small" i18n>{{ 'Número de identificación del consumidor' | translate
+            }}</label>
           <p class="form-control-plaintext small">
             {{ pcc.consumer.identification_number }}
           </p>
@@ -95,10 +98,12 @@
     <!-- Buttons for consumerDetail -->
     <div class="row justify-content-center">
       <div class="col-2 pb-3">
-        <button class="btn btn-danger rounded-pill w-100" i18n [routerLink]="['/pcc-list']">Regresar</button>
+        <button class="btn btn-danger rounded-pill w-100" i18n [routerLink]="['/pcc-list']">{{ 'Regresar' | translate
+          }}</button>
       </div>
       <div class="col-2 pb-3" *ngIf="role === 'AGENT'">
-        <button class="btn btn-primary rounded-pill w-100" i18n [routerLink]="['/pcc-edit', pcc.id]">Editar PQR</button>
+        <button class="btn btn-primary rounded-pill w-100" i18n [routerLink]="['/pcc-edit', pcc.id]">{{ 'Editar PQR' |
+          translate }}</button>
       </div>
     </div>
   </div>

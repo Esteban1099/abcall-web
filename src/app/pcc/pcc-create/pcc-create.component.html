@@ -1,22 +1,21 @@
-<form [formGroup]="pccForm"
-      (ngSubmit)="!pccForm.invalid && createPcc(pccForm.value)">
+<form [formGroup]="pccForm" (ngSubmit)="!pccForm.invalid && createPcc(pccForm.value)">
   <div class="row">
     <div class="col-6 pt-3 pb-3">
       <div class="input-group has-validation">
         <div class="form-floating">
           <select formControlName="company" id="company" class="form-select rounded-4"
-                  [class.is-invalid]="pccForm.controls['company'].invalid && pccForm.controls['company'].touched || consumer.companies.length === 0">
+            [class.is-invalid]="pccForm.controls['company'].invalid && pccForm.controls['company'].touched || consumer.companies.length === 0">
             <option *ngFor="let option of consumer.companies" [value]="option.id">{{ option.name }}
             </option>
           </select>
-          <label class="form-label" for="company"i18n>Empresa</label>
+          <label class="form-label" for="company" i18n>{{ 'Empresa' | translate }}</label>
           <div class="invalid-feedback"
-               *ngIf="pccForm.controls['company']!.hasError('required') && consumer.companies.length > 0" i18n>
-            Debe seleccionar la empresa
+            *ngIf="pccForm.controls['company']!.hasError('required') && consumer.companies.length > 0" i18n>
+            {{ 'Debe seleccionar la empresa' | translate }}
           </div>
           <div class="invalid-feedback" *ngIf="consumer.companies.length === 0" i18n>
-            El consumidor no tiene ninguna empresa asociada y por consiguiente no es posible crear una PQR en este
-            momento
+            {{ 'El consumidor no tiene ninguna empresa asociada y por consiguiente no es posible crear una PQR en este'
+            + ' momento' | translate }}
           </div>
         </div>
       </div>
@@ -27,11 +26,10 @@
       <div class="input-group has-validation">
         <div class="form-floating">
           <input formControlName="subject" id="subject" type="text" class="form-control rounded-4"
-                 [class.is-invalid]="pccForm.controls['subject'].invalid && pccForm.controls['subject'].touched"/>
-          <label class="form-label" for="subject"i18n>Asunto</label>
-          <div class="invalid-feedback"
-               *ngIf="pccForm.controls['subject']!.hasError('required')" i18n>
-            Debe ingresar el asunto
+            [class.is-invalid]="pccForm.controls['subject'].invalid && pccForm.controls['subject'].touched" />
+          <label class="form-label" for="subject" i18n>{{ 'Asunto' | translate }}</label>
+          <div class="invalid-feedback" *ngIf="pccForm.controls['subject']!.hasError('required')" i18n>
+            {{ 'Debe ingresar el asunto' | translate }}
           </div>
         </div>
       </div>
@@ -41,22 +39,22 @@
     <div class="col-6 pb-3">
       <div class="input-group has-validation">
         <div class="form-floating">
-              <textarea formControlName="description" id="description" class="form-control rounded-4"
-                        style="height: 150px"
-                        [class.is-invalid]="pccForm.controls['description'].invalid && pccForm.controls['description'].touched">
+          <textarea formControlName="description" id="description" class="form-control rounded-4" style="height: 150px"
+            [class.is-invalid]="pccForm.controls['description'].invalid && pccForm.controls['description'].touched">
               </textarea>
-          <label class="form-label" for="description"i18n>Descripción</label>
-          <div class="invalid-feedback"
-               *ngIf="pccForm.controls['description']!.hasError('required')">
-            Debe ingresar la descripción
+          <label class="form-label" for="description" i18n>{{ 'Descripción' | translate }}</label>
+          <div class="invalid-feedback" *ngIf="pccForm.controls['description']!.hasError('required')">
+            {{ 'Debe ingresar la descripción' | translate }}
           </div>
-          <div class="invalid-feedback"
-               *ngIf="pccForm.controls['description']!.hasError('minlength')">
-            La descripción debe tener al menos {{ pccForm.controls['description']!.errors?.['minlength']?.requiredLength }} caracteres
+          <div class="invalid-feedback" *ngIf="pccForm.controls['description']!.hasError('minlength')">
+            {{ 'La descripción debe tener al menos' | translate }} {{
+            pccForm.controls['description']!.errors?.['minlength']?.requiredLength
+            }} {{ 'caracteres' | translate }}
           </div>
-          <div class="invalid-feedback"
-               *ngIf="pccForm.controls['description']!.hasError('maxlength')">
-            La descripción no debe exceder los {{ pccForm.controls['description']!.errors?.['maxlength']?.requiredLength }} caracteres
+          <div class="invalid-feedback" *ngIf="pccForm.controls['description']!.hasError('maxlength')">
+            {{ 'La descripción no debe exceder los' | translate }} {{
+            pccForm.controls['description']!.errors?.['maxlength']?.requiredLength
+            }} {{ 'caracteres' | translate }}
           </div>
         </div>
       </div>
@@ -64,10 +62,12 @@
   </div>
   <div class="row">
     <div class="col-2 pb-3">
-      <button class="btn btn-danger rounded-pill w-100" i18n (click)="clearConsumer()">Regresar</button>
+      <button class="btn btn-danger rounded-pill w-100" i18n (click)="clearConsumer()">{{ 'Regresar' | translate
+        }}</button>
     </div>
     <div class="col-2 pb-3">
-      <button class="btn btn-primary rounded-pill w-100" i18n [disabled]="!pccForm.valid">Crear PQR</button>
+      <button class="btn btn-primary rounded-pill w-100" i18n [disabled]="!pccForm.valid">{{ 'Crear PQR' | translate
+        }}</button>
     </div>
   </div>
 </form>

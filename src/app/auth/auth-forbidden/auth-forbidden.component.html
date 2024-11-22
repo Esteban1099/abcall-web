@@ -2,14 +2,16 @@
   <div style="width: 500px">
     <div class="row">
       <div class="col">
-        <h1 class="pb-3 text-center">Acceso Prohibido</h1>
-        <h2 i18n class="pb-3 text-center">No tiene permiso para acceder a esta página.</h2>
+        <h1 class="pb-3 text-center">{{ 'Acceso Prohibido' | translate }}</h1>
+        <h2 i18n class="pb-3 text-center">{{ 'No tiene permiso para acceder a esta página.' | translate }}</h2>
       </div>
     </div>
     <div class="row justify-content-center">
       <div class="col-auto pb-3">
-        <a class="btn btn-primary btn-sm rounded-4" [routerLink]="['/auth']"  style="min-width: 200px" *ngIf="redirectToLogin">Ir al inicio de sesión</a>
-        <a class="btn btn-primary btn-sm rounded-4" [routerLink]="['/pcc-list']"  style="min-width: 200px" *ngIf="!redirectToLogin">Ir al inicio</a>
+        <a class="btn btn-primary btn-sm rounded-4" [routerLink]="['/auth']" style="min-width: 200px"
+          *ngIf="redirectToLogin">{{ 'Ir al inicio de sesión' | translate }}</a>
+        <a class="btn btn-primary btn-sm rounded-4" [routerLink]="['/pcc-list']" style="min-width: 200px"
+          *ngIf="!redirectToLogin">{{ 'Ir al inicio' | translate }}</a>
       </div>
     </div>
   </div>

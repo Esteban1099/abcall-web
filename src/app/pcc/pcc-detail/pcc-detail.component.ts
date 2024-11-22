@@ -2,21 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Pcc } from '../pcc';
 import { PccService } from '../pcc.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import {NgForOf, NgIf} from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { PccEditComponent } from '../pcc-edit/pcc-edit.component';
-
-
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-pcc-detail',
   templateUrl: './pcc-detail.component.html',
   styleUrls: ['./pcc-detail.component.css'],
-  imports: [
-    NgIf,
-    NgForOf,
-    RouterLink,
-    PccEditComponent
-  ],
+  imports: [NgIf, NgForOf, RouterLink, PccEditComponent, TranslateModule],
   standalone: true,
 })
 export class PccDetailComponent implements OnInit {

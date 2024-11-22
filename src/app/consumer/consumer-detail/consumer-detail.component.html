@@ -1,31 +1,30 @@
 <div *ngIf="!consumer">
   <div class="row">
     <div class="col" *ngIf="actualRoute === '/pcc-create'">
-      <h1 class="pb-3" i18n>Consultar consumidor para creación de PQR</h1>
+      <h1 class="pb-3" i18n>{{ 'Consultar consumidor para creación de PQR' | translate }}</h1>
     </div>
     <div class="col" *ngIf="actualRoute === '/consumer-detail'">
-      <h1 class="pb-3" i18n>Consultar consumidor</h1>
+      <h1 class="pb-3" i18n>{{ 'Consultar consumidor' | translate }}</h1>
     </div>
   </div>
-  <form [formGroup]="consumerForm"
-        (ngSubmit)="!consumerForm.invalid && getConsumerDetails(consumerForm.value)">
+  <form [formGroup]="consumerForm" (ngSubmit)="!consumerForm.invalid && getConsumerDetails(consumerForm.value)">
     <div class="row">
       <div class="col-3 pb-3">
         <div class="input-group has-validation">
           <div class="form-floating">
             <select formControlName="identification_type" id="identification_type"
-                    class="form-select form-control rounded-4"
-                    [class.is-invalid]="consumerForm.controls['identification_type'].invalid && consumerForm.controls['identification_type'].touched"
-                    autocomplete="off">
-              <option value="Cédula de ciudadanía" i18n>Cédula de ciudadanía</option>
-              <option value="Cédula de extranjería" i18n>Cédula de extranjería</option>
-              <option value="Tarjeta de identidad" i18n>Tarjeta de identidad</option>
-              <option value="Pasaporte" i18n>Pasaporte</option>
+              class="form-select form-control rounded-4"
+              [class.is-invalid]="consumerForm.controls['identification_type'].invalid && consumerForm.controls['identification_type'].touched"
+              autocomplete="off">
+              <option value="Cédula de ciudadanía" i18n>{{ 'Cédula de ciudadanía' | translate }}</option>
+              <option value="Cédula de extranjería" i18n>{{ 'Cédula de extranjería' | translate }}</option>
+              <option value="Tarjeta de identidad" i18n>{{ 'Tarjeta de identidad' | translate }}</option>
+              <option value="Pasaporte" i18n>{{ 'Pasaporte' | translate }}</option>
             </select>
-            <label for="identification_type" i18n>Tipo identificación</label>
+            <label for="identification_type" i18n>{{ 'Tipo identificación' | translate }}</label>
             <div i18n class="invalid-feedback"
-                 *ngIf="consumerForm.controls['identification_type']!.hasError('required')">
-              Tipo identificación requerido
+              *ngIf="consumerForm.controls['identification_type']!.hasError('required')">
+              {{ 'Tipo identificación requerido' | translate }}
             </div>
           </div>
         </div>
@@ -34,12 +33,12 @@
         <div class="input-group has-validation">
           <div class="form-floating">
             <input formControlName="identification_number" id="identification_number" type="text"
-                   class="form-control rounded-4"
-                   [class.is-invalid]="consumerForm.controls['identification_number'].invalid && consumerForm.controls['identification_number'].touched"/>
-            <label i18n for="identification_number">Numero identificación</label>
+              class="form-control rounded-4"
+              [class.is-invalid]="consumerForm.controls['identification_number'].invalid && consumerForm.controls['identification_number'].touched" />
+            <label i18n for="identification_number">{{ 'Numero identificación' | translate }}</label>
             <div i18n class="invalid-feedback"
-                 *ngIf="consumerForm.controls['identification_number']!.hasError('required')">
-              Numero identificación requerido
+              *ngIf="consumerForm.controls['identification_number']!.hasError('required')">
+              {{ 'Numero identificación requerido' | translate }}
             </div>
           </div>
         </div>
@@ -48,12 +47,12 @@
     <div class="row">
       <div class="col-2">
         <button i18n type="button" class="btn btn-danger rounded-pill w-100" [routerLink]="['/pcc-list']">
-          Regresar
+          {{ 'Regresar' | translate }}
         </button>
       </div>
       <div class="col-2">
         <button i18n type="submit" class="btn btn-primary rounded-pill w-100" [disabled]="!consumerForm.valid">
-          Consultar
+          {{ 'Consultar' | translate }}
         </button>
       </div>
     </div>
@@ -62,10 +61,10 @@
 <div *ngIf="consumer">
   <div class="row">
     <div class="col" *ngIf="actualRoute === '/consumer-detail'">
-      <h1 class="pb-3">Vista 360 de {{ consumer.name }}</h1>
+      <h1 class="pb-3">{{ 'Vista 360 de ' | translate }} {{ consumer.name }}</h1>
     </div>
     <div class="col" *ngIf="actualRoute === '/pcc-create'">
-      <h1 class="pb-3">Crear PQR para {{ consumer.name }}</h1>
+      <h1 class="pb-3">{{ 'Crear PQR para ' | translate }} {{ consumer.name }}</h1>
     </div>
   </div>
   <div class="row">
@@ -78,7 +77,7 @@
               <p class="form-control-plaintext rounded-4">
                 {{ consumer.identification_type }}
               </p>
-              <label class="form-label" i18n>Tipo de identificación</label>
+              <label class="form-label" i18n>{{ 'Tipo de identificación' | translate }}</label>
             </div>
           </div>
         </div>
@@ -88,7 +87,7 @@
               <p class="form-control-plaintext rounded-4">
                 {{ consumer.identification_number }}
               </p>
-              <label class="form-label" i18n>Número de identificación</label>
+              <label class="form-label" i18n>{{ 'Número de identificación' | translate }}</label>
             </div>
           </div>
         </div>
@@ -100,7 +99,7 @@
               <p class="form-control-plaintext rounded-4">
                 {{ consumer.contact_number }}
               </p>
-              <label class="form-label" i18n>Número de contacto</label>
+              <label class="form-label" i18n>{{ 'Número de contacto' | translate }}</label>
             </div>
           </div>
         </div>
@@ -112,7 +111,7 @@
               <p class="form-control-plaintext rounded-4">
                 {{ consumer.address }}
               </p>
-              <label class="form-label" i18n>Dirección</label>
+              <label class="form-label" i18n>{{ 'Dirección' | translate }}</label>
             </div>
           </div>
         </div>
@@ -122,7 +121,7 @@
               <p class="form-control-plaintext rounded-4">
                 {{ consumer.email }}
               </p>
-              <label class="form-label" i18n>Correo electrónico</label>
+              <label class="form-label" i18n>{{ 'Correo electrónico' | translate }}</label>
             </div>
           </div>
         </div>
@@ -133,7 +132,7 @@
     <div class="col-6" *ngIf="actualRoute === '/consumer-detail'">
       <div class="row">
         <div class="col">
-          <h2 class="pb-3" i18n>Listado de PQRs reportados por el consumidor</h2>
+          <h2 class="pb-3" i18n>{{ 'Listado de PQRs reportados por el consumidor' | translate }}</h2>
         </div>
       </div>
       <div class="row">
@@ -147,7 +146,7 @@
       </div>
       <div class="row">
         <div class="col">
-          <h2 class="pb-3" i18n>Empresas asociadas con el consumidor</h2>
+          <h2 class="pb-3" i18n>{{ 'Empresas asociadas con el consumidor' | translate }}</h2>
         </div>
       </div>
       <div class="row">
@@ -165,12 +164,13 @@
     <!-- Buttons for consumerDetail -->
     <div class="row justify-content-center">
       <div class="col-2 pb-3">
-        <button class="btn btn-danger rounded-pill w-100" i18n (click)="clearConsumer()">Regresar</button>
+        <button class="btn btn-danger rounded-pill w-100" i18n (click)="clearConsumer()">{{ 'Regresar' | translate
+          }}</button>
       </div>
       <div class="col-2 pb-3">
-        <button class="btn btn-primary rounded-pill w-100" i18n [routerLink]="['/pcc-list']">Ir al inicio</button>
+        <button class="btn btn-primary rounded-pill w-100" i18n [routerLink]="['/pcc-list']">{{ 'Ir al inicio' |
+          translate }}</button>
       </div>
     </div>
   </div>
 </div>
-

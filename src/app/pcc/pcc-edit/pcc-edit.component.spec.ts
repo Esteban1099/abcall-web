@@ -1,9 +1,18 @@
 // pcc-edit.component.spec.ts
 
-import { ComponentFixture, TestBed, waitForAsync, fakeAsync, tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  waitForAsync,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { PccEditComponent } from './pcc-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
@@ -14,9 +23,10 @@ import { EventService } from '../../commons/event.service';
 import { DebugElement, Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Consumer } from '../../consumer/consumer';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  template: ''
+  template: '',
 })
 class DummyComponent {}
 
@@ -40,6 +50,7 @@ describe('PccEditComponent', () => {
           { path: 'pcc-list', component: DummyComponent },
           { path: 'pcc-edit/:id', component: DummyComponent }, // Añade esta ruta si es necesaria
         ]),
+        TranslateModule.forRoot(),
       ],
       declarations: [DummyComponent],
       providers: [
@@ -51,14 +62,13 @@ describe('PccEditComponent', () => {
           useValue: {
             snapshot: {
               paramMap: {
-                get: () => 'test-pcc-id' // Simular el ID de la PQR
-              }
-            }
-          }
+                get: () => 'test-pcc-id', // Simular el ID de la PQR
+              },
+            },
+          },
         },
       ],
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -144,7 +154,9 @@ describe('PccEditComponent', () => {
     component.pccEditForm.controls['status'].setValue('En revisión');
     fixture.detectChanges();
 
-    const submitButton: HTMLButtonElement = fixture.debugElement.query(By.css('button[type="submit"]')).nativeElement;
+    const submitButton: HTMLButtonElement = fixture.debugElement.query(
+      By.css('button[type="submit"]')
+    ).nativeElement;
     expect(submitButton.disabled).toBeFalsy();
   });
 
@@ -153,7 +165,9 @@ describe('PccEditComponent', () => {
     component.pccEditForm.controls['status'].setValue('');
     fixture.detectChanges();
 
-    const submitButton: HTMLButtonElement = fixture.debugElement.query(By.css('button[type="submit"]')).nativeElement;
+    const submitButton: HTMLButtonElement = fixture.debugElement.query(
+      By.css('button[type="submit"]')
+    ).nativeElement;
     expect(submitButton.disabled).toBeTruthy();
   });
 
@@ -188,7 +202,9 @@ describe('PccEditComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/pcc-edit', 'test-pcc-id']);
     expect(component.pccEditForm.pristine).toBeTruthy();
     expect(component.pccEditForm.untouched).toBeTruthy();
-    expect(toastService.showSuccess).toHaveBeenCalledWith('La PQR ha sido Editada exitosamente');
+    expect(toastService.showSuccess).toHaveBeenCalledWith(
+      'La PQR ha sido Editada exitosamente'
+    );
   }));
 
   it('should handle error on PQR update failure', fakeAsync(() => {
@@ -206,7 +222,8 @@ describe('PccEditComponent', () => {
 
     tick();
 
-    expect(toastService.showError).toHaveBeenCalledWith('Error al actualizar la PQR');
+    expect(toastService.showError).toHaveBeenCalledWith(
+      'Error al actualizar la PQR'
+    );
   }));
-
 });

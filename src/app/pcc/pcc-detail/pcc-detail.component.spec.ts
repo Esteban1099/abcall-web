@@ -13,6 +13,7 @@ import { PccService } from '../pcc.service';
 import { Pcc } from '../pcc';
 import { Consumer } from '../../consumer/consumer';
 import { Company } from '../../company/company';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('PccDetailComponent', () => {
   let component: PccDetailComponent;
@@ -40,7 +41,11 @@ describe('PccDetailComponent', () => {
   beforeEach(waitForAsync(() => {
     const pccServiceSpy = jasmine.createSpyObj('PccService', ['getPccDetail']);
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, PccDetailComponent],
+      imports: [
+        HttpClientTestingModule,
+        PccDetailComponent,
+        TranslateModule.forRoot(),
+      ],
       providers: [
         { provide: PccService, useValue: pccServiceSpy },
         {

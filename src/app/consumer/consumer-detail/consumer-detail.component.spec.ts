@@ -7,6 +7,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { Consumer } from '../consumer';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ConsumerDetailComponent', () => {
   let component: ConsumerDetailComponent;
@@ -22,14 +23,15 @@ describe('ConsumerDetailComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule.withRoutes([]),  // Configuración de RouterTestingModule para evitar el error
-        ConsumerDetailComponent
+        RouterTestingModule.withRoutes([]), // Configuración de RouterTestingModule para evitar el error
+        ConsumerDetailComponent,
+        TranslateModule.forRoot(),
       ],
       providers: [
         { provide: ConsumerService, useValue: consumerService },
         { provide: EventService, useValue: eventService },
-        FormBuilder
-      ]
+        FormBuilder,
+      ],
     }).compileComponents();
   }));
 
@@ -66,7 +68,7 @@ describe('ConsumerDetailComponent', () => {
       contact_number: '555-555-5555',
       address: '123 Main St',
       companies: [],
-      pccs: []
+      pccs: [],
     };
 
     consumerService.getConsumer.and.returnValue(of(mockConsumer));
@@ -76,7 +78,9 @@ describe('ConsumerDetailComponent', () => {
     expect(consumerService.getConsumer).toHaveBeenCalledWith(mockConsumer);
     expect(component.consumer).toEqual(mockConsumer);
     expect(component.consumerForm.get('identification_type')?.value).toBe(null);
-    expect(component.consumerForm.get('identification_number')?.value).toBe(null);
+    expect(component.consumerForm.get('identification_number')?.value).toBe(
+      null
+    );
   });
 
   it('should clear the consumer when clearConsumer is called', () => {
@@ -89,7 +93,7 @@ describe('ConsumerDetailComponent', () => {
       contact_number: '555-555-5555',
       address: '123 Main St',
       companies: [],
-      pccs: []
+      pccs: [],
     };
 
     component.clearConsumer();

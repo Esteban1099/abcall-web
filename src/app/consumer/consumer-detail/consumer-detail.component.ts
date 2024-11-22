@@ -1,11 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {Consumer} from '../consumer';
-import {ConsumerService} from '../consumer.service';
-import {Router, RouterLink} from '@angular/router';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {NgForOf, NgIf} from '@angular/common';
-import {PccCreateComponent} from '../../pcc/pcc-create/pcc-create.component';
-import {EventService} from '../../commons/event.service';
+import { Component, OnInit } from '@angular/core';
+import { Consumer } from '../consumer';
+import { ConsumerService } from '../consumer.service';
+import { Router, RouterLink } from '@angular/router';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { NgForOf, NgIf } from '@angular/common';
+import { PccCreateComponent } from '../../pcc/pcc-create/pcc-create.component';
+import { EventService } from '../../commons/event.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-consumer-detail',
@@ -16,22 +22,22 @@ import {EventService} from '../../commons/event.service';
     NgIf,
     NgForOf,
     RouterLink,
-    PccCreateComponent
+    PccCreateComponent,
+    TranslateModule,
   ],
-  standalone: true
+  standalone: true,
 })
 export class ConsumerDetailComponent implements OnInit {
   consumerForm!: FormGroup;
   consumer!: Consumer;
-  actualRoute !: string;
+  actualRoute!: string;
 
   constructor(
     private consumerService: ConsumerService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private eventService: EventService,
-  ) {
-  }
+    private eventService: EventService
+  ) {}
 
   ngOnInit() {
     this.actualRoute = this.router.url;
@@ -41,7 +47,7 @@ export class ConsumerDetailComponent implements OnInit {
     });
     this.eventService.clearConsumer.subscribe((): void => {
       this.clearConsumer();
-    })
+    });
   }
 
   getConsumerDetails(consumer: Consumer) {
