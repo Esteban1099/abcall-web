@@ -3,21 +3,21 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PccService } from '../pcc.service';
 import { Pcc } from '../pcc';
-import {ToastService} from '../../commons/toast.service';
-import {EventService} from '../../commons/event.service';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-
+import { ToastService } from '../../commons/toast.service';
+import { EventService } from '../../commons/event.service';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-pcc-edit',
   templateUrl: './pcc-edit.component.html',
   styleUrls: ['./pcc-edit.component.css'],
-  imports: [
-    ReactiveFormsModule,
-    NgIf,
-    NgForOf,
-    RouterLink,
-  ],
+  imports: [ReactiveFormsModule, NgIf, NgForOf, RouterLink, TranslateModule],
   standalone: true,
 })
 export class PccEditComponent implements OnInit {
@@ -30,8 +30,8 @@ export class PccEditComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private toastService: ToastService,
-    private eventService: EventService,
-  ) { }
+    private eventService: EventService
+  ) {}
 
   ngOnInit(): void {
     const pccId = this.route.snapshot.paramMap.get('id')!;
@@ -44,10 +44,15 @@ export class PccEditComponent implements OnInit {
     }
     this.pccEditForm = this.formBuilder.group({
       status: ['', Validators.required],
-      reason: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(1000)]],
+      reason: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(1000),
+        ],
+      ],
     });
-
-
   }
 
   onSubmit(): void {
@@ -61,11 +66,21 @@ export class PccEditComponent implements OnInit {
           this.pccEditForm.reset();
           this.pccEditForm.markAsPristine();
           this.pccEditForm.markAsUntouched();
-          this.toastService.showSuccess('La PQR ha sido Editada exitosamente');
+          if ((localStorage.getItem('lang') || 'es-CO') === 'es-CO') {
+            this.toastService.showSuccess(
+              'La PQR ha sido Editada exitosamente'
+            );
+          } else {
+            this.toastService.showSuccess('PCC has been edited successfully');
+          }
         },
         (error) => {
+          if ((localStorage.getItem('lang') || 'es-CO') === 'es-CO') {
+            this.toastService.showError('Error al actualizar la PQR');
+          } else {
+            this.toastService.showError('Error updating the PCC');
+          }
           console.error('Error al actualizar la PQR:', error);
-          this.toastService.showError('Error al actualizar la PQR');
         }
       );
     }
