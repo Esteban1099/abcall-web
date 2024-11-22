@@ -39,10 +39,10 @@
             <div class="input-group has-validation">
               <div class="form-floating">
                 <textarea formControlName="reason" id="reason" type="text" class="form-control rounded-4"
-                  autocomplete="Numero identificación"
+                  autocomplete="off"
                   [class.is-invalid]="pccEditForm.controls['reason'].invalid && pccEditForm.controls['reason'].touched">
                 </textarea>
-                <label i18n>{{ 'Razón de modificación de PQR' | translate }}</label>
+                <label for="reason" i18n>{{ 'Razón de modificación de PQR' | translate }}</label>
                 <div i18n class="invalid-feedback" *ngIf="pccEditForm.controls['reason']!.hasError('required')">
                   {{ 'Por favor, ingrese la Razón por la cual se modifica la PQR' | translate }}
                 </div>
@@ -60,9 +60,9 @@
           <div class="col-6 pb-3">
             <div class="input-group has-validation">
               <div class="form-floating">
-                <select formControlName="status" id="identification_type" class="form-select form-control rounded-4"
+                <select formControlName="status" id="status" class="form-select form-control rounded-4"
                   [class.is-invalid]="pccEditForm.controls['status'].invalid && pccEditForm.controls['status'].touched"
-                  autocomplete="Estado de la PQR">
+                  autocomplete="off">
                   <option value="" disabled selected i18n>{{ 'Seleccione un estado' | translate }}</option>
                   <option value="Pendiente por documentación" i18n>{{ 'Pendiente por documentación' | translate }}
                   </option>
@@ -70,7 +70,7 @@
                   <option value="Cerrada sin solución" i18n>{{ 'Cerrada sin solución' | translate }}</option>
                   <option value="En revisión" i18n>{{ 'En revisión' | translate }}</option>
                 </select>
-                <label i18n>{{ 'Nuevo Estado' | translate }}</label>
+                <label i18n for="status">Nuevo Estado</label>
                 <div i18n class="invalid-feedback" *ngIf="pccEditForm.controls['status'].hasError('required')">
                   {{ 'Estado requerido' | translate }}
                 </div>

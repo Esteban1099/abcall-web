@@ -9,13 +9,14 @@ app.use(express.json()); // Parse JSON request bodies
 // Proxy API requests (define these first to prevent them from being caught by the wildcard route)
 app.use("/api/auth/clients/token", async (req, res) => {
   try {
+    const langHeader = req.headers["Language"];
     const targetUrl =
       "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/auth/clients/token";
     const response = await axios({
       method: req.method,
       url: targetUrl,
       data: req.body,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", Language: langHeader },
     });
     res.status(response.status).json(response.data);
   } catch (error) {
@@ -31,13 +32,14 @@ app.use("/api/auth/clients/token", async (req, res) => {
 
 app.use("/api/auth/agents/token", async (req, res) => {
   try {
+    const langHeader = req.headers["Language"];
     const targetUrl =
       "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/auth/agents/token";
     const response = await axios({
       method: req.method,
       url: targetUrl,
       data: req.body,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", Language: langHeader },
     });
     res.status(response.status).json(response.data);
   } catch (error) {
@@ -56,6 +58,7 @@ app.use(
   async (req, res) => {
     console.log("consumer details ---- entered");
     try {
+      const langHeader = req.headers["Language"];
       // Extract Authorization header from incoming request
       const authHeader = req.headers["authorization"];
       console.log("Authorization Header:", authHeader);
@@ -70,6 +73,7 @@ app.use(
         headers: {
           "Content-Type": "application/json",
           Authorization: authHeader, // Forward the Authorization header if it exists
+          Language: langHeader,
         },
       });
       res.status(response.status).json(response.data);
@@ -89,6 +93,7 @@ app.use(
   "/api/companies/:companyId/consumers/:consumerId/pccs",
   async (req, res) => {
     try {
+      const langHeader = req.headers["Language"];
       // Extract Authorization header from incoming request
       const authHeader = req.headers["authorization"];
       console.log("Authorization Header:", authHeader);
@@ -103,6 +108,7 @@ app.use(
         headers: {
           "Content-Type": "application/json",
           Authorization: authHeader, // Forward the Authorization header if it exists
+          Language: langHeader,
         },
       });
       res.status(response.status).json(response.data);
@@ -120,6 +126,7 @@ app.use(
 
 app.use("/api/pccs/:id", async (req, res) => {
   try {
+    const langHeader = req.headers["Language"];
     // Extract Authorization header from incoming request
     const authHeader = req.headers["authorization"];
     console.log("Authorization Header:", authHeader);
@@ -134,6 +141,7 @@ app.use("/api/pccs/:id", async (req, res) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: authHeader, // Forward the Authorization header if it exists
+        Language: langHeader,
       },
     });
     res.status(response.status).json(response.data);
@@ -150,6 +158,7 @@ app.use("/api/pccs/:id", async (req, res) => {
 
 app.use("/api/agents/pccs", async (req, res) => {
   try {
+    const langHeader = req.headers["Language"];
     // Extract Authorization header from incoming request
     const authHeader = req.headers["authorization"];
     console.log("Authorization Header:", authHeader);
@@ -164,6 +173,7 @@ app.use("/api/agents/pccs", async (req, res) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: authHeader, // Forward the Authorization header if it exists
+        Language: langHeader,
       },
     });
     res.status(response.status).json(response.data);
@@ -180,6 +190,7 @@ app.use("/api/agents/pccs", async (req, res) => {
 
 app.use("/api/clients/pccs", async (req, res) => {
   try {
+    const langHeader = req.headers["Language"];
     // Extract Authorization header from incoming request
     const authHeader = req.headers["authorization"];
     console.log("Authorization Header:", authHeader);
@@ -194,6 +205,7 @@ app.use("/api/clients/pccs", async (req, res) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: authHeader, // Forward the Authorization header if it exists
+        Language: langHeader,
       },
     });
     res.status(response.status).json(response.data);

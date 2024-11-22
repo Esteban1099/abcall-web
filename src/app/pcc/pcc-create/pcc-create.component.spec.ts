@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { Pcc } from '../pcc';
 import { Consumer, SimplifiedConsumer } from '../../consumer/consumer';
 import { Company } from '../../company/company';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('PccCreateComponent', () => {
   let component: PccCreateComponent;
@@ -22,7 +23,11 @@ describe('PccCreateComponent', () => {
     eventService = new EventService();
 
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, PccCreateComponent],
+      imports: [
+        ReactiveFormsModule,
+        PccCreateComponent,
+        TranslateModule.forRoot(),
+      ],
       providers: [
         FormBuilder,
         { provide: PccService, useValue: pccService },

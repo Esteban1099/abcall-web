@@ -5,13 +5,13 @@
         <div class="col-auto me-auto">
           <div class="row">
             <div class="col-auto" *ngIf="showBackOption">
-              <button class="btn btn-primary rounded-pill" type="button" (click)="backAuthLogin()">
+              <button class="btn btn-primary rounded-pill" title="regresar_button" type="button" (click)="backAuthLogin()">
                 <i class="fa-solid fa-arrow-left"></i>
               </button>
             </div>
             <div class="col-auto" *ngIf="showMenu">
               <div class="dropdown">
-                <button class="btn btn-primary rounded-pill" type="button" data-bs-toggle="dropdown">
+                <button id="select_language" title="select_language_button"  class="btn btn-primary rounded-pill" type="button" data-bs-toggle="dropdown">
                   <i class="fa-solid fa-bars"></i>
                 </button>
                 <ul class="dropdown-menu">
@@ -29,7 +29,7 @@
           <div class="row">
             <div class="col-auto">
               <div class="dropdown">
-                <button class="btn btn-primary rounded-pill" type="button" data-bs-toggle="dropdown">
+                <button id="select_language" title="select_language_button" class="btn btn-primary rounded-pill" type="button" data-bs-toggle="dropdown">
                   <i class="fa-solid fa-globe"></i>
                 </button>
                 <ul class="dropdown-menu">
@@ -41,7 +41,7 @@
               </div>
             </div>
             <div class="col-auto" *ngIf="showLogOut">
-              <button class="btn btn-danger rounded-pill" type="button" (click)="logOut()">
+              <button class="btn btn-danger rounded-pill" type="button" title="log_off" (click)="logOut()">
                 <i class="fa-solid fa-right-from-bracket"></i>
               </button>
             </div>
