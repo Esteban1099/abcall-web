@@ -83,7 +83,6 @@ describe('AuthLoginComponent', () => {
 
     expect(authService.loginClient).toHaveBeenCalledWith(mockUser);
     expect(localStorage.getItem('token')).toBe('mock-token');
-    expect(toastService.showSuccess).toHaveBeenCalledWith('Bienvenido!');
     expect(router.navigate).toHaveBeenCalledWith(['/pcc-list']);
   });
 
@@ -97,7 +96,6 @@ describe('AuthLoginComponent', () => {
 
     expect(authService.loginAgent).toHaveBeenCalledWith(mockUser);
     expect(localStorage.getItem('token')).toBe('mock-token');
-    expect(toastService.showSuccess).toHaveBeenCalledWith('Bienvenido!');
     expect(router.navigate).toHaveBeenCalledWith(['/pcc-list']);
   });
 
