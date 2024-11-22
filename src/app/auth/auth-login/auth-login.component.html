@@ -40,9 +40,9 @@
           <div class="input-group has-validation">
             <div class="form-floating">
               <input formControlName="email" id="email" type="email" class="form-control rounded-4"
-                autocomplete="Correo electrónico"
+                autocomplete="email"
                 [class.is-invalid]="authForm.controls['email'].invalid && authForm.controls['email'].touched" />
-              <label i18n> {{ 'Correo electrónico' | translate }} </label>
+              <label for="email" i18n> {{ 'Correo electrónico' | translate }} </label>
               <div i18n class="invalid-feedback" *ngIf="authForm.controls['email']!.hasError('required')">
                 {{ 'Correo electrónico requerido' | translate }}
               </div>
@@ -58,9 +58,9 @@
           <div class="input-group has-validation">
             <div class="form-floating">
               <input formControlName="password" id="password" type="password" class="form-control rounded-4"
-                autocomplete="Contraseña"
+                autocomplete="current-password"
                 [class.is-invalid]="authForm.controls['password'].invalid && authForm.controls['password'].touched" />
-              <label i18n> {{ 'Contraseña' | translate }} </label>
+              <label for="password" i18n> {{ 'Contraseña' | translate }} </label>
               <div i18n class="invalid-feedback" *ngIf="authForm.controls['password']!.hasError('required')">
                 {{ 'Debe ingresar la contraseña' | translate }}
               </div>
@@ -70,8 +70,11 @@
       </div>
       <div class="row justify-content-end">
         <div class="col-auto pb-3">
-          <a i18n class="link-secondary link-underline-opacity-0"> {{ '¿Olvido su contraseña?' | translate }} </a>
+          <a i18n class="link-secondary" style="color: #FFFFFF !important">
+            {{ '¿Olvido su contraseña?' | translate }}
+          </a>
         </div>
+
       </div>
       <div class="row">
         <div class="col pb-3">
