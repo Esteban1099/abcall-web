@@ -16,13 +16,13 @@
             <select formControlName="identification_type" id="identification_type"
                     class="form-select form-control rounded-4"
                     [class.is-invalid]="consumerForm.controls['identification_type'].invalid && consumerForm.controls['identification_type'].touched"
-                    autocomplete="Tipo identificación">
+                    autocomplete="off">
               <option value="Cédula de ciudadanía" i18n>Cédula de ciudadanía</option>
               <option value="Cédula de extranjería" i18n>Cédula de extranjería</option>
               <option value="Tarjeta de identidad" i18n>Tarjeta de identidad</option>
               <option value="Pasaporte" i18n>Pasaporte</option>
             </select>
-            <label i18n>Tipo identificación</label>
+            <label for="identification_type" i18n>Tipo identificación</label>
             <div i18n class="invalid-feedback"
                  *ngIf="consumerForm.controls['identification_type']!.hasError('required')">
               Tipo identificación requerido
@@ -34,9 +34,9 @@
         <div class="input-group has-validation">
           <div class="form-floating">
             <input formControlName="identification_number" id="identification_number" type="text"
-                   class="form-control rounded-4" autocomplete="Numero identificación"
+                   class="form-control rounded-4"
                    [class.is-invalid]="consumerForm.controls['identification_number'].invalid && consumerForm.controls['identification_number'].touched"/>
-            <label i18n>Numero identificación</label>
+            <label i18n for="identification_number">Numero identificación</label>
             <div i18n class="invalid-feedback"
                  *ngIf="consumerForm.controls['identification_number']!.hasError('required')">
               Numero identificación requerido
