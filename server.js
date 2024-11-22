@@ -10,6 +10,7 @@ app.use(express.json()); // Parse JSON request bodies
 app.use("/api/auth/clients/token", async (req, res) => {
   try {
     const langHeader = req.headers["Language"];
+    console.log("Language Header:", langHeader);
     const targetUrl =
       "http://abcall-load-balancer-1563043008.us-east-1.elb.amazonaws.com/auth/clients/token";
     const response = await axios({
