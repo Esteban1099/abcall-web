@@ -430,7 +430,7 @@ describe('Asesor crea PQR, y vuelve a la lista exitosamente. Nueva PQR no necesa
       cy.contains('th', 'ID Consumidor').should('be.visible');
       cy.contains('th', 'Acciones').should('be.visible');
     });
-    cy.wait(10000);
+    cy.wait(1000);
     cy.get('table tbody tr').should('have.length.at.least', 20);
   });
 });
@@ -490,7 +490,7 @@ describe('Asesor ve detalle de Usuario y vuelve a la lista', () => {
       cy.contains('th', 'ID Consumidor').should('be.visible');
       cy.contains('th', 'Acciones').should('be.visible');
     });
-    cy.wait(10000);
+    cy.wait(1000);
     cy.get('table tbody tr').should('have.length.at.least', 20);
   });
 });
@@ -505,7 +505,7 @@ describe('Asesor busca una PQR específica con la barra de búsqueda', () => {
     cy.get('input[formcontrolname="password"]').type('123456');
     cy.contains('button', 'Iniciar sesión').click();
     cy.contains('Bienvenido').should('be.visible');
-    cy.wait(10000);
+    cy.wait(1000);
 
     cy.get('table tbody tr').should('have.length.at.least', 1);
 
@@ -542,7 +542,7 @@ describe('Asesor verifica consistencia entre tablas de PQRs y Vista 360 de Usuar
     cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
     cy.get('input[formcontrolname="password"]').type('123456');
     cy.contains('button', 'Iniciar sesión').click();
-    cy.wait(10000);
+    cy.wait(1000);
 
     cy.get('table tbody tr').should('have.length.at.least', 1);
 
@@ -591,7 +591,7 @@ describe('Asesor verifica consistencia entre tablas de PQRs y Vista 360 de Usuar
               .clear()
               .type(userId);
             cy.get('button').contains('Consultar').click(); // Botón para buscar al usuario
-            cy.wait(10000); // Espera a que se carguen los resultados de PQRs del usuario
+            cy.wait(1000); // Espera a que se carguen los resultados de PQRs del usuario
 
             // Verifica que el ID de PQR está en la lista de PQRs del usuario
             //cy.get('.list-group-item').should('contain.text', pqrId);
@@ -616,7 +616,7 @@ describe('Asesor ve detalle de PCC al azar', () => {
     cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
     cy.get('input[formcontrolname="password"]').type('123456');
     cy.contains('button', 'Iniciar sesión').click();
-    cy.wait(10000); // Espera a que cargue la tabla de PQRs/PCCs
+    cy.wait(1000); // Espera a que cargue la tabla de PQRs/PCCs
 
     // Verifica que la tabla de PQRs está visible y tiene al menos una fila
     cy.get('.table-responsive').should('be.visible');
@@ -687,7 +687,7 @@ describe('Update Pcc', () => {
     cy.get('input[formcontrolname="email"]').type('agente@gmail.com');
     cy.get('input[formcontrolname="password"]').type('123456');
     cy.contains('button', 'Iniciar sesión').click();
-    cy.wait(10000); // Espera a que cargue la tabla de PQRs/PCCs
+    cy.wait(1000); // Espera a que cargue la tabla de PQRs/PCCs
 
     // Verifica que la tabla de PQRs está visible y tiene al menos una fila
     cy.get('.table-responsive').should('be.visible');

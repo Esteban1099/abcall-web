@@ -10,7 +10,7 @@
     <div class="input-group">
       <input type="text" class="form-control rounded-start-pill bg-white text-dark placeholder-black"
         placeholder="{{ 'Buscar' | translate }}" [(ngModel)]="searchTerm" (input)="applyFilter()" />
-      <button class="btn btn-primary rounded-end-pill" (click)="applyFilter()">
+      <button class="btn btn-primary rounded-end-pill" (click)="applyFilter()" aria-label="Search">
         <i class="fa fa-search"></i>
       </button>
     </div>

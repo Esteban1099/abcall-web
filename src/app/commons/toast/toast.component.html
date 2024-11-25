@@ -6,5 +6,5 @@
   (hidden)="utilService.remove(toast)"
   header="{{toast.content?.['header']}}" class="">
   {{toast.content?.['body']}}
-  <button type="button" class="btn-close me-0 mt-0 m-auto d-flex" (click)="utilService.remove(toast)"></button>
+  <button type="button" class="btn-close me-0 mt-0 m-auto d-flex" (click)="utilService.remove(toast)" aria-label="Close"></button>
 </ngb-toast>
